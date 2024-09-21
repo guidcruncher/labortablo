@@ -1,0 +1,20 @@
+
+<div id="iconServices">
+{{> iconlist containers }}
+</div>
+
+<script type="text/javascript">
+function reloadIconList() {
+var url = "{{API_BASE}}/containers";
+axios.get(url)
+.then(function(response) {
+	var html=Handlebars.templates["iconlist.hbs"](response.data);
+	document.getElementById("iconServices").innerHTML = html;
+	setTimeout(reloadIconList, 15000);
+}).catch (function(error) {
+	setTimeout(reloadIconList, 60000);
+});
+}
+reloadIconList();
+</script>
+	

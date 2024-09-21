@@ -1,0 +1,30 @@
+{{#if isBootstrap}}
+{{#each this.groups}}
+<div class="card" style="margin-bottom:5px">
+  <div class="card-body">
+    <h5 class="card-title">{{this}}</h5>
+{{#eachwhen ../this.items "group" this }}
+{{> iconbutton this}}
+{{/eachwhen}}
+</div>
+</div>
+{{/each}}
+{{else}}
+<ul class="nav nav-tabs nav-justified" role="tablist">
+{{# each this.groups}}
+<li class="nav-item" role="presentation">
+    <button class="nav-link {{#if @first}}active{{/if}}" data-bs-toggle="tab" role="tab" data-bs-target="#{{ident this}}">{{this}}</button>
+  </li>
+{{/each}}
+</ul>
+
+<div class="tab-content">
+{{# each this.groups}}
+<div class="tab-pane container-fluid {{#if @first}}active{{else}}fade{{/if}}" role="tabpanel" id="{{ident this}}">
+<div style="margin:5px;">
+{{#eachwhen ../this.items "group" this }}
+{{> iconbutton this}}
+{{/eachwhen}}
+</div></div>
+{{/each}}
+{{/if}}

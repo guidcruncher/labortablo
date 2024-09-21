@@ -1,0 +1,16 @@
+{
+  "name": "Labrotablo",
+  "short_name": "labrotablo",
+  "description": "A cool simple Docker friendly dashboard and homepage",
+  "icons": [
+    {
+      "src": "./images/logo.svg",
+      "sizes": 64x64",
+      "type": "image/svg+xml"
+    }
+  ],
+  "start_url": "/",
+  "display": "fullscreen",
+  "theme_color": "#0d6efd",
+  "background_color": "#000000"
+}

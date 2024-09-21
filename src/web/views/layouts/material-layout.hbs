@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="manifest" href="/scripts/pwa.webmanifest">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@materialstyle/materialstyle@3.1.1/dist/css/materialstyle.min.css">
+  <link rel="stylesheet"
+        href="/stylesheets/style.css">
+  <title>{{appTitle}} - {{title}}</title>
+  <script type="text/javascript">
+     const API_BASE='{{API_BASE}}'
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch-jsonp/1.3.0/fetch-jsonp.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3 SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+  <script src="/scripts/helpers.js" ></script>
+  <script src="/scripts/templates.js" ></script> 
+  <script src="/scripts/main.js" ></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-primary fixed-top" >
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center" href="javascript:">
+      <i class="bi bi-star-fill me-2"><img src="/images/logo.svg" style="width:32px;" /></i>{{appTitle}}
+    </a>
+  </div>
+</nav>
+
+<div class="container-fluid p-2" style="margin-top: var(--navbar-fixed-height);">
+{{{body}}}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+        crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@materialstyle/materialstyle@3.1.1/dist/js/materialstyle.min.js"></script>
+
+</body>
+</html>
