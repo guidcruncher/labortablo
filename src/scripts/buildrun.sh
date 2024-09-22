@@ -2,7 +2,7 @@
 version="development"
 
 docker buildx create --name multiarchbuilder --use --bootstrap
-docker buildx build . --load --platform linux/arm64 -t "crockerish/labortablo:$version"
+docker buildx build . --load --platform linux/arm64 -t "guidcruncher/labortablo:$version"
 
 docker run --name labortablo-dev \
 	-i -t -p 9000:80 \
@@ -15,4 +15,4 @@ docker run --name labortablo-dev \
 	-e GHCR_IO_USER=${GHCR_IO_USER} \
 	-e GHCR_IO_PASS=${GHCR_IO_PASS} \
 	--rm \
-	crockerish/labortablo:$version
+	guidcruncher/labortablo:$version
