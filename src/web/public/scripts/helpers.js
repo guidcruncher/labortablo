@@ -21,6 +21,6 @@ Handlebars.registerHelper("ident", function (str) {
 });
 
 Handlebars.registerHelper("hostonly", function (uri) {
- var parts = new URL(uri);
-    return parts.protocol + "://" + parts.host;
+  var parts = new URL(uri);
+  return parts.protocol + "://" + parts.host;
 });

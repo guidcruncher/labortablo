@@ -1,5 +1,3 @@
-const url = require("url");
-
 module.exports = {
   eachwhen: function (list, k, v, opts) {
     var i,
@@ -20,11 +18,11 @@ module.exports = {
     }
     return "";
   },
-  hostonly: function(uri) {
+  hostonly: function (uri) {
     var parts = new URL(uri);
     return parts.protocol + "://" + parts.host;
   },
-  domainonly: function(uri) {
+  domainonly: function (uri) {
     var parts = new URL(uri);
     return parts.hostname;
   },
