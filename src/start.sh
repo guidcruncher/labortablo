@@ -1,6 +1,7 @@
 #!/bin/sh
 
 mkdir -p /cache
+mkdir -p /cache/bookmarks
 
 cp /labortablo/web/public/images/labortablo.svg /cache/
 cp /labortablo/web/public/images/labortablo.svg /labortablo/web/public/icons/

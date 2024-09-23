@@ -16,6 +16,25 @@ function getIconCacheFolder() {
   return process.env.ICON_CACHE;
 }
 
+function downloadUrl(url, filename) {
+  return new Promise((resolve, reject) => {
+    var file = fs.createWriteStream(filename);
+    https
+      .get(url, function (response) {
+        response.pipe(file);
+        file.on("finish", function () {
+          file.close();
+          resolve();
+        });
+      })
+      .on("error", function (err) {
+        // Handle errors
+        fs.unlink(filename);
+        reject(err);
+      });
+  });
+}
+
 function downloadFile(url, name) {
   var iconCacheFolder = getIconCacheFolder();
 
@@ -29,17 +48,9 @@ function downloadFile(url, name) {
 
     console.log("Downloading => " + url);
 
-    var file = fs.createWriteStream(filename);
-    https
-      .get(url, function (response) {
-        response.pipe(file);
-        file.on("finish", function () {
-          file.close();
-          resolve();
-        });
-      })
-      .on("error", function (err) {
-        // Handle errors
+    downloadUrl(url, filename)
+      .then(() => resolve())
+      .catch((err) => {
         fs.unlink(filename);
         reject(err);
       });
@@ -289,7 +300,50 @@ function getMimeType(filename) {
   return mimetypes[ext.toLowerCase()] || "application/octet-stream";
 }
 
+function getWebsiteIcon(hostname) {
+  return new Promise((resolve, reject) => {
+    var parts = hostname.split(".");
+    var cacheFolder = getIconCacheFolder();
+    var filename = path.join(cacheFolder, "bookmarks", hostname) + ".ico";
+
+    if (fs.existsSync(filename)) {
+      resolve(fs.readFileSync(filename));
+      return;
+    }
+
+    var domain =
+      "www." +
+      parts
+        .slice(0)
+        .slice(-(parts.length === 4 ? 3 : 2))
+        .join(".");
+
+    var url = "https://icons.duckduckgo.com/ip3/" + domain + ".ico";
+    downloadUrl(url, filename)
+      .then(() => {
+        resolve(fs.readFileSync(filename));
+      })
+      .catch(() => {
+        fs.unlink(filename);
+        domain = parts
+          .slice(0)
+          .slice(-(parts.length === 4 ? 3 : 2))
+          .join(".");
+
+        var url = "https://icons.duckduckgo.com/ip3/" + domain + ".ico";
+        downloadUrl(url, filename)
+          .then(() => {
+            resolve(fs.readFileSync(filename));
+          })
+          .catch((err) => {
+            fs.unlink(filename);
+            reject(err);
+          });
+      });
+  });
+}
 module.exports = {
   determineIconUrl,
   getMimeType,
+  getWebsiteIcon,
 };
