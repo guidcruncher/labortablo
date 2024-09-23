@@ -24,3 +24,8 @@ Handlebars.registerHelper("hostonly", function (uri) {
   var parts = new URL(uri);
   return parts.protocol + "://" + parts.host;
 });
+
+Handlebars.registerHelper("hostonly", function (uri) {
+  var parts = new URL(uri);
+  return parts.hostname;
+});
