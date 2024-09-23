@@ -1,16 +1,30 @@
-<div class="container">
-<di class="row">
-<div class="services col-sm">
-{{> iconlist containers }}
+<ul class="icon-left nav nav-tabs nav-justified" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" data-bs-toggle="tab" role="tab" data-bs-target="#tabservices">
+      <i class="bi bi-server m-1"></i> Services
+    </button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#tabbookmarks">
+     <i class="bi bi-pc-display-horizontal m-1"></i> Bookmarks
+    </button>
+  </li>
+</ul>
+<div class="tab-content ">
+  <div class="tab-pane container-fluid active " role="tabpanel" id="tabservices">
+  <div class="container"><div class="row"><div class=col-sm">
+  {{> iconlist containers }}
+  </div></div></div>
+  </div>
+  <div class="tab-pane container-fluid fade " role="tabpanel" id="tabbookmarks">
+   <div class="container"><div class="row"><div class=col-sm">
+  {{> bookmarks bookmarks }}
+  </div></div></div>
+  </div>
 </div>
-
-<div class="bookmarks col-sm">
-{{> bookmarks bookmarks }}
 </div>
-</div></div>
 
 <script type="text/javascript">
-
 function setHtml(id, html) {
 var elemeemts = document.getElementsByClassName(id);
 
@@ -44,7 +58,17 @@ axios.get(url)
 });
 }
 
-reloadIconList();
-// reloadBookmarks();
+
+function initialiseTabs() {
+// Initialize tabs
+var tabs = [].slice.call(document.querySelectorAll('.nav-tabs'))
+tabs.map(function (tab) {
+  new materialstyle.MaterialTab(tab)
+})
+}
+
+initialiseTabs();
+setTimeout(reloadIconList, 60000);
+setTimeout(reloadBookmarks, 120000);
 </script>
 	
