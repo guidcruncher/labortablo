@@ -59,7 +59,10 @@ if (oidcEnabled == "true") {
 }
 
 app.use(express.static(path.join(__dirname, "public")));
-
+app.use(
+  "/user-icons",
+  express.static(path.join(process.env.CONFIG_DIR, "icons")),
+);
 app.use("/", indexRouter);
 
 module.exports = app;

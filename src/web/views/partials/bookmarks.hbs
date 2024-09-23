@@ -3,7 +3,8 @@
 <div class="list-group-item list-group-item-primary">{{@key}}</div>
 {{#each this }}
   <a href="{{this.href}}" target="_blank" class="list-group-item d-flex align-items-center gap-3 list-group-item-action">
-    <img src="{{@root.API_BASE}}/bookmark/icon?host={{domainonly this.href}}" style="max-width:32px;max-height:32px;" />
+
+    <img src="{{#if this.icon}}/user-icons/{{this.icon}}{{else}}{{@root.API_BASE}}/bookmark/icon?host={{domainonly this.href}}{{/if}}" style="max-width:32px;max-height:32px;" />
     <span>
       {{@key}}
       <div style="font-size: 12px;white-space:nowrap;overflow:hidden; !important;width:280px !important;" class="d-block text-muted">{{this.description}}</div>
