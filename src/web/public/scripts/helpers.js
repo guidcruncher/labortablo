@@ -19,3 +19,8 @@ Handlebars.registerHelper("ident", function (str) {
   }
   return "";
 });
+
+Handlebars.registerHelper("hostonly", function (uri) {
+ var parts = new URL(uri);
+    return parts.protocol + "://" + parts.host;
+});

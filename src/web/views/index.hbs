@@ -3,18 +3,38 @@
 {{> iconlist containers }}
 </div>
 
+<div id="bookmarks">
+{{> bookmarks bookmarks }}
+</div>
+
+
 <script type="text/javascript">
 function reloadIconList() {
 var url = "{{API_BASE}}/containers";
 axios.get(url)
 .then(function(response) {
-	var html=Handlebars.templates["iconlist.hbs"](response.data);
-	document.getElementById("iconServices").innerHTML = html;
-	setTimeout(reloadIconList, 15000);
+        var html=Handlebars.templates["iconlist.hbs"](response.data);
+        document.getElementById("iconServices").innerHTML = html;
+        setTimeout(reloadIconList, 15000);
 }).catch (function(error) {
-	setTimeout(reloadIconList, 60000);
+        setTimeout(reloadIconList, 60000);
 });
 }
+
+
+function reloadBookmarks() {
+var url = "{{API_BASE}}/bookmarks";
+axios.get(url)
+.then(function(response) {
+	var html=Handlebars.templates["bookmarks.hbs"](response.data);
+	document.getElementById("bookmarks").innerHTML = html;
+	setTimeout(reloadBookmarks, 60000);
+}).catch (function(error) {
+	setTimeout(reloadBookmarks, 300000);
+});
+}
+
 reloadIconList();
+// reloadBookmarks();
 </script>
 	

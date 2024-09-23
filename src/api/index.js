@@ -14,6 +14,7 @@ fastify.register(require("@fastify/static"), {
 fastify.register(require("./routes/container.js"));
 fastify.register(require("./routes/repository.js"));
 fastify.register(require("./routes/icon.js"));
+fastify.register(require("./routes/bookmarks.js"));
 
 fastify.log.info("Performing pre-load");
 docker.preload().then(() => {
