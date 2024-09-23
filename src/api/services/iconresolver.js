@@ -323,27 +323,19 @@ function getWebsiteIcon(hostname) {
       resolve(fs.readFileSync(filename));
       return;
     }
-
-    var domain =
-      "www." +
-      parts
-        .slice(0)
-        .slice(-(parts.length === 4 ? 3 : 2))
-        .join(".");
-
-    var url = "https://icons.duckduckgo.com/ip3/" + domain + ".ico";
+	
+    var url = "https://icons.duckduckgo.com/ip3/" + hostname + ".ico";
     downloadUrl(url, filename)
       .then(() => {
         resolve(fs.readFileSync(filename));
       })
       .catch(() => {
-        if (fs.existsSync(filename)) {
-          fs.unlinkSync(filename);
-        }
-        domain = parts
-          .slice(0)
-          .slice(-(parts.length === 4 ? 3 : 2))
-          .join(".");
+        var domain =
+          "www." +
+          parts
+            .slice(0)
+            .slice(-(parts.length === 4 ? 3 : 2))
+            .join(".");
 
         var url = "https://icons.duckduckgo.com/ip3/" + domain + ".ico";
         downloadUrl(url, filename)
@@ -359,22 +351,40 @@ function getWebsiteIcon(hostname) {
               .slice(-(parts.length === 4 ? 3 : 2))
               .join(".");
 
-            var url =
-              "https://www.google.com/s2/favicons?domain=" + domain + "&sz=64";
+            var url = "https://icons.duckduckgo.com/ip3/" + domain + ".ico";
             downloadUrl(url, filename)
               .then(() => {
                 resolve(fs.readFileSync(filename));
               })
-              .catch((err) => {
+              .catch(() => {
                 if (fs.existsSync(filename)) {
                   fs.unlinkSync(filename);
                 }
-                reject(err);
+                domain = parts
+                  .slice(0)
+                  .slice(-(parts.length === 4 ? 3 : 2))
+                  .join(".");
+
+                var url =
+                  "https://www.google.com/s2/favicons?domain=" +
+                  domain +
+                  "&sz=64";
+                downloadUrl(url, filename)
+                  .then(() => {
+                    resolve(fs.readFileSync(filename));
+                  })
+                  .catch((err) => {
+                    if (fs.existsSync(filename)) {
+                      fs.unlinkSync(filename);
+                    }
+                    reject(err);
+                  });
               });
           });
       });
   });
 }
+
 module.exports = {
   determineIconUrl,
   getMimeType,
