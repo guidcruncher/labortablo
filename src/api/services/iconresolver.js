@@ -16,6 +16,22 @@ function getIconCacheFolder() {
   return process.env.ICON_CACHE;
 }
 
+function checkUrlExists(url) {
+  return new Promise((resolve, reject) => {
+    https
+      .get(url, function (response) {
+        if (response.statusCode != 200) {
+          reject(response.statusCode);
+          return;
+        }
+        resolve(url);
+      })
+      .on("error", function (err) {
+        reject(err);
+      });
+  });
+}
+
 function downloadUrl(url, filename) {
   return new Promise((resolve, reject) => {
     var file = fs.createWriteStream(filename);
@@ -318,18 +334,34 @@ function getWebsiteIcon(hostname) {
     var parts = hostname.split(".");
     var cacheFolder = getIconCacheFolder();
     var filename = path.join(cacheFolder, "bookmarks", hostname) + ".ico";
+    var dir = path.join(cacheFolder, "bookmarks");
+
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
+    }
 
     if (fs.existsSync(filename)) {
       resolve(fs.readFileSync(filename));
       return;
     }
 
-    var url = "https://icons.duckduckgo.com/ip3/" + hostname + ".ico";
-    downloadUrl(url, filename)
-      .then(() => {
-        resolve(fs.readFileSync(filename));
-      })
-      .catch(() => {
+    var promises = [];
+
+    promises.push(
+      new Promise((resolve, reject) => {
+        var url = "https://icons.duckduckgo.com/ip3/" + hostname + ".ico";
+        checkUrlExists(url)
+          .then((uri) => {
+            resolve(uri);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      }),
+    );
+
+    promises.push(
+      new Promise((resolve, reject) => {
         var domain =
           "www." +
           parts
@@ -338,7 +370,58 @@ function getWebsiteIcon(hostname) {
             .join(".");
 
         var url = "https://icons.duckduckgo.com/ip3/" + domain + ".ico";
-        downloadUrl(url, filename)
+        checkUrlExists(url)
+          .then((uri) => {
+            resolve(uri);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      }),
+    );
+
+    promises.push(
+      new Promise((resolve, reject) => {
+        var domain = parts
+          .slice(0)
+          .slice(-(parts.length === 4 ? 3 : 2))
+          .join(".");
+
+        var url = "https://icons.duckduckgo.com/ip3/" + domain + ".ico";
+        checkUrlExists(url)
+          .then((uri) => {
+            resolve(uri);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      }),
+    );
+
+    promises.push(
+      new Promise((resolve, reject) => {
+        var domain = parts
+          .slice(0)
+          .slice(-(parts.length === 4 ? 3 : 2))
+          .join(".");
+
+        var url =
+          "https://www.google.com/s2/favicons?domain=" + domain + "&sz=64";
+        checkUrlExists(url)
+          .then((uri) => {
+            resolve(uri);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      }),
+    );
+
+    Promise.any(promises)
+      .then((uri) => {
+        var filename =
+          path.join(getIconCacheFolder(), "bookmarks", hostname) + ".ico";
+        downloadUrl(uri, filename)
           .then(() => {
             resolve(fs.readFileSync(filename));
           })
@@ -346,41 +429,14 @@ function getWebsiteIcon(hostname) {
             if (fs.existsSync(filename)) {
               fs.unlinkSync(filename);
             }
-            domain = parts
-              .slice(0)
-              .slice(-(parts.length === 4 ? 3 : 2))
-              .join(".");
-
-            var url = "https://icons.duckduckgo.com/ip3/" + domain + ".ico";
-            downloadUrl(url, filename)
-              .then(() => {
-                resolve(fs.readFileSync(filename));
-              })
-              .catch(() => {
-                if (fs.existsSync(filename)) {
-                  fs.unlinkSync(filename);
-                }
-                domain = parts
-                  .slice(0)
-                  .slice(-(parts.length === 4 ? 3 : 2))
-                  .join(".");
-
-                var url =
-                  "https://www.google.com/s2/favicons?domain=" +
-                  domain +
-                  "&sz=64";
-                downloadUrl(url, filename)
-                  .then(() => {
-                    resolve(fs.readFileSync(filename));
-                  })
-                  .catch((err) => {
-                    if (fs.existsSync(filename)) {
-                      fs.unlinkSync(filename);
-                    }
-                    reject(err);
-                  });
-              });
+            reject();
           });
+      })
+      .catch((err) => {
+        if (fs.existsSync(filename)) {
+          fs.unlinkSync(filename);
+        }
+        reject(err);
       });
   });
 }
