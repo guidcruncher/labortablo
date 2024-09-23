@@ -6,15 +6,15 @@ module.exports = function (fastify, opts, done) {
     reply.send(bookmarks.loadBookmarks());
   });
 
-  fastify.get("/bookmark/icon/{hostname}", function (req, reply) {
+  fastify.get("/bookmark/icon", function (req, reply) {
     iconResolver
-      .getWebsiteIcon(req.params.hostname)
+      .getWebsiteIcon(req.query.host)
       .then((content) =>
         reply
           .header("content-type", "image/x-icon")
           .header(
             "content-disposition",
-            "inline; filename=" + req.params.hostname + ".ico",
+            "inline; filename=" + req.query.host + ".ico",
           )
           .send(content),
       )

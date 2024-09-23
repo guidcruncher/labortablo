@@ -27,9 +27,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-const oidcEnabled = process.env.OIDC_ENABLED || false;
+const oidcEnabled = process.env.OIDC_ENABLED || "false";
 
-if (oidcEnabled) {
+if (oidcEnabled == "true") {
+  console.log("Initialising OIDC");
+
   var authConfig = {
     authorizationParams: {
       response_type: "code",

@@ -19,8 +19,19 @@ function getIconCacheFolder() {
 function downloadUrl(url, filename) {
   return new Promise((resolve, reject) => {
     var file = fs.createWriteStream(filename);
+
+    console.log("Downloading => " + url + " => " + filename);
+
     https
       .get(url, function (response) {
+        if (response.statusCode != 200) {
+          if (fs.existsSync(filename)) {
+            fs.unlinkSync(filename);
+          }
+          reject("Http errorcode " + response.statusCode);
+          return;
+        }
+
         response.pipe(file);
         file.on("finish", function () {
           file.close();
@@ -29,7 +40,9 @@ function downloadUrl(url, filename) {
       })
       .on("error", function (err) {
         // Handle errors
-        fs.unlink(filename);
+        if (fs.existsSync(filename)) {
+          fs.unlinkSync(filename);
+        }
         reject(err);
       });
   });
@@ -46,12 +59,12 @@ function downloadFile(url, name) {
       return;
     }
 
-    console.log("Downloading => " + url);
-
     downloadUrl(url, filename)
       .then(() => resolve())
       .catch((err) => {
-        fs.unlink(filename);
+        if (fs.existsSync(filename)) {
+          fs.unlinkSync(filename);
+        }
         reject(err);
       });
   });
@@ -324,7 +337,9 @@ function getWebsiteIcon(hostname) {
         resolve(fs.readFileSync(filename));
       })
       .catch(() => {
-        fs.unlink(filename);
+        if (fs.existsSync(filename)) {
+          fs.unlinkSync(filename);
+        }
         domain = parts
           .slice(0)
           .slice(-(parts.length === 4 ? 3 : 2))
@@ -335,9 +350,27 @@ function getWebsiteIcon(hostname) {
           .then(() => {
             resolve(fs.readFileSync(filename));
           })
-          .catch((err) => {
-            fs.unlink(filename);
-            reject(err);
+          .catch(() => {
+            if (fs.existsSync(filename)) {
+              fs.unlinkSync(filename);
+            }
+            domain = parts
+              .slice(0)
+              .slice(-(parts.length === 4 ? 3 : 2))
+              .join(".");
+
+            var url =
+              "https://www.google.com/s2/favicons?domain=" + domain + "&sz=64";
+            downloadUrl(url, filename)
+              .then(() => {
+                resolve(fs.readFileSync(filename));
+              })
+              .catch((err) => {
+                if (fs.existsSync(filename)) {
+                  fs.unlinkSync(filename);
+                }
+                reject(err);
+              });
           });
       });
   });

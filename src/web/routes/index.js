@@ -42,7 +42,8 @@ router.get("/", function (req, res) {
       res.render("index", data);
     })
     .catch((err) => {
-      res.status(500).send(err);
+      console.log(err);
+      res.status(500).send("errorl-");
     });
 });
 
