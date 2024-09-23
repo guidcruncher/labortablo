@@ -323,7 +323,7 @@ function getWebsiteIcon(hostname) {
       resolve(fs.readFileSync(filename));
       return;
     }
-	
+
     var url = "https://icons.duckduckgo.com/ip3/" + hostname + ".ico";
     downloadUrl(url, filename)
       .then(() => {
