@@ -9,10 +9,14 @@
   <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/@materialstyle/materialstyle@3.1.1/dist/css/materialstyle.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <link,rel="stylesheet" href="/stylesheets/style.css" > 
+ 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheets/style.css" >
   <title>{{appTitle}} - {{title}}</title>
 </head>
-<body>
+<body class="roboto-flex-main">
 <nav class="navbar navbar-expand-sm bg-primary navbar-dark fixed-top">
   <div class="container-fluid">
       <a class="navbar-brand d-flex align-items-center" href="javascript:">
@@ -45,7 +49,11 @@
 </div>
 <div style="margin-top: 60px;" ></div>
 <footer class="bg-dark text-white p-3 fixed-bottom">
-  Footer
+<div class="ticker-wrap">
+ <div class="ticker">
+   <div class="ticker__item">Footer</div>
+ </div>
+</div>
 </footer>
 
 <!-- Popper JS -->
