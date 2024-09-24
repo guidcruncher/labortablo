@@ -106,7 +106,7 @@ function checkIconUrl(url, format, name) {
   });
 }
 
-function determineIconUrl(data) {
+function determineIconUrl(data, preload) {
   var iconCacheFolder = getIconCacheFolder();
 
   return new Promise((resolve) => {
@@ -130,27 +130,31 @@ function determineIconUrl(data) {
       return;
     }
 
-    urltemplates.forEach(function (template) {
-      requests.push(checkIconUrl(template.url, template.serves, imagename));
-    });
-
-    Promise.any(requests)
-      .then((validUrl) => {
-        downloadFile(validUrl.url, imagename + validUrl.format)
-          .then(() => {
-            data.icon =
-              process.env.API_BASE + "/icon/" + imagename + validUrl.format;
-            resolve(data);
-          })
-          .catch(() => {
-            data.icon = "/icons/" + data.icon;
-            resolve(data);
-          });
-      })
-      .catch(() => {
-        data.icon = "/icons/" + data.icon;
-        resolve(data);
+    if (preload) {
+      urltemplates.forEach(function (template) {
+        requests.push(checkIconUrl(template.url, template.serves, imagename));
       });
+
+      Promise.any(requests)
+        .then((validUrl) => {
+          downloadFile(validUrl.url, imagename + validUrl.format)
+            .then(() => {
+              data.icon =
+                process.env.API_BASE + "/icon/" + imagename + validUrl.format;
+              resolve(data);
+            })
+            .catch(() => {
+              data.icon = "/icons/" + data.icon;
+              resolve(data);
+            });
+        })
+        .catch(() => {
+          data.icon = "/icons/" + data.icon;
+          resolve(data);
+        });
+    } else {
+      resolve(data);
+    }
   });
 }
 

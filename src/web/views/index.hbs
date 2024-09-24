@@ -25,50 +25,30 @@
 </div>
 
 <script type="text/javascript">
-function setHtml(id, html) {
-var elemeemts = document.getElementsByClassName(id);
-
-	for (var i = 0; i < elements.length; i++) {
-		elememts[i].innnerHTML = html;
-	}
-}
-
 function reloadIconList() {
 var url = "{{API_BASE}}/containers";
-axios.get(url)
-.then(function(response) {
+$.getJSON(url,function(data, status, jqXHR) {
         var html=Handlebars.templates["iconlist.hbs"](response.data);
-	setHtml("services",html); 
+	$(".services").html(html);
         setTimeout(reloadIconList, 15000);
-}).catch (function(error) {
-        setTimeout(reloadIconList, 60000);
 });
 }
 
 
 function reloadBookmarks() {
 var url = "{{API_BASE}}/bookmarks";
-axios.get(url)
-.then(function(response) {
+$.getJSON(url,function(data, status, jqXHR) {
 	var html = Handlebars.templates["bookmarks.hbs"](response.data);
-	setHtml("bookmarks", html);
+	$(".bookmarks").html(html);
 	setTimeout(reloadBookmarks, 60000);
-}).catch (function(error) {
-	setTimeout(reloadBookmarks, 300000);
 });
 }
 
 
-function initialiseTabs() {
-// Initialize tabs
-var tabs = [].slice.call(document.querySelectorAll('.nav-tabs'))
-tabs.map(function (tab) {
-  new materialstyle.MaterialTab(tab)
-})
-}
-
-initialiseTabs();
-setTimeout(reloadIconList, 60000);
-setTimeout(reloadBookmarks, 120000);
+$(function() {
+  $('.nav-tabs').materialtab();
+  setTimeout(reloadIconList, 60000);
+  setTimeout(reloadBookmarks, 120000);
+});
 </script>
 	

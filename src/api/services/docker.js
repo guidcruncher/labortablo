@@ -81,7 +81,7 @@ function loadFromCache() {
 
 function preload() {
   return new Promise((resolve) => {
-    listContainers()
+    listContainers(true)
       .then((data) => {
         var promises = [];
 
@@ -149,7 +149,7 @@ function _getContainer(record) {
   });
 }
 
-function listContainers() {
+function listContainers(preload) {
   return new Promise((resolve, reject) => {
     var docker = dockerFactory.createDocker();
     docker.listContainers(function (err, containers) {
@@ -174,7 +174,7 @@ function listContainers() {
               };
 
               var promises = [];
-              promises.push(iconresolver.determineIconUrl(record));
+              promises.push(iconresolver.determineIconUrl(record, preload));
               promises.push(_getContainer(record));
 
               Promise.all(promises)
