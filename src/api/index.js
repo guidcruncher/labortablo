@@ -15,6 +15,7 @@ fastify.register(require("./routes/container.js"));
 fastify.register(require("./routes/repository.js"));
 fastify.register(require("./routes/icon.js"));
 fastify.register(require("./routes/bookmarks.js"));
+fastify.register(require("./routes/rssproxy.js"));
 
 // Run the server!
 const listenPort = process.env.API_PORT || 9080;
