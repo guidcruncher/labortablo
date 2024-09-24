@@ -30,7 +30,7 @@ function getFeed(url) {
   return new Promise((resolve, reject) => {
     var parser = new Parser();
     parser
-      .parseUrl(url)
+      .parseURL(url)
       .then((feed) => {
         resolve(feed);
       })
