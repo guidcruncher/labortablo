@@ -283,4 +283,47 @@ templates['icontabs.hbs'] = template({"1":function(container,depth0,helpers,part
 
   return ((stack1 = lookupProperty(helpers,"if").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"isBootstrap") : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0, blockParams, depths),"inverse":container.program(5, data, 0, blockParams, depths),"data":data,"loc":{"start":{"line":1,"column":0},"end":{"line":30,"column":7}}})) != null ? stack1 : "");
 },"usePartial":true,"useData":true,"useDepths":true});
+templates['ticker.hbs'] = template({"1":function(container,depth0,helpers,partials,data) {
+    var stack1, alias1=container.lambda, alias2=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
+        if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
+          return parent[propertyName];
+        }
+        return undefined
+    };
+
+  return "   <div class=\"ticker__item\">\n<a href=\""
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"image") : depth0)) != null ? lookupProperty(stack1,"link") : stack1), depth0))
+    + "\" target=\"_blank\"><img src=\""
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"image") : depth0)) != null ? lookupProperty(stack1,"url") : stack1), depth0))
+    + "\" style=\"max-height:30px\" /></a>\n</div>\n"
+    + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"items") : depth0),{"name":"each","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":7,"column":2},"end":{"line":11,"column":11}}})) != null ? stack1 : "");
+},"2":function(container,depth0,helpers,partials,data) {
+    var alias1=container.lambda, alias2=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
+        if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
+          return parent[propertyName];
+        }
+        return undefined
+    };
+
+  return "<div class=\"ticker__item\">\n<a class=\"text-white\" style=\"text-decoration: none;\" href=\""
+    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"link") : depth0), depth0))
+    + "\" target=\"_blank\">"
+    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"title") : depth0), depth0))
+    + "</a>\n</div>\n";
+},"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
+    var stack1, alias1=container.lambda, alias2=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
+        if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
+          return parent[propertyName];
+        }
+        return undefined
+    };
+
+  return " <div class=\"ticker-wrap\">\n <div class=\"ticker\" id=\"ticker\">\n"
+    + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"feeds") : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":3,"column":1},"end":{"line":12,"column":10}}})) != null ? stack1 : "")
+    + " </div>\n</div>\n\n<script type=\"text/javascript\">\n$( document ).ready(function() {\n$(\".ticker\").css(\"-webkit-animation-duration\", \""
+    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"tickerDelay") : depth0), depth0))
+    + "s\")\n$(\".ticker\").css(\"animation-duration\", \""
+    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"tickerDelay") : depth0), depth0))
+    + "s\")\n});\n</script>\n";
+},"useData":true});
 })();

@@ -29,3 +29,11 @@ Handlebars.registerHelper("hostonly", function (uri) {
   var parts = new URL(uri);
   return parts.hostname;
 });
+
+Handlebars.registerHelper("urlencode", function (v) {
+  return encodeURIComponent(v);
+});
+
+Handlebars.registerHelper("debug", function (v) {
+  return JSON.stringify(v, null, 2);
+});

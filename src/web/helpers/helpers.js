@@ -26,4 +26,10 @@ module.exports = {
     var parts = new URL(uri);
     return parts.hostname;
   },
+  urlencode: function (v) {
+    return encodeURIComponent(v);
+  },
+  debug: function (v) {
+    return JSON.stringify(v, null, 2);
+  },
 };

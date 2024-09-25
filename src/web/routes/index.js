@@ -6,8 +6,27 @@ router.get("/", function (req, res) {
   var promises = [];
   var data = {
     title: "Home",
-    API_BASE: process.env.API_BASE,
+    ticker: [],
+    feeds: [],
+    tickerDelay: 0,
+    feedCount: 0,
   };
+
+  promises.push(
+    new Promise((resolve, reject) => {
+      var url = process.env.API_INTERNAL_URL + "/rss/feeds";
+      var client = new Client();
+      var req = client.get(url, function (result) {
+        data.feeds = result.feeds;
+        data.ticker = result.urls;
+        data.feedCount = result.itemCount;
+        resolve(result);
+      });
+      req.on("error", function (err) {
+        reject(err);
+      });
+    }),
+  );
 
   promises.push(
     new Promise((resolve, reject) => {
@@ -39,11 +58,11 @@ router.get("/", function (req, res) {
 
   Promise.all(promises)
     .then(() => {
+      data.tickerDelay = data.feedCount * 5;
       res.render("index", data);
     })
     .catch((err) => {
-      console.log(err);
-      res.status(500).send("errorl-");
+      res.status(500).send(err);
     });
 });
 

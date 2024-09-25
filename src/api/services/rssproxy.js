@@ -1,6 +1,18 @@
 const https = require("https");
 const convert = require("xml-js");
 const Parser = require("rss-parser");
+const fs = require("fs");
+const path = require("path");
+
+function loadFeeds() {
+  var filename = path.join(process.env.CONFIG_DIR, "feeds.json");
+
+  if (fs.existsSync(filename)) {
+    return JSON.parse(fs.readFileSync(filename));
+  }
+
+  return {};
+}
 
 function getFeedAsJson(url) {
   return new Promise((resolve, reject) => {
@@ -43,4 +55,5 @@ function getFeed(url) {
 module.exports = {
   getFeedAsJson,
   getFeed,
+  loadFeeds,
 };

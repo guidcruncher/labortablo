@@ -9,6 +9,7 @@ const { auth } = require("express-openid-connect");
 
 const app = express();
 app.locals.appTitle = "Labortablo";
+app.locals.API_BASE = process.env.API_BASE;
 
 const hbs = handlebars.create({
   extname: ".hbs",

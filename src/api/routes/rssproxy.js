@@ -25,5 +25,31 @@ module.exports = function (fastify, opts, done) {
       });
   });
 
+  fastify.get("/rss/feeds", function (req, reply) {
+    var list = rssproxy.loadFeeds();
+    var promises = [];
+    var result = { urls: list, feeds: [], itemCount: 0 };
+    for (var i = 0; i < list.length; i++) {
+      promises.push(
+        new Promise((resolve, reject) => {
+          rssproxy
+            .getFeed(list[i])
+            .then(function (feed) {
+              result.feeds.push(feed);
+              result.itemCount += feed.items.length + 1;
+              resolve(feed);
+            })
+            .catch((status, err) => {
+              reject(err);
+            });
+        }),
+      );
+    }
+
+    Promise.all(promises)
+      .then(() => reply.send(result))
+      .catch((err) => reply.code(500).send(err));
+  });
+
   done();
 };
