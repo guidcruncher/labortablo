@@ -172,7 +172,16 @@ function listContainers(preload) {
                 icon: container.Labels["homepage.icon"],
 		state: container.State,
                 description: container.Labels["homepage.description"],
-              };
+		uptime: container.Status,
+		health: "",
+		}
+
+  	      var matches = container.Status.split("(");
+		if (matches.length > 1) {
+			if (matches[0].trim() != "Exited") {
+				record.health = matches[1].trim().replace(")","");
+			}
+		}
 
               var promises = [];
               promises.push(iconresolver.determineIconUrl(record, true));

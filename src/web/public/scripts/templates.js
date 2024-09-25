@@ -175,7 +175,7 @@ templates['iconlist.hbs'] = template({"1":function(container,depth0,helpers,part
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"href") : depth0), depth0))
     + "\" target=\"_blank\" class=\"list-group-item d-flex align-items-center gap-3 list-group-item-action\">\n    <img src=\""
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"icon") : depth0), depth0))
-    + "\" style=\"max-width:32px;max-height:32px;\" />\n    <span>\n      "
+    + "\" style=\"max-width:32px;max-height:32px\" />\n    <span>\n      "
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"name") : depth0), depth0))
     + "\n      <div style=\"font-size: 12px;white-space:nowrap;overflow:hidden; !important;width:280px !important;\" class=\"d-block text-muted\">"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"description") : depth0), depth0))
