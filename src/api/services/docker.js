@@ -152,7 +152,7 @@ function _getContainer(record) {
 function listContainers(preload) {
   return new Promise((resolve, reject) => {
     var docker = dockerFactory.createDocker();
-    docker.listContainers(function (err, containers) {
+    docker.listContainers({all: true}, function (err, containers) {
       if (err) {
         reject(err);
         return;
@@ -170,11 +170,12 @@ function listContainers(preload) {
                 name: container.Labels["homepage.name"],
                 href: container.Labels["homepage.href"],
                 icon: container.Labels["homepage.icon"],
+		state: container.State,
                 description: container.Labels["homepage.description"],
               };
 
               var promises = [];
-              promises.push(iconresolver.determineIconUrl(record, preload));
+              promises.push(iconresolver.determineIconUrl(record, true));
               promises.push(_getContainer(record));
 
               Promise.all(promises)

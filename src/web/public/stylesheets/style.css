@@ -81,3 +81,11 @@
   display: inline-block;
   padding: 0 2rem;
 }
+
+.state {font-size: 0.7rem;border:solid 1px;padding:5px; border-radius:5px;}
+.state.running { color: #77fc00 !important; }
+.state.created { color: #ffff00 !important; }
+.state.restarting { color: #ff8c00 !important;}
+.state.paused { color: #77fc00 !important}
+.state.exited { color: #778899 !important;}
+state.dead { color: #808080 !important;}

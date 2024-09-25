@@ -7,7 +7,8 @@
     <span>
       {{this.name}}
       <div style="font-size: 12px;white-space:nowrap;overflow:hidden; !important;width:280px !important;" class="d-block text-muted">{{this.description}}</div>
-    </span>
+<span class="state {{this.state}}">{{this.state}}</span>
+</span>
 </a>
 {{/eachwhen}}
 {{#if @last}}{{else}} <div class="list-group-item list-divider"></div>{{/if}}

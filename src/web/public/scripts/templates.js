@@ -160,8 +160,8 @@ templates['iconlist.hbs'] = template({"1":function(container,depth0,helpers,part
   return "<div class=\"list-group-item list-group-item-primary\">"
     + container.escapeExpression(container.lambda(depth0, depth0))
     + "</div>\n"
-    + ((stack1 = (lookupProperty(helpers,"eachwhen")||(depth0 && lookupProperty(depth0,"eachwhen"))||container.hooks.helperMissing).call(alias1,(depths[1] != null ? lookupProperty(depths[1],"items") : depths[1]),"group",depth0,{"name":"eachwhen","hash":{},"fn":container.program(2, data, 0, blockParams, depths),"inverse":container.noop,"data":data,"loc":{"start":{"line":4,"column":0},"end":{"line":12,"column":13}}})) != null ? stack1 : "")
-    + ((stack1 = lookupProperty(helpers,"if").call(alias1,(data && lookupProperty(data,"last")),{"name":"if","hash":{},"fn":container.program(4, data, 0, blockParams, depths),"inverse":container.program(6, data, 0, blockParams, depths),"data":data,"loc":{"start":{"line":13,"column":0},"end":{"line":13,"column":77}}})) != null ? stack1 : "")
+    + ((stack1 = (lookupProperty(helpers,"eachwhen")||(depth0 && lookupProperty(depth0,"eachwhen"))||container.hooks.helperMissing).call(alias1,(depths[1] != null ? lookupProperty(depths[1],"items") : depths[1]),"group",depth0,{"name":"eachwhen","hash":{},"fn":container.program(2, data, 0, blockParams, depths),"inverse":container.noop,"data":data,"loc":{"start":{"line":4,"column":0},"end":{"line":13,"column":13}}})) != null ? stack1 : "")
+    + ((stack1 = lookupProperty(helpers,"if").call(alias1,(data && lookupProperty(data,"last")),{"name":"if","hash":{},"fn":container.program(4, data, 0, blockParams, depths),"inverse":container.program(6, data, 0, blockParams, depths),"data":data,"loc":{"start":{"line":14,"column":0},"end":{"line":14,"column":77}}})) != null ? stack1 : "")
     + "\n";
 },"2":function(container,depth0,helpers,partials,data) {
     var alias1=container.lambda, alias2=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
@@ -179,7 +179,11 @@ templates['iconlist.hbs'] = template({"1":function(container,depth0,helpers,part
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"name") : depth0), depth0))
     + "\n      <div style=\"font-size: 12px;white-space:nowrap;overflow:hidden; !important;width:280px !important;\" class=\"d-block text-muted\">"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"description") : depth0), depth0))
-    + "</div>\n    </span>\n</a>\n";
+    + "</div>\n<span class=\"state "
+    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"state") : depth0), depth0))
+    + "\">"
+    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"state") : depth0), depth0))
+    + "</span>\n</span>\n</a>\n";
 },"4":function(container,depth0,helpers,partials,data) {
     return "";
 },"6":function(container,depth0,helpers,partials,data) {
@@ -193,7 +197,7 @@ templates['iconlist.hbs'] = template({"1":function(container,depth0,helpers,part
     };
 
   return "<div class=\"list-group\">\n"
-    + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"groups") : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0, blockParams, depths),"inverse":container.noop,"data":data,"loc":{"start":{"line":2,"column":1},"end":{"line":14,"column":9}}})) != null ? stack1 : "")
+    + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"groups") : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0, blockParams, depths),"inverse":container.noop,"data":data,"loc":{"start":{"line":2,"column":1},"end":{"line":15,"column":9}}})) != null ? stack1 : "")
     + "\n</div>	\n";
 },"useData":true,"useDepths":true});
 templates['icontabs.hbs'] = template({"1":function(container,depth0,helpers,partials,data,blockParams,depths) {
