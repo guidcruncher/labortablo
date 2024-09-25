@@ -8,7 +8,8 @@ module.exports = function (fastify, opts, done) {
     var color = req.query.color ? req.query.color : "0C0310";
 
     if (!fs.existsSync(fulliconName)) {
-      reply.code(404).send();
+      fulliconName = path.join(__dirname, "../public/images/unknown.png");
+      reply.code(404).send(fs.createReadStream(fulliconName));
       return;
     }
 
@@ -27,14 +28,14 @@ module.exports = function (fastify, opts, done) {
   fastify.get("/icon/:iconName", function (req, reply) {
     var iconCacheFolder = process.env.ICON_CACHE;
 
-    if (process.env.ICON_CACHE == "") {
-      iconCacheFolder = path.join(__dirname, "../public/icons");
-    }
-
-    var fulliconName = path.join(iconCacheFolder, "/" + req.params.iconName);
+    var fulliconName = path.join(
+      iconCacheFolder,
+      "/services/" + req.params.iconName,
+    );
 
     if (!fs.existsSync(fulliconName)) {
-      reply.code(404).send();
+      fulliconName = path.join(__dirname, "../public/images/unknown.png");
+      reply.code(404).send(fs.createReadStream(fulliconName));
       return;
     }
 
