@@ -6,7 +6,7 @@ const moment = require("moment");
 const repository = require("./repository.js");
 
 function saveToCache(data) {
-  var filename = path.join(process.env.ICON_CACHE, "services.json");
+  var filename = path.join(process.env.ICON_CACHE, "services", "services.json");
   fs.writeFileSync(
     filename,
     JSON.stringify({
@@ -17,7 +17,7 @@ function saveToCache(data) {
 }
 
 function invalidateCache() {
-  var filename = path.join(process.env.ICON_CACHE, "services.json");
+  var filename = path.join(process.env.ICON_CACHE, "services", "services.json");
 
   if (fs.existsSync(filename)) {
     fs.unlinkSync(filename);
@@ -69,7 +69,7 @@ function isCacheStale() {
 }
 
 function loadFromCache() {
-  var filename = path.join(process.env.ICON_CACHE, "services.json");
+  var filename = path.join(process.env.ICON_CACHE, "services", "services.json");
 
   if (!fs.existsSync(filename)) {
     return { groups: [], items: [] };
@@ -152,7 +152,7 @@ function _getContainer(record) {
 function listContainers(preload) {
   return new Promise((resolve, reject) => {
     var docker = dockerFactory.createDocker();
-    docker.listContainers({all: true}, function (err, containers) {
+    docker.listContainers({ all: true }, function (err, containers) {
       if (err) {
         reject(err);
         return;
@@ -170,21 +170,21 @@ function listContainers(preload) {
                 name: container.Labels["homepage.name"],
                 href: container.Labels["homepage.href"],
                 icon: container.Labels["homepage.icon"],
-		state: container.State,
+                state: container.State,
                 description: container.Labels["homepage.description"],
-		uptime: container.Status,
-		health: "",
-		}
+                uptime: container.Status,
+                health: "",
+              };
 
-  	      var matches = container.Status.split("(");
-		if (matches.length > 1) {
-			if (matches[0].trim() != "Exited") {
-				record.health = matches[1].trim().replace(")","");
-			}
-		}
+              var matches = container.Status.split("(");
+              if (matches.length > 1) {
+                if (matches[0].trim() != "Exited") {
+                  record.health = matches[1].trim().replace(")", "");
+                }
+              }
 
               var promises = [];
-              promises.push(iconresolver.determineIconUrl(record, true));
+              promises.push(iconresolver.determineIconUrl(record, preload));
               promises.push(_getContainer(record));
 
               Promise.all(promises)

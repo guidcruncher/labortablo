@@ -30,7 +30,9 @@ RUN mkdir -p /config
 RUN mkdir -p /labortablo/api
 RUN mkdir -p /labortablo/web
 RUN mkdir -p /labortablo/web/public/icons
-RUN mkdir -p /cache
+RUN mkdir -p /cache/services
+RUN mkdir -p /cache/bookmarks
+RUN mkdir -p /cache/feeds
 
 WORKDIR /labortablo/
 

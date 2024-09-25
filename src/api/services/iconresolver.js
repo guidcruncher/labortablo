@@ -68,7 +68,7 @@ function downloadFile(url, name) {
   var iconCacheFolder = getIconCacheFolder();
 
   return new Promise((resolve, reject) => {
-    var filename = iconCacheFolder + "/" + name;
+    var filename = iconCacheFolder + "/services/" + name;
 
     if (fs.existsSync(filename)) {
       resolve();
@@ -112,7 +112,7 @@ function determineIconUrl(data, preload) {
   return new Promise((resolve) => {
     var imagename = data.icon.split(".")[0];
     var requests = [];
-    var filename = iconCacheFolder + "/" + imagename + ".png";
+    var filename = iconCacheFolder + "/services/" + imagename + ".png";
 
     if (fs.existsSync(filename)) {
       data.icon =
@@ -121,7 +121,7 @@ function determineIconUrl(data, preload) {
       return;
     }
 
-    filename = iconCacheFolder + "/" + imagename + ".svg";
+    filename = iconCacheFolder + "/services/" + imagename + ".svg";
 
     if (fs.existsSync(filename)) {
       data.icon =
