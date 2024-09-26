@@ -17,4 +17,4 @@ fi
 
 lighttpd -f /etc/lighttpd/lighttpd.conf
 
-npx pm2  --no-daemon start ./ecosystem.config.js
+npx pm2 -s --no-daemon start ./ecosystem.config.js
