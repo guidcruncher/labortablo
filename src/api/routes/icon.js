@@ -48,7 +48,7 @@ module.exports = function (fastify, opts, done) {
   });
 
   fastify.get("/icon/:iconName", function (req, reply) {
-    var iconCacheFolder = process.env.ICON_CACHE;
+    var iconCacheFolder = process.env.PERSISTENCE_STORE;
 
     var fulliconName = path.join(
       iconCacheFolder,

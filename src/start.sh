@@ -11,8 +11,8 @@ if [ ! -f  "$CONFIG_DIR/bookmarks.json" ]; then
 fi
 
 
-if [ ! -z "$ICON_CACHE" ]; then
-	mkdir -p "$ICON_CACHE"
+if [ ! -z "$PERSISTENCE_STORE" ]; then
+	mkdir -p "$PERSISTENCE_STORE"
 fi
 
 lighttpd -f /etc/lighttpd/lighttpd.conf

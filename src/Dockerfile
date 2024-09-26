@@ -4,7 +4,7 @@ RUN apk add --no-cache nano lighttpd  nodejs npm curl
 
 RUN npm i --global npx handlebars pm2
 
-ENV ICON_CACHE="/cache"
+ENV PERSISTENCE_STORE="/cache"
 ENV API_BASE="/api"
 ENV API_INTERNAL_URL="http://127.0.0.201:9080"
 ENV LISTEN_ADDRESS=""

@@ -13,7 +13,7 @@ const urltemplates = [
 ];
 
 function getIconCacheFolder() {
-  return process.env.ICON_CACHE;
+  return process.env.PERSISTENCE_STORE;
 }
 
 function checkUrlExists(url) {

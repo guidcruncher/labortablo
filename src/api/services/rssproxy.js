@@ -16,7 +16,7 @@ function loadFeeds() {
 }
 
 function saveToCache(feeds) {
-  var filename = path.join(process.env.ICON_CACHE, "feeds", "feeds.json");
+  var filename = path.join(process.env.PERSISTENCE_STORE, "feeds", "feeds.json");
   fs.writeFileSync(
     filename,
     JSON.stringify({
@@ -27,14 +27,14 @@ function saveToCache(feeds) {
 }
 
 function invalidateCache() {
-  var filename = path.join(process.env.ICON_CACHE, "feeds", "feeds.json");
+  var filename = path.join(process.env.PERSISTENCE_STORE, "feeds", "feeds.json");
   if (fs.existsSync(filename)) {
     fs.unlinkSync(filename);
   }
 }
 
 function loadFromCache() {
-  var filename = path.join(process.env.ICON_CACHE, "feeds", "feeds.json");
+  var filename = path.join(process.env.PERSISTENCE_STORE, "feeds", "feeds.json");
   if (!fs.existsSync(filename)) {
     return [];
   }
@@ -43,7 +43,7 @@ function loadFromCache() {
 }
 
 function isCacheStale() {
-  var filename = path.join(process.env.ICON_CACHE, "feeds", "feeds.json");
+  var filename = path.join(process.env.PERSISTENCE_STORE, "feeds", "feeds.json");
 
   if (!fs.existsSync(filename)) {
     return true;
