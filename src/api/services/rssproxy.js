@@ -20,7 +20,7 @@ function saveToCache(feeds) {
   fs.writeFileSync(
     filename,
     JSON.stringify({
-      created: moment().format("yyyy-MM-DD hh:mm:ss ZZ"),
+      created: moment().format("yyyy-MM-DD hh:mm:ss"),
       feeds: feeds,
     }),
   );
@@ -50,7 +50,8 @@ function isCacheStale() {
   }
 
   var data = JSON.parse(fs.readFileSync(filename));
-  var duration = moment.duration(moment().diff(moment(data.created))).asHours();
+  var duration = moment(new Date(data.created)).diff(moment(), "hours");
+
   if (duration > 1) {
     invalidateCache();
     return true;

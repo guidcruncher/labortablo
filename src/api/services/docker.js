@@ -10,7 +10,7 @@ function saveToCache(data) {
   fs.writeFileSync(
     filename,
     JSON.stringify({
-      created: moment().format("yyyy-MM-DD hh:mm:ss ZZ"),
+      created: moment().format("yyyy-MM-DD hh:mm:ss"),
       services: data,
     }),
   );
@@ -160,41 +160,44 @@ function listContainers(preload) {
 
       var requests = [];
 
-      containers.forEach(function (container) {
-        if (container.Labels["homepage.group"]) {
+      containers.forEach(function (c) {
+        if (c.Labels["homepage.group"]) {
           requests.push(
             new Promise((resolve) => {
-              var record = {
-                id: container.Id,
-                group: container.Labels["homepage.group"],
-                name: container.Labels["homepage.name"],
-                href: container.Labels["homepage.href"],
-                icon: container.Labels["homepage.icon"],
-                state: container.State,
-                description: container.Labels["homepage.description"],
-                uptime: container.Status,
-                health: "",
-              };
-
-              var matches = container.Status.split("(");
-              if (matches.length > 1) {
-                if (matches[0].trim() != "Exited") {
-                  record.health = matches[1].trim().replace(")", "");
+              var cntr = docker.getContainer(c.Id);
+              cntr.inspect(function (err, container) {
+                var record = {
+                  id: container.Id,
+                  group: container.Config.Labels["homepage.group"],
+                  name: container.Config.Labels["homepage.name"],
+                  href: container.Config.Labels["homepage.href"],
+                  icon: container.Config.Labels["homepage.icon"],
+                  state: container.State.Status,
+                  description: container.Config.Labels["homepage.description"],
+                  health: container.State.Health
+                    ? container.State.Health.Status
+                    : "",
+                };
+                if (record.health != "") {
+                  record.state = record.health;
                 }
-              }
+                var promises = [];
+                promises.push(iconresolver.determineIconUrl(record, preload));
+                promises.push(_getContainer(record));
 
-              var promises = [];
-              promises.push(iconresolver.determineIconUrl(record, preload));
-              promises.push(_getContainer(record));
-
-              Promise.all(promises)
-                .then((containers) => {
-                  var merged = Object.assign({}, containers[0], containers[1]);
-                  resolve(merged);
-                })
-                .catch((err) => {
-                  resolve(err);
-                });
+                Promise.all(promises)
+                  .then((containers) => {
+                    var merged = Object.assign(
+                      {},
+                      containers[0],
+                      containers[1],
+                    );
+                    resolve(merged);
+                  })
+                  .catch((err) => {
+                    resolve(err);
+                  });
+              });
             }),
           );
         }
