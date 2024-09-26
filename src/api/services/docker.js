@@ -10,7 +10,7 @@ function saveToCache(data) {
   fs.writeFileSync(
     filename,
     JSON.stringify({
-      created: moment().format("yyyy-mm-dd:hh:mm:ss"),
+      created: moment().format("yyyy-MM-DD hh:mm:ss ZZ"),
       services: data,
     }),
   );

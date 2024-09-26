@@ -20,7 +20,7 @@ function saveToCache(feeds) {
   fs.writeFileSync(
     filename,
     JSON.stringify({
-      created: moment().format("yyyy-mm-dd:hh:mm:ss"),
+      created: moment().format("yyyy-MM-DD hh:mm:ss ZZ"),
       feeds: feeds,
     }),
   );
@@ -51,7 +51,12 @@ function isCacheStale() {
 
   var data = JSON.parse(fs.readFileSync(filename));
   var duration = moment.duration(moment().diff(moment(data.created))).asHours();
-  return duration > 1;
+  if (duration > 1) {
+    invalidateCache();
+    return true;
+  }
+
+  return false;
 }
 
 function getFeedAsJson(url) {
@@ -92,9 +97,48 @@ function getFeed(url) {
   });
 }
 
+function getFeeds() {
+  return new Promise((resolve, reject) => {
+    if (isCacheStale()) {
+      var list = loadFeeds();
+      var promises = [];
+      var result = {
+        urls: list,
+        feeds: [],
+        itemCount: 0,
+      };
+      for (var i = 0; i < list.length; i++) {
+        promises.push(
+          new Promise((resolve, reject) => {
+            getFeed(list[i])
+              .then(function (feed) {
+                result.feeds.push(feed);
+                result.itemCount += feed.items.length + 1;
+                resolve(feed);
+              })
+              .catch((status, err) => {
+                reject(err);
+              });
+          }),
+        );
+      }
+
+      Promise.all(promises)
+        .then(() => {
+          saveToCache(result);
+          resolve(result);
+        })
+        .catch((err) => reject(err));
+    } else {
+      resolve(loadFromCache());
+    }
+  });
+}
+
 module.exports = {
   getFeedAsJson,
   getFeed,
+  getFeeds,
   loadFeeds,
   isCacheStale,
   saveToCache,

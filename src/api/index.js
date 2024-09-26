@@ -2,6 +2,9 @@
 const fastify = require("fastify")({ logger: true });
 const path = require("path");
 const docker = require("./services/docker.js");
+const crontasks = require("./crontasks/crontasks.js");
+
+crontasks.register();
 
 fastify.register(require("@fastify/cors"), {});
 
