@@ -26,6 +26,7 @@ module.exports = function (fastify, opts, done) {
   });
 
   fastify.get("/rss/feeds", function (req, reply) {
+   if (rssproxy.isCacheStale()) {
     var list = rssproxy.loadFeeds();
     var promises = [];
     var result = { urls: list, feeds: [], itemCount: 0 };
@@ -47,9 +48,13 @@ module.exports = function (fastify, opts, done) {
     }
 
     Promise.all(promises)
-      .then(() => reply.send(result))
+      .then(() => {rr
+eply.send(result);})
       .catch((err) => reply.code(500).send(err));
-  });
+  } else { 
+    reply.send(rssproxy.loadFromCache());
+  }
+ });
 
   done();
 };
