@@ -17,5 +17,5 @@ mkdir -p "$ICON_CACHE"
 # rm "$ICON_CACHE"/*
 
 npx handlebars ./web/views/partials/*.hbs -f ./web/public/scripts/templates.js
-npx pm2 --no-daemon start ./ecosystem.config.js
+npx pm2 -s --no-daemon start ./ecosystem.config.js
 
