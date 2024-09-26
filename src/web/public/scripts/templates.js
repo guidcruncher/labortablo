@@ -160,9 +160,9 @@ templates['iconlist.hbs'] = template({"1":function(container,depth0,helpers,part
   return "<div class=\"list-group-item list-group-item-primary\">"
     + container.escapeExpression(container.lambda(depth0, depth0))
     + "</div>\n"
-    + ((stack1 = (lookupProperty(helpers,"eachwhen")||(depth0 && lookupProperty(depth0,"eachwhen"))||container.hooks.helperMissing).call(alias1,(depths[1] != null ? lookupProperty(depths[1],"items") : depths[1]),"group",depth0,{"name":"eachwhen","hash":{},"fn":container.program(2, data, 0, blockParams, depths),"inverse":container.noop,"data":data,"loc":{"start":{"line":4,"column":0},"end":{"line":13,"column":13}}})) != null ? stack1 : "")
-    + ((stack1 = lookupProperty(helpers,"if").call(alias1,(data && lookupProperty(data,"last")),{"name":"if","hash":{},"fn":container.program(4, data, 0, blockParams, depths),"inverse":container.program(6, data, 0, blockParams, depths),"data":data,"loc":{"start":{"line":14,"column":0},"end":{"line":14,"column":77}}})) != null ? stack1 : "")
-    + "\n";
+    + ((stack1 = (lookupProperty(helpers,"eachwhen")||(depth0 && lookupProperty(depth0,"eachwhen"))||container.hooks.helperMissing).call(alias1,(depths[1] != null ? lookupProperty(depths[1],"items") : depths[1]),"group",depth0,{"name":"eachwhen","hash":{},"fn":container.program(2, data, 0, blockParams, depths),"inverse":container.noop,"data":data,"loc":{"start":{"line":4,"column":0},"end":{"line":19,"column":13}}})) != null ? stack1 : "")
+    + " "
+    + ((stack1 = lookupProperty(helpers,"if").call(alias1,(data && lookupProperty(data,"last")),{"name":"if","hash":{},"fn":container.program(4, data, 0, blockParams, depths),"inverse":container.program(6, data, 0, blockParams, depths),"data":data,"loc":{"start":{"line":19,"column":14},"end":{"line":20,"column":7}}})) != null ? stack1 : "");
 },"2":function(container,depth0,helpers,partials,data) {
     var alias1=container.lambda, alias2=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
@@ -171,23 +171,23 @@ templates['iconlist.hbs'] = template({"1":function(container,depth0,helpers,part
         return undefined
     };
 
-  return "  <a href=\""
+  return "<div class=\"list-group-item d-flex align-items-center gap-3 list-group-item-action\" onclick=\"window.open('"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"href") : depth0), depth0))
-    + "\" target=\"_blank\" class=\"list-group-item d-flex align-items-center gap-3 list-group-item-action\">\n    <span style=\"width:36px;\"><img src=\""
+    + "','_blank');return false;\" >\n<div class=\"container\">\n<div class=\"row\">\n  <div class=\"col\" style=\"width:36px !important;max-width:36px !important;height:40px !important;padding: 0px;\"/>\n    <img src=\""
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"icon") : depth0), depth0))
-    + "\" style=\"max-width:32px;max-height:32px\" /></span>\n    <span>\n      "
+    + "\" style=\"align:middle;max-width:32px;height:32px;\" />\n  </div>\n  <div class=\"col\" style=\"max-width:250px !important; overflow:hidden;width:250px!important;\">\n    <div class=\"row\"><span style=\"color:white;\">"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"name") : depth0), depth0))
-    + "\n      <div style=\"font-size: 12px;white-space:nowrap;overflow:hidden; !important;width:280px !important;\" class=\"d-block text-muted\">"
+    + "</span></div>\n    <div class=\"row\"><div class=\"col\" style=\"font-size: 12px;white-space:nowrap;overflow:hidden; !important;\">"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"description") : depth0), depth0))
-    + "</div>\n<span class=\"state "
+    + "</div></div>\n  </div>\n  <div class=\"col col-md-auto\"> \n    <span class=\"state "
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"state") : depth0), depth0))
     + "\">"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"state") : depth0), depth0))
-    + "</span>\n</span>\n</a>\n";
+    + "</span>\n  </div>\n</div></div></div>\n";
 },"4":function(container,depth0,helpers,partials,data) {
     return "";
 },"6":function(container,depth0,helpers,partials,data) {
-    return " <div class=\"list-group-item list-divider\"></div>";
+    return " <div class=\"list-group-item list-divider\"></div>\n";
 },"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data,blockParams,depths) {
     var stack1, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
@@ -197,7 +197,7 @@ templates['iconlist.hbs'] = template({"1":function(container,depth0,helpers,part
     };
 
   return "<div class=\"list-group\">\n"
-    + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"groups") : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0, blockParams, depths),"inverse":container.noop,"data":data,"loc":{"start":{"line":2,"column":1},"end":{"line":15,"column":9}}})) != null ? stack1 : "")
+    + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"groups") : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0, blockParams, depths),"inverse":container.noop,"data":data,"loc":{"start":{"line":2,"column":1},"end":{"line":21,"column":9}}})) != null ? stack1 : "")
     + "\n</div>	\n";
 },"useData":true,"useDepths":true});
 templates['icontabs.hbs'] = template({"1":function(container,depth0,helpers,partials,data,blockParams,depths) {
