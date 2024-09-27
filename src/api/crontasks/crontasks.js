@@ -1,7 +1,6 @@
 const cron = require("node-cron");
 const rssproxy = require("../services/rssproxy");
-const docker = require("./services/docker.js");
-4;
+const docker = require("../services/docker.js");
 
 function initialise() {
   console.log("Performing service preload...");

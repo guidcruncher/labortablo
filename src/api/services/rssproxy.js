@@ -12,7 +12,7 @@ function loadFeeds() {
     return JSON.parse(fs.readFileSync(filename));
   }
 
-  return {};
+  return [];
 }
 
 function saveToCache(feeds) {
@@ -66,9 +66,16 @@ function isCacheStale() {
   }
 
   var data = JSON.parse(fs.readFileSync(filename));
-  var duration = moment(new Date(data.created)).diff(moment(), "hours");
+  var created = new Date(data.created);
+  var now = new Date();
+  var duration = moment(now).diff(created, "minutes");
+  console.log(
+    "Cache created : " + moment(created).format("yyyy-MM-DD hh:mm:ss"),
+  );
+  console.log("Now           : " + moment(now).format("yyyy-MM-DD hh:mm:ss"));
+  console.log("Age (minutes) : " + duration);
 
-  if (duration > 1) {
+  if (duration > 60) {
     invalidateCache();
     return true;
   }
@@ -108,8 +115,10 @@ function getFeed(url) {
       .then((feed) => {
         resolve(feed);
       })
-      .catch(() => {
-        reject(500, "error");
+      .catch((err) => {
+        console.log("Error on feed: " + url);
+        console.log(err);
+        reject(500, err);
       });
   });
 }
@@ -140,8 +149,25 @@ function getFeeds() {
         );
       }
 
-      Promise.all(promises)
-        .then(() => {
+      Promise.allSettled(promises)
+        .then((results) => {
+          for (var i = 0; i < results.length; i++) {
+            if (results[i].status == "fulfilled") {
+              result.feeds.push(results[i].value);
+              result.itemCount += results[i].value.items.length + 1;
+            }
+          }
+
+          var sorted = result.feeds.sort((a, b) => {
+            if (a.title < b.title) {
+              return -1;
+            }
+            if (a.title > b.title) {
+              return 1;
+            }
+            return 0;
+          });
+          result.feeds = sorted;
           saveToCache(result);
           resolve(result);
         })
