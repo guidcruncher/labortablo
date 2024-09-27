@@ -45,7 +45,21 @@ module.exports = function (fastify, opts, done) {
       })
       .catch((err) => {
         console.log(err);
+        reply.code(500).send(err);
       });
   });
+
+  fastify.get("/container/:id/stats", function handler(request, reply) {
+    docker
+      .getContainerStats(request.params.id)
+      .then((data) => {
+        reply.send(data);
+      })
+      .catch((err) => {
+        console.log(err);
+        reply.code(500).send(err);
+      });
+  });
+
   done();
 };

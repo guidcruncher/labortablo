@@ -139,7 +139,37 @@ function getContainer(id) {
   });
 }
 
-function _getContainer(record) {
+function getContainerStats(id) {
+  return new Promise((resolve, reject) => {
+    var docker = dockerFactory.createDocker();
+    var container = docker.getContainer(id);
+    var cpuDelta = 0.0;
+    var systemDelta = 0.0;
+
+    container.stats({ stream: false }, function (err, data) {
+      if (err) {
+        reject(err);
+      } else {
+        data.cpuPercent = 0.0;
+        data.cpuCorePercent = 0.0;
+        cpuDelta =
+          data.cpu_stats.cpu_usage.total_usage -
+          data.precpu_stats.cpu_usage.total_usage;
+        systemDelta =
+          data.cpu_stats.system_cpu_usage - data.precpu_stats.system_cpu_usage;
+
+        if (systemDelta > 0 && cpuDelta > 0) {
+          data.cpuPercent = (cpuDelta / systemDelta) * 100;
+          data.cpuCorePercent =
+            (cpuDelta / systemDelta) * data.cpu_stats.online_cpus * 100;
+        }
+        resolve(data);
+      }
+    });
+  });
+}
+
+function __getContainer(record) {
   return new Promise((resolve) => {
     getContainer(record.id)
       .then((container) => {
@@ -196,7 +226,7 @@ function listContainers(preload) {
                 }
                 var promises = [];
                 promises.push(iconresolver.determineIconUrl(record, preload));
-                promises.push(_getContainer(record));
+                promises.push(__getContainer(record));
 
                 Promise.all(promises)
                   .then((containers) => {
@@ -240,4 +270,5 @@ module.exports = {
   loadFromCache,
   invalidateCache,
   saveToCache,
+  getContainerStats,
 };
