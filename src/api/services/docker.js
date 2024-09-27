@@ -6,7 +6,11 @@ const moment = require("moment");
 const repository = require("./repository.js");
 
 function saveToCache(data) {
-  var filename = path.join(process.env.PERSISTENCE_STORE, "services", "services.json");
+  var filename = path.join(
+    process.env.PERSISTENCE_STORE,
+    "services",
+    "services.json",
+  );
   fs.writeFileSync(
     filename,
     JSON.stringify({
@@ -17,7 +21,11 @@ function saveToCache(data) {
 }
 
 function invalidateCache() {
-  var filename = path.join(process.env.PERSISTENCE_STORE, "services", "services.json");
+  var filename = path.join(
+    process.env.PERSISTENCE_STORE,
+    "services",
+    "services.json",
+  );
 
   if (fs.existsSync(filename)) {
     fs.unlinkSync(filename);
@@ -69,7 +77,11 @@ function isCacheStale() {
 }
 
 function loadFromCache() {
-  var filename = path.join(process.env.PERSISTENCE_STORE, "services", "services.json");
+  var filename = path.join(
+    process.env.PERSISTENCE_STORE,
+    "services",
+    "services.json",
+  );
 
   if (!fs.existsSync(filename)) {
     return { groups: [], items: [] };
@@ -168,6 +180,7 @@ function listContainers(preload) {
               cntr.inspect(function (err, container) {
                 var record = {
                   id: container.Id,
+                  shortid: container.Id.substring(0, 12),
                   group: container.Config.Labels["homepage.group"],
                   name: container.Config.Labels["homepage.name"],
                   href: container.Config.Labels["homepage.href"],

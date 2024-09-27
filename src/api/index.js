@@ -1,7 +1,6 @@
 // Require the framework and instantiate it
 const fastify = require("fastify")({ logger: true });
 const path = require("path");
-const docker = require("./services/docker.js");
 const crontasks = require("./crontasks/crontasks.js");
 
 crontasks.register();
@@ -29,14 +28,5 @@ fastify.listen({ port: listenPort, host: listenAddress }, (err, address) => {
     process.exit(1);
   }
   fastify.log.info(`API Server listening on ${address}`);
-
-  fastify.log.info("Performing service preload...");
-  docker
-    .preload()
-    .then(() => {
-      fastify.log.info("Service preload finished.");
-    })
-    .catch(() => {
-      fastify.log.error("Something went wrong with the Service Preload");
-    });
+  crontasks.initialise();
 });

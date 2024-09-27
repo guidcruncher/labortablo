@@ -50,7 +50,7 @@ function getRepositorySettings(image) {
 function login(repository, username, password) {
   return new Promise((resolve, reject) => {
     if (username == null || username == undefined) {
-      console.log("No credentials supplied for repository "+repository.name);
+      console.log("No credentials supplied for repository " + repository.name);
       reject("No credentials");
       return;
     }
@@ -65,8 +65,8 @@ function login(repository, username, password) {
 
     client.post(url, args, function (data) {
       if (data.token) {
-	console.log("Logged in successfully to server"); 
-       resolve(data.token);
+        console.log("Logged in successfully to server");
+        resolve(data.token);
         return;
       }
 
@@ -122,7 +122,7 @@ function query(image) {
     } else {
       var userEnvPrefix =
         repository.name.replace(/\./g, "_").toUpperCase() + "_";
-	login(
+      login(
         repository,
         process.env[userEnvPrefix + "USER"],
         process.env[userEnvPrefix + "PASS"],
@@ -145,8 +145,12 @@ function summary(image) {
       reject("No repository");
       return;
     }
- var userEnvPrefix = repository.name.replace(/\./g, "_").toUpperCase() + "_";
-    login(repository, process.env[userEnvPrefix+"USER"], process.env[userEnvPrefix+"PASS"])
+    var userEnvPrefix = repository.name.replace(/\./g, "_").toUpperCase() + "_";
+    login(
+      repository,
+      process.env[userEnvPrefix + "USER"],
+      process.env[userEnvPrefix + "PASS"],
+    )
       .then((token) => {
         var client = new Client();
         var url =

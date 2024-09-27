@@ -16,7 +16,11 @@ function loadFeeds() {
 }
 
 function saveToCache(feeds) {
-  var filename = path.join(process.env.PERSISTENCE_STORE, "feeds", "feeds.json");
+  var filename = path.join(
+    process.env.PERSISTENCE_STORE,
+    "feeds",
+    "feeds.json",
+  );
   fs.writeFileSync(
     filename,
     JSON.stringify({
@@ -27,14 +31,22 @@ function saveToCache(feeds) {
 }
 
 function invalidateCache() {
-  var filename = path.join(process.env.PERSISTENCE_STORE, "feeds", "feeds.json");
+  var filename = path.join(
+    process.env.PERSISTENCE_STORE,
+    "feeds",
+    "feeds.json",
+  );
   if (fs.existsSync(filename)) {
     fs.unlinkSync(filename);
   }
 }
 
 function loadFromCache() {
-  var filename = path.join(process.env.PERSISTENCE_STORE, "feeds", "feeds.json");
+  var filename = path.join(
+    process.env.PERSISTENCE_STORE,
+    "feeds",
+    "feeds.json",
+  );
   if (!fs.existsSync(filename)) {
     return [];
   }
@@ -43,7 +55,11 @@ function loadFromCache() {
 }
 
 function isCacheStale() {
-  var filename = path.join(process.env.PERSISTENCE_STORE, "feeds", "feeds.json");
+  var filename = path.join(
+    process.env.PERSISTENCE_STORE,
+    "feeds",
+    "feeds.json",
+  );
 
   if (!fs.existsSync(filename)) {
     return true;
@@ -136,6 +152,28 @@ function getFeeds() {
   });
 }
 
+function checkFeedCache() {
+  return new Promise((resolve, reject) => {
+    console.log("Checking feed cache");
+
+    if (isCacheStale()) {
+      console.log("Updating feed cache");
+      getFeeds()
+        .then(() => {
+          console.log("Finished getting feeds.");
+          resolve(true);
+        })
+        .catch((err) => {
+          console.log("Error getting feeds.", err);
+          reject(err);
+        });
+    } else {
+      console.log("Cache still valid");
+      resolve(false);
+    }
+  });
+}
+
 module.exports = {
   getFeedAsJson,
   getFeed,
@@ -145,4 +183,5 @@ module.exports = {
   saveToCache,
   loadFromCache,
   invalidateCache,
+  checkFeedCache,
 };
