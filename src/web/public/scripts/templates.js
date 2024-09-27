@@ -160,9 +160,9 @@ templates['iconlist.hbs'] = template({"1":function(container,depth0,helpers,part
   return "<div class=\"list-group-item list-group-item-primary\">"
     + container.escapeExpression(container.lambda(depth0, depth0))
     + "</div>\n"
-    + ((stack1 = (lookupProperty(helpers,"eachwhen")||(depth0 && lookupProperty(depth0,"eachwhen"))||container.hooks.helperMissing).call(alias1,(depths[1] != null ? lookupProperty(depths[1],"items") : depths[1]),"group",depth0,{"name":"eachwhen","hash":{},"fn":container.program(2, data, 0, blockParams, depths),"inverse":container.noop,"data":data,"loc":{"start":{"line":4,"column":0},"end":{"line":19,"column":13}}})) != null ? stack1 : "")
+    + ((stack1 = (lookupProperty(helpers,"eachwhen")||(depth0 && lookupProperty(depth0,"eachwhen"))||container.hooks.helperMissing).call(alias1,(depths[1] != null ? lookupProperty(depths[1],"items") : depths[1]),"group",depth0,{"name":"eachwhen","hash":{},"fn":container.program(2, data, 0, blockParams, depths),"inverse":container.noop,"data":data,"loc":{"start":{"line":4,"column":0},"end":{"line":20,"column":13}}})) != null ? stack1 : "")
     + " "
-    + ((stack1 = lookupProperty(helpers,"if").call(alias1,(data && lookupProperty(data,"last")),{"name":"if","hash":{},"fn":container.program(4, data, 0, blockParams, depths),"inverse":container.program(6, data, 0, blockParams, depths),"data":data,"loc":{"start":{"line":19,"column":14},"end":{"line":20,"column":7}}})) != null ? stack1 : "");
+    + ((stack1 = lookupProperty(helpers,"if").call(alias1,(data && lookupProperty(data,"last")),{"name":"if","hash":{},"fn":container.program(4, data, 0, blockParams, depths),"inverse":container.program(6, data, 0, blockParams, depths),"data":data,"loc":{"start":{"line":20,"column":14},"end":{"line":21,"column":7}}})) != null ? stack1 : "");
 },"2":function(container,depth0,helpers,partials,data) {
     var alias1=container.lambda, alias2=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
@@ -179,7 +179,9 @@ templates['iconlist.hbs'] = template({"1":function(container,depth0,helpers,part
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"name") : depth0), depth0))
     + "</span></div>\n    <div class=\"row\"><div class=\"col col-md-auto\" style=\"font-size: 12px;white-space:nowrap;overflow:hidden; !important;\">"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"description") : depth0), depth0))
-    + "</div></div>\n  </div>\n  <div class=\"col col-md-auto\"> \n    <span class=\"state "
+    + "</div></div>\n  </div>\n  <div class=\"col\"><div class=\"containerstats\" container-id=\""
+    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"id") : depth0), depth0))
+    + "\">CPU: -</div></div>\n  <div class=\"col col-md-auto\"> \n    <span class=\"state "
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"state") : depth0), depth0))
     + "\">"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"state") : depth0), depth0))
@@ -197,7 +199,7 @@ templates['iconlist.hbs'] = template({"1":function(container,depth0,helpers,part
     };
 
   return "<div class=\"list-group\">\n"
-    + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"groups") : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0, blockParams, depths),"inverse":container.noop,"data":data,"loc":{"start":{"line":2,"column":1},"end":{"line":21,"column":9}}})) != null ? stack1 : "")
+    + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"groups") : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0, blockParams, depths),"inverse":container.noop,"data":data,"loc":{"start":{"line":2,"column":1},"end":{"line":22,"column":9}}})) != null ? stack1 : "")
     + "\n</div>	\n";
 },"useData":true,"useDepths":true});
 templates['icontabs.hbs'] = template({"1":function(container,depth0,helpers,partials,data,blockParams,depths) {

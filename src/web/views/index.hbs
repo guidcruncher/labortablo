@@ -25,30 +25,11 @@
 </div>
 
 <script type="text/javascript">
-function reloadIconList() {
-var url = "{{API_BASE}}/containers";
-$.getJSON(url,function(data, status, jqXHR) {
-        var html=Handlebars.templates["iconlist.hbs"](response.data);
-	$(".services").html(html);
-        setTimeout(reloadIconList, 15000);
-});
-}
-
-
-function reloadBookmarks() {
-var url = "{{API_BASE}}/bookmarks";
-$.getJSON(url,function(data, status, jqXHR) {
-	var html = Handlebars.templates["bookmarks.hbs"](response.data);
-	$(".bookmarks").html(html);
-	setTimeout(reloadBookmarks, 60000);
-});
-}
-
-
 $(function() {
   $('.nav-tabs').materialtab();
-  setTimeout(reloadIconList, 60000);
-  setTimeout(reloadBookmarks, 120000);
+  setTimeout(function() {reloadIconList("{{API_BASE}}");}, 60000);
+  setTimeout(function() {reloadBookmarks("{{API_BASE}}");}, 120000);
+  containerStats("{{API_BASE}}");
 });
 </script>
 	
