@@ -5,10 +5,10 @@ const helpers = require("./helpers/helpers.js");
 const indexRouter = require("./routes/index");
 const handlebars = require("express-handlebars");
 const { auth } = require("express-openid-connect");
-const logger = require('pino-http')
+const logger = require("pino-http");
 
 const app = express();
-app.use(logger({logger: require("./logger.js")}));
+app.use(logger({ logger: require("./logger.js") }));
 app.locals.appTitle = "Labortablo";
 app.locals.API_BASE = process.env.API_BASE;
 

@@ -75,7 +75,7 @@ function isCacheStale() {
   console.log("Now           : " + moment(now).format("yyyy-MM-DD hh:mm:ss"));
   console.log("Age (minutes) : " + duration);
 
-  if ((duration < 0) || (duration > 60)) {
+  if (duration < 0 || duration > 60) {
     invalidateCache();
     return true;
   }
@@ -140,7 +140,9 @@ function getFeeds() {
               .then(function (feed) {
                 result.feeds.push(feed);
                 result.itemCount += feed.items.length + 1;
-		feed.lastBuildDate=moment(new Date(feed.lastBuildDate)).format("LLLL");
+                feed.lastBuildDate = moment(
+                  new Date(feed.lastBuildDate),
+                ).format("LLLL");
                 resolve(feed);
               })
               .catch((status, err) => {

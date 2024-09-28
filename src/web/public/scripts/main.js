@@ -11,7 +11,7 @@ function reloadIconList(base) {
   });
 }
 
-Cfunction reloadBookmarks(base) {
+function reloadBookmarks(base) {
   if (window.API_BASE === undefined) {
     window.API_BASE = base;
   }
@@ -43,20 +43,24 @@ function containerStats(base) {
   setTimeout(containerStats, 15000);
 }
 
-
 function loadFeeds(base) {
   if (window.API_BASE === undefined) {
     window.API_BASE = base;
   }
 
   var url = window.API_BASE + "/rss/feeds";
-
-    $.getJSON(url, function (data, status, jqXHR) {
-	var  html = Handlebars.templates["tickerl.hbs"]({feeds:data.feeds, ticker: data.urls, feedCount: data.itemCount}));
-	$("footer").html(html);
+  $.getJSON(url, function (data, status, jqXHR) {
+    var tickerDelay = data.itemCount * 5;
+    var html = Handlebars.templates["tickerl.hbs"]({
+      feeds: data.feeds,
+      ticker: data.urls,
+      feedCount: data.itemCount,
+      tickerDelay: tickerDelay,
     });
+    $(".ticker").css("-webkit-animation-duration", tickerDelay + "s");
+    $(".ticker").css("animation-duration", tickerDelay + "s");
+    $("footer").html(html);
+  });
 
-  setTimeout(loadFeeds, 15000);
+  setTimeout(loadFeeds, 300000);
 }
-
-

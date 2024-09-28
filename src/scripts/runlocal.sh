@@ -16,6 +16,10 @@ mkdir -p "$CONFIG_DIR"
 mkdir -p "$PERSISTENCE_STORE"
 # rm "$PERSISTENCE_STORE"/*
 
+npx prettier --write "./api/**/*.js" "./web/**/*.js"
+
+npx  eslint -c ./eslint.config.mjs --ignore-pattern "web/public/**/*.*" --ignore-pattern "ecosystem.config.js"
+
 npx handlebars ./web/views/partials/*.hbs -f ./web/public/scripts/templates.js
 npx pm2 -s --no-daemon start ./ecosystem.config.js
 
