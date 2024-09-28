@@ -12,16 +12,11 @@
 </ul>
 <div class="tab-content ">
   <div class="tab-pane container-fluid active " role="tabpanel" id="tabservices">
-  <div class="container"><div class="row"><div class=col-sm">
   {{> iconlist containers }}
-  </div></div></div>
   </div>
   <div class="tab-pane container-fluid fade " role="tabpanel" id="tabbookmarks">
-   <div class="container"><div class="row"><div class=col-sm">
   {{> bookmarks bookmarks }}
-  </div></div></div>
   </div>
-</div>
 </div>
 
 <script type="text/javascript">
@@ -30,6 +25,7 @@ $(function() {
   setTimeout(function() {reloadIconList("{{API_BASE}}");}, 60000);
   setTimeout(function() {reloadBookmarks("{{API_BASE}}");}, 120000);
   containerStats("{{API_BASE}}");
+  loadTicker("{{API_BASE}}");
 });
 </script>
 	

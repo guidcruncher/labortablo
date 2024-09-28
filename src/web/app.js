@@ -1,13 +1,14 @@
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
-const logger = require("morgan");
 const helpers = require("./helpers/helpers.js");
 const indexRouter = require("./routes/index");
 const handlebars = require("express-handlebars");
 const { auth } = require("express-openid-connect");
+const logger = require('pino-http')
 
 const app = express();
+app.use(logger({logger: require("./logger.js")}));
 app.locals.appTitle = "Labortablo";
 app.locals.API_BASE = process.env.API_BASE;
 
@@ -22,8 +23,6 @@ const hbs = handlebars.create({
 app.engine(".hbs", hbs.engine);
 app.set("view engine", ".hbs");
 app.set("views", path.join(__dirname, "views/"));
-
-app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
