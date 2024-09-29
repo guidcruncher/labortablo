@@ -132,7 +132,7 @@ function query(image) {
           resolve();
         });
     } else {
-	_query("");
+      _query("");
     }
   });
 }

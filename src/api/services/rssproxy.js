@@ -5,6 +5,13 @@ const fs = require("fs");
 const path = require("path");
 const moment = require("moment");
 
+function ensurePath() {
+  var dir = path.join(process.env.PERSISTENCE_STORE, "feeds");
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+  }
+}
+
 function loadFeeds() {
   var filename = path.join(process.env.CONFIG_DIR, "feeds.json");
 
@@ -16,6 +23,7 @@ function loadFeeds() {
 }
 
 function saveToCache(feeds) {
+  ensurePath();
   var filename = path.join(
     process.env.PERSISTENCE_STORE,
     "feeds",
@@ -31,6 +39,7 @@ function saveToCache(feeds) {
 }
 
 function invalidateCache() {
+  ensurePath();
   var filename = path.join(
     process.env.PERSISTENCE_STORE,
     "feeds",
@@ -42,6 +51,7 @@ function invalidateCache() {
 }
 
 function loadFromCache() {
+  ensurePath();
   var filename = path.join(
     process.env.PERSISTENCE_STORE,
     "feeds",
@@ -55,6 +65,7 @@ function loadFromCache() {
 }
 
 function isCacheStale() {
+  ensurePath();
   var filename = path.join(
     process.env.PERSISTENCE_STORE,
     "feeds",

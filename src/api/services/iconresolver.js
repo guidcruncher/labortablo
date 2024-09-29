@@ -13,6 +13,16 @@ const urltemplates = [
 ];
 
 function getIconCacheFolder() {
+  var dir = path.join(process.env.PERSISTENCE_STORE, "services");
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+  }
+
+  dir = path.join(process.env.PERSISTENCE_STORE, "bookmarks");
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+  }
+
   return process.env.PERSISTENCE_STORE;
 }
 

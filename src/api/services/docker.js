@@ -5,7 +5,15 @@ const path = require("path");
 const moment = require("moment");
 const repository = require("./repository.js");
 
+function ensurePath() {
+  var dir = path.join(process.env.PERSISTENCE_STORE, "services");
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+  }
+}
+
 function saveToCache(data) {
+  ensurePath();
   var filename = path.join(
     process.env.PERSISTENCE_STORE,
     "services",
@@ -21,6 +29,7 @@ function saveToCache(data) {
 }
 
 function invalidateCache() {
+  ensurePath();
   var filename = path.join(
     process.env.PERSISTENCE_STORE,
     "services",
@@ -33,6 +42,7 @@ function invalidateCache() {
 }
 
 function isCacheStale() {
+  ensurePath();
   return new Promise((resolve) => {
     var cache = loadFromCache();
 
@@ -77,6 +87,7 @@ function isCacheStale() {
 }
 
 function loadFromCache() {
+  ensurePath();
   var filename = path.join(
     process.env.PERSISTENCE_STORE,
     "services",
