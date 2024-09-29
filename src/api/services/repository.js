@@ -19,7 +19,7 @@ const repositories = [
     name: "quay.io",
     api: "https://quay.io/api/v1",
     loginUrl: "",
-    authorization: "",
+    authorization: null,
     queryEndpoint: "/repository/[image]",
   },
 ];
@@ -92,7 +92,7 @@ function query(image) {
         repository.api +
         repository.queryEndpoint.replace("[image]", getImagePath(imageUrl));
 
-      if (repository.authorization != "") {
+      if (repository.authorization) {
         var args = {};
         args.headers = {
           Authorization: repository.authorization + " " + token,
@@ -117,9 +117,7 @@ function query(image) {
       }
     }
 
-    if (repository.authorization == "") {
-      _query("");
-    } else {
+    if (repository.authorization) {
       var userEnvPrefix =
         repository.name.replace(/\./g, "_").toUpperCase() + "_";
       login(
@@ -133,6 +131,8 @@ function query(image) {
         .catch(() => {
           resolve();
         });
+    } else {
+	_query("");
     }
   });
 }
