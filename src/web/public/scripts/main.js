@@ -7,6 +7,7 @@ function reloadIconList(base) {
   $.getJSON(url, function (data, status, jqXHR) {
     var html = Handlebars.templates["iconlist.hbs"](response.data);
     $(".services").html(html);
+    containerStats(base);
     setTimeout(reloadIconList, 15000);
   });
 }
@@ -40,7 +41,6 @@ function containerStats(base) {
     });
   });
 
-  setTimeout(containerStats, 15000);
 }
 
 function loadFeeds(base) {
