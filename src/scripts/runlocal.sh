@@ -22,7 +22,8 @@ if [ $? -ne 0 ]; then
 	exit
 fi
 
-npx minify web/public/scripts/main.js > web/public/scripts/main.min.js
+rm ./web/public/scripts/main.min.js
+npx minify ./web/public/scripts/main.js > ./web/public/scripts/main.min.js
 
 if [ $? -ne 0 ]; then
 	exit
