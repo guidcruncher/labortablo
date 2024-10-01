@@ -47,12 +47,19 @@ if (oidcEnabled == "true") {
     },
     authRequired: true,
     auth0Logout: false,
+    session: {
+      cookie: {
+        domain: new URL(process.env.BASE_URL).host,
+      },
+    },
     clientID: process.env.OIDC_CLIENTID,
     clientSecret: process.env.OIDC_CLIENTSECRET,
     secret: process.env.OIDC_SECRET,
     issuerBaseURL: process.env.OIDC_ISSUER_URL,
   };
+
   const port = process.env.WEB_PORT || 9081;
+
   if (
     !process.env.BASE_URL &&
     process.env.WEB_PORT &&
@@ -70,6 +77,7 @@ app.use(
   "/user-icons",
   express.static(path.join(process.env.CONFIG_DIR, "icons")),
 );
+
 app.use("/", indexRouter);
 
 module.exports = app;
