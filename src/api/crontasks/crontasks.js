@@ -7,6 +7,7 @@ function initialise() {
   docker
     .preload()
     .then(() => {
+      rssproxy.invalidateCache();
       rssproxy.checkFeedCache().then(() => {
         console.log("Service preload finished.");
       });
