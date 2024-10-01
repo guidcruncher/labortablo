@@ -18,8 +18,21 @@ mkdir -p "$PERSISTENCE_STORE"
 
 npx prettier --write "./api/**/*.js" "./web/**/*.js"
 
+if [ $? -ne 0 ]; then
+	exit
+fi
+
 npx  eslint -c ./eslint.config.mjs --ignore-pattern "web/public/**/*.*" --ignore-pattern "ecosystem.config.js"
 
+if [ $? -ne 0 ]; then
+	exit
+fi
+
 npx handlebars ./web/views/partials/*.hbs -f ./web/public/scripts/templates.js
+
+if [ $? -ne 0 ]; then
+	exit
+fi
+
 npx pm2 -s --no-daemon start ./ecosystem.config.js
 

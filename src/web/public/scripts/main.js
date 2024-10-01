@@ -40,7 +40,6 @@ function containerStats(base) {
       $(ctl).html("CPU " + cpuPercent);
     });
   });
-
 }
 
 function loadFeeds(base) {

@@ -19,7 +19,6 @@ function initialise() {
 function register() {
   cron.schedule("0 */1 * * *", () => {
     rssproxy.checkFeedCache();
-    
   });
 }
 
