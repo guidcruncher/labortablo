@@ -7,6 +7,12 @@ if [ $? -ne 0 ]; then
         exit
 fi
 
+npx minify web/public/scripts/main.js > web/public/scripts/main.min.js
+
+if [ $? -ne 0 ]; then
+	exit
+fi
+
 npx  eslint -c ./eslint.config.mjs --ignore-pattern "web/public/**/*.*" --ignore-pattern "ecosystem.config.js"
 
 if [ $? -ne 0 ]; then
