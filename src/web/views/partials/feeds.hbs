@@ -1,0 +1,17 @@
+{{#each this.feeds}}
+<div style="margin-bottom:10px;font-family:serif !important">
+<div onclick="window.open('{{link}}'); return false;" >
+<img style="max-height:80px;" src="{{image.url}}" alt="{{image.title}}" />
+</div>
+<ul class="list-group" >
+{{#each this.items}}
+  <li class="list-group-item" onclick="window.open('{{link}}'); return false;">
+    <h2 >{{title}}</h2>
+    <small class="d-block text-muted">{{pubDate}}</small>
+    <img src="{{enclosure.url}}" style="float:left; max-width:100px;margin-right: 10px;" />
+{{content}}
+  </li>
+  <li class="list-group-item list-divider"></li>
+{{/each}}
+</ul></div>
+{{/each}}

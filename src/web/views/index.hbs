@@ -9,14 +9,33 @@
      <i class="bi bi-pc-display-horizontal m-1"></i> Bookmarks
     </button>
   </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#tabfeeds">
+     <i class="bi bi-rss m-1"></i> Feeds
+    </button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#tabsystem">
+     <i class="bi bi-clipboard-data m-1"></i> System
+    </button>
+  </li>
 </ul>
 <div class="tab-content ">
   <div class="tab-pane container-fluid active " role="tabpanel" id="tabservices">
   {{> iconlist containers }}
   </div>
+
   <div class="tab-pane container-fluid fade " role="tabpanel" id="tabbookmarks">
   {{> bookmarks bookmarks }}
   </div>
+
+  <div class="tab-pane container-fluid fade " role="tabpanel" id="tabfeeds">
+  {{> feeds this }}
+  </div>
+
+  <div class="tab-pane container-fluid fade " role="tabpanel" id="tabeytem">
+  </div>
+
 </div>
 
 <script type="text/javascript">
