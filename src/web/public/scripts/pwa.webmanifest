@@ -4,9 +4,9 @@
   "description": "A cool simple Docker friendly dashboard and homepage",
   "icons": [
     {
-      "src": "./images/logo.svg",
+      "src": "/images/apple-touch-icon.png",
       "sizes": 64x64",
-      "type": "image/svg+xml"
+      "type": "image/png"
     }
   ],
   "start_url": "/",
