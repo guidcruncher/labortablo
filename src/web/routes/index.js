@@ -1,8 +1,9 @@
+const requiresAuth = require("../oidcHelper.js");
 var express = require("express");
 var router = express.Router();
 var Client = require("node-rest-client").Client;
 
-router.get("/", function (req, res) {
+router.get("/", requiresAuth(), function (req, res) {
   var promises = [];
   var data = {
     title: "Home",

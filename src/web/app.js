@@ -45,7 +45,7 @@ if (oidcEnabled == "true") {
       audience: "",
       scope: "openid profile email offline_access groups",
     },
-    authRequired: true,
+    authRequired: false,
     auth0Logout: false,
     session: {
       cookie: {
