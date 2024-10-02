@@ -302,7 +302,7 @@
             depth0,
           ),
         ) +
-        '" /></div>\n<div class="col-10" ><h2>' +
+        '" /></div>\n<div class="col-10 d-flex align-items-center" ><span class="align-middle"><h2>' +
         alias4(
           ((helper =
             (helper =
@@ -317,13 +317,13 @@
                 hash: {},
                 data: data,
                 loc: {
-                  start: { line: 7, column: 25 },
-                  end: { line: 7, column: 34 },
+                  start: { line: 7, column: 78 },
+                  end: { line: 7, column: 87 },
                 },
               })
             : helper),
         ) +
-        "</h2></div>\n</div></div></li>\n" +
+        "</h2></span></div>\n</div></div></li>\n" +
         ((stack1 = lookupProperty(helpers, "each").call(
           alias1,
           depth0 != null ? lookupProperty(depth0, "items") : depth0,

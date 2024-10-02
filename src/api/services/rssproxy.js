@@ -31,10 +31,14 @@ function saveToCache(feeds, name) {
   );
   fs.writeFileSync(
     filename,
-    JSON.stringify({
-      created: moment().format("yyyy-MM-DD hh:mm:ss"),
-      feeds: feeds,
-    }),
+    JSON.stringify(
+      {
+        created: moment().format("yyyy-MM-DD hh:mm:ss"),
+        feeds: feeds,
+      },
+      null,
+      2,
+    ),
   );
 }
 
@@ -87,7 +91,7 @@ function isCacheStale(name) {
   console.log("Age (minutes) : " + duration);
 
   if (duration < 0 || duration > 60) {
-    invalidateCache();
+    invalidateCache(name);
     return true;
   }
 
@@ -149,6 +153,7 @@ function getFeeds(name) {
           new Promise((resolve, reject) => {
             getFeed(list[i])
               .then(function (feed) {
+                console.log(feed.title);
                 result.feeds.push(feed);
                 result.itemCount += feed.items.length + 1;
                 feed.lastBuildDate = moment(
@@ -181,7 +186,15 @@ function getFeeds(name) {
             }
             return 0;
           });
-          result.feeds = sorted;
+          result.feeds = sorted.filter(
+            (value, index, self) =>
+              index === self.findIndex((t) => t.title === value.title),
+          );
+          result.itemCount = result.feeds
+            .map((i) => i.items.length + 1)
+            .reduce((a, b) => {
+              return a + b;
+            });
           saveToCache(result, name);
           resolve(result);
         })

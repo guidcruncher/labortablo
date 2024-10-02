@@ -7,6 +7,7 @@ router.get("/", function (req, res) {
   var data = {
     title: "Home",
     ticker: [],
+    newsfeeds: [],
     feeds: [],
     tickerDelay: 0,
     feedCount: 0,

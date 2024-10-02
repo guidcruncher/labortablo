@@ -21,10 +21,14 @@ function saveToCache(data) {
   );
   fs.writeFileSync(
     filename,
-    JSON.stringify({
-      created: moment().format("yyyy-MM-DD hh:mm:ss"),
-      services: data,
-    }),
+    JSON.stringify(
+      {
+        created: moment().format("yyyy-MM-DD hh:mm:ss"),
+        services: data,
+      },
+      null,
+      2,
+    ),
   );
 }
 
