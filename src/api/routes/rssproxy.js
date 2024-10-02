@@ -25,9 +25,10 @@ module.exports = function (fastify, opts, done) {
       });
   });
 
-  fastify.get("/rss/feeds", function (req, reply) {
-    if (rssproxy.isCacheStale()) {
-      var list = rssproxy.loadFeeds();
+  fastify.get("/rss/feeds/:name", function (req, reply) {
+    var name = req.params.name;
+    if (rssproxy.isCacheStale(name)) {
+      var list = rssproxy.loadFeeds(name);
       var promises = [];
       var result = { urls: list, feeds: [], itemCount: 0 };
       for (var i = 0; i < list.length; i++) {
@@ -49,12 +50,12 @@ module.exports = function (fastify, opts, done) {
 
       Promise.all(promises)
         .then(() => {
-          rssproxy.saveToCache(result);
+          rssproxy.saveToCache(result, name);
           reply.send(result);
         })
         .catch((err) => reply.code(500).send(err));
     } else {
-      reply.send(rssproxy.loadFromCache());
+      reply.send(rssproxy.loadFromCache(name));
     }
   });
 

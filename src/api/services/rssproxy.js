@@ -12,8 +12,8 @@ function ensurePath() {
   }
 }
 
-function loadFeeds() {
-  var filename = path.join(process.env.CONFIG_DIR, "feeds.json");
+function loadFeeds(name) {
+  var filename = path.join(process.env.CONFIG_DIR, name + ".json");
 
   if (fs.existsSync(filename)) {
     return JSON.parse(fs.readFileSync(filename));
@@ -22,12 +22,12 @@ function loadFeeds() {
   return [];
 }
 
-function saveToCache(feeds) {
+function saveToCache(feeds, name) {
   ensurePath();
   var filename = path.join(
     process.env.PERSISTENCE_STORE,
     "feeds",
-    "feeds.json",
+    name + ".json",
   );
   fs.writeFileSync(
     filename,
@@ -38,24 +38,24 @@ function saveToCache(feeds) {
   );
 }
 
-function invalidateCache() {
+function invalidateCache(name) {
   ensurePath();
   var filename = path.join(
     process.env.PERSISTENCE_STORE,
     "feeds",
-    "feeds.json",
+    name + ".json",
   );
   if (fs.existsSync(filename)) {
     fs.unlinkSync(filename);
   }
 }
 
-function loadFromCache() {
+function loadFromCache(name) {
   ensurePath();
   var filename = path.join(
     process.env.PERSISTENCE_STORE,
     "feeds",
-    "feeds.json",
+    name + ".json",
   );
   if (!fs.existsSync(filename)) {
     return [];
@@ -64,12 +64,12 @@ function loadFromCache() {
   return data.feeds;
 }
 
-function isCacheStale() {
+function isCacheStale(name) {
   ensurePath();
   var filename = path.join(
     process.env.PERSISTENCE_STORE,
     "feeds",
-    "feeds.json",
+    name + ".json",
   );
 
   if (!fs.existsSync(filename)) {
@@ -134,10 +134,10 @@ function getFeed(url) {
   });
 }
 
-function getFeeds() {
+function getFeeds(name) {
   return new Promise((resolve, reject) => {
-    if (isCacheStale()) {
-      var list = loadFeeds();
+    if (isCacheStale(name)) {
+      var list = loadFeeds(name);
       var promises = [];
       var result = {
         urls: list,
@@ -182,23 +182,23 @@ function getFeeds() {
             return 0;
           });
           result.feeds = sorted;
-          saveToCache(result);
+          saveToCache(result, name);
           resolve(result);
         })
         .catch((err) => reject(err));
     } else {
-      resolve(loadFromCache());
+      resolve(loadFromCache(name));
     }
   });
 }
 
-function checkFeedCache() {
+function checkFeedCache(name) {
   return new Promise((resolve, reject) => {
     console.log("Checking feed cache");
 
-    if (isCacheStale()) {
+    if (isCacheStale(name)) {
       console.log("Updating feed cache");
-      getFeeds()
+      getFeeds(name)
         .then(() => {
           console.log("Finished getting feeds.");
           resolve(true);

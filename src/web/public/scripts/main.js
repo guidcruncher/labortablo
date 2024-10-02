@@ -47,10 +47,10 @@ function loadFeeds(base) {
     window.API_BASE = base;
   }
 
-  var url = window.API_BASE + "/rss/feeds";
+  var url = window.API_BASE + "/rss/feeds/ticker";
   $.getJSON(url, function (data, status, jqXHR) {
     var tickerDelay = data.itemCount * 5;
-    var html = Handlebars.templates["tickerl.hbs"]({
+    var html = Handlebars.templates["ticker.hbs"]({
       feeds: data.feeds,
       ticker: data.urls,
       feedCount: data.itemCount,
@@ -59,6 +59,15 @@ function loadFeeds(base) {
     $(".ticker").css("-webkit-animation-duration", tickerDelay + "s");
     $(".ticker").css("animation-duration", tickerDelay + "s");
     $("footer").html(html);
+  });
+
+  var url = window.API_BASE + "/rss/feeds/feeds";
+  $.getJSON(url, function (data, status, jqXHR) {
+    var tickerDelay = data.itemCount * 5;
+    var html = Handlebars.templates["feeds.hbs"]({
+      newsfeeds: data.feeds,
+    });
+    $("#tabfeeds").html(html);
   });
 
   setTimeout(loadFeeds, 300000);

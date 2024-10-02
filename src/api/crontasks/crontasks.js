@@ -7,8 +7,12 @@ function initialise() {
   docker
     .preload()
     .then(() => {
-      rssproxy.invalidateCache();
-      rssproxy.checkFeedCache().then(() => {
+      rssproxy.invalidateCache("feeds");
+      rssproxy.invalidateCache("ticker");
+      var promises = [];
+      promises.push(rssproxy.checkFeedCache("feeds"));
+      promises.push(rssproxy.checkFeedCache("ticker"));
+      Promise.allSettled(promises).then(() => {
         console.log("Service preload finished.");
       });
     })
@@ -19,7 +23,12 @@ function initialise() {
 
 function register() {
   cron.schedule("0 */1 * * *", () => {
-    rssproxy.checkFeedCache();
+    var promises = [];
+    promises.push(rssproxy.checkFeedCache("feeds"));
+    promises.push(rssproxy.checkFeedCache("ticker"));
+    Promise.allSettled(promises).then(() => {
+      console.log("Feed refresh finished.");
+    });
   });
 }
 

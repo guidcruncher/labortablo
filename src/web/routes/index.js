@@ -14,7 +14,7 @@ router.get("/", function (req, res) {
 
   promises.push(
     new Promise((resolve, reject) => {
-      var url = process.env.API_INTERNAL_URL + "/rss/feeds";
+      var url = process.env.API_INTERNAL_URL + "/rss/feeds/ticker";
       var client = new Client();
       var req = client.get(url, function (result) {
         data.feeds = result.feeds;
@@ -28,6 +28,19 @@ router.get("/", function (req, res) {
     }),
   );
 
+  promises.push(
+    new Promise((resolve, reject) => {
+      var url = process.env.API_INTERNAL_URL + "/rss/feeds/feeds";
+      var client = new Client();
+      var req = client.get(url, function (result) {
+        data.newsfeeds = result.feeds;
+        resolve(result);
+      });
+      req.on("error", function (err) {
+        reject(err);
+      });
+    }),
+  );
   promises.push(
     new Promise((resolve, reject) => {
       var url = process.env.API_INTERNAL_URL + "/containers";
