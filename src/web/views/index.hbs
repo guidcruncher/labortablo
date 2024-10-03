@@ -30,7 +30,7 @@
   </div>
 
   <div class="tab-pane container-fluid fade " role="tabpanel" id="tabfeeds">
-  {{> feeds this }}
+  {{> feeds this.newsfeeds }}
   </div>
 
   <div class="tab-pane container-fluid fade " role="tabpanel" id="tabeytem">
@@ -40,24 +40,13 @@
 
 <script type="text/javascript">
 $(function() {
+window.API_BASE='{{API_BASE}}';
+window.WEBSOCKET_BASE='{{WEBSOCKET_BASE}}';
   $('.nav-tabs').materialtab();
-
-  const socket = new WebSocket('{{WEBSOCKET_BASE}}');
-    socket.addEventListener('message', (event) => {
-        const data = JSON.parse(event.data);
-	switch (data.type) {
-		case "feed#":
-			break;
-		case "ticker":
-			break;
-	}
-
-    });
-
-  setTimeout(function() {reloadIconList("{{API_BASE}}");}, 60000);
-  setTimeout(function() {reloadBookmarks("{{API_BASE}}");}, 120000);
-  containerStats("{{API_BASE}}");
-  loadFeeds("{{API_BASE}}");
+  setTimeout(function() {reloadIconList();}, 60000);
+  setTimeout(function() {reloadBookmarks();}, 120000);
+  containerStats();
+  loadFeeds();
 });
 </script>
 	
