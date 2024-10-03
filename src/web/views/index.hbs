@@ -43,9 +43,9 @@ $(function() {
 window.API_BASE='{{API_BASE}}';
 window.WEBSOCKET_BASE='{{WEBSOCKET_BASE}}';
   $('.nav-tabs').materialtab();
-  initialiseSocket();
-  setTimeout(function() {reloadIconList();}, 60000);
-  setTimeout(function() {reloadBookmarks();}, 120000);
+  setTimeout(reloadIconList(), 60000);
+  setTimeout(reloadBookmarks(), 120000);
+  setTimeout(loadFeeds(), 60000);
   containerStats();
 });
 </script>

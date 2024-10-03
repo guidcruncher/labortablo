@@ -17,4 +17,5 @@ fi
 
 lighttpd -f /etc/lighttpd/lighttpd.conf
 
-npx pm2 -s --no-daemon start ./ecosystem.config.js
+export NODE_ENV=production
+npx pm2 -s --no-daemon restart ./ecosystem.config.js --update-env

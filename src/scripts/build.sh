@@ -14,7 +14,7 @@ if [ $? -ne 0 ]; then
 	exit
 fi
 
-npx eslint -c ./eslint.config.mjs --ignore-pattern "web/public/**/*.*" --ignore-pattern "ecosystem.config.js"
+npx eslint -c ./eslint.config.mjs --ignore-pattern "web/public/**/*.*" --ignore-pattern "ecosystem*.config.js"
 
 if [ $? -ne 0 ]; then
 	exit

@@ -5,20 +5,6 @@ const crontasks = require("./crontasks/crontasks.js");
 
 fastify.register(require("@fastify/cors"), {});
 
-fastify.register(require("@fastify/websocket"), {
-  errorHandler: function (error, socket, req, reply) {
-    console.log("Websocket error ", error);
-    socket.terminate();
-  },
-  options: {
-    maxPayload: 1048576,
-    verifyClient: function (info, next) {
-      console.log("Websocket client verify");
-      next(true);
-    },
-  },
-});
-
 fastify.register(require("@fastify/static"), {
   root: path.join(__dirname, "public/icons/"),
   prefix: "/public/icons/",
@@ -30,7 +16,6 @@ fastify.register(require("./routes/repository.js"));
 fastify.register(require("./routes/icon.js"));
 fastify.register(require("./routes/bookmarks.js"));
 fastify.register(require("./routes/rssproxy.js"));
-fastify.register(require("./routes/wsroutes.js"));
 
 crontasks.register(fastify);
 // Run the server!

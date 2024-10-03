@@ -1,7 +1,7 @@
 module.exports = {
   apps : [{
     name: "api",
-    script: "./index.js",
+    script: "nodemon ./index.js",
     cwd: "./api/",
     env_production: {
        NODE_ENV: "production",
@@ -12,7 +12,7 @@ module.exports = {
   },
   {
     name: "web",
-    script: "./index.js",
+    script: "nodemon ./index.js",
     cwd: "./web/",
     env_production: {
        NODE_ENV: "production",

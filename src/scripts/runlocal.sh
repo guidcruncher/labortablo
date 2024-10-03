@@ -29,7 +29,7 @@ if [ $? -ne 0 ]; then
 	exit
 fi
 
-# npx eslint -c ./eslint.config.mjs --ignore-pattern "web/public/**/*.*" --ignore-pattern "ecosystem.config.js"
+npx eslint -c ./eslint.config.mjs --ignore-pattern "web/public/**/*.*" --ignore-pattern "ecosystem*.config.js"
 
 if [ $? -ne 0 ]; then
 	exit
@@ -41,4 +41,6 @@ if [ $? -ne 0 ]; then
 	exit
 fi
 
-npx pm2 -s --no-daemon start ./ecosystem.config.js
+export NODE_ENV=development
+npx pm2 -s --no-daemon restart ./ecosystem.development.config.js --update-env
+
