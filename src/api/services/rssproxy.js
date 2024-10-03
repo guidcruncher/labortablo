@@ -212,9 +212,9 @@ function checkFeedCache(name) {
     if (isCacheStale(name)) {
       console.log("Updating feed cache");
       getFeeds(name)
-        .then(() => {
+        .then((feeds) => {
           console.log("Finished getting feeds.");
-          resolve(true);
+          resolve({ name: name, updated: true, data: feeds });
         })
         .catch((err) => {
           console.log("Error getting feeds.", err);
@@ -222,7 +222,7 @@ function checkFeedCache(name) {
         });
     } else {
       console.log("Cache still valid");
-      resolve(false);
+      resolve({ name: name, updated: false, data: loadFromCache(name) });
     }
   });
 }

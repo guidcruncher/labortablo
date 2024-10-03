@@ -21,12 +21,27 @@ function initialise() {
     });
 }
 
-function register() {
+function register(fastify) {
   cron.schedule("0 */1 * * *", () => {
     var promises = [];
     promises.push(rssproxy.checkFeedCache("feeds"));
     promises.push(rssproxy.checkFeedCache("ticker"));
-    Promise.allSettled(promises).then(() => {
+    Promise.allSettled(promises).then((results) => {
+      results.forEach((feed) => {
+        if (feed.status == "fulfilled") {
+          if (feed.value.updated) {
+            for (let client of fastify.websocketServer.clients) {
+              client.send(
+                JSON.stringify({
+                  type: feed.value.name,
+                  data: feed.value.data,
+                }),
+              );
+            }
+          }
+        }
+      });
+
       console.log("Feed refresh finished.");
     });
   });

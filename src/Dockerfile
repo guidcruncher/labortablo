@@ -6,6 +6,7 @@ RUN npm i --global npx handlebars pm2
 
 ENV PERSISTENCE_STORE="/cache"
 ENV API_BASE="/api"
+
 ENV API_INTERNAL_URL="http://127.0.0.201:9080"
 ENV LISTEN_ADDRESS=""
 ENV DOCKER_SOCKET=""

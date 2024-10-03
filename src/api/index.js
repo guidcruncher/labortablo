@@ -3,9 +3,11 @@ const fastify = require("fastify")({ logger: true });
 const path = require("path");
 const crontasks = require("./crontasks/crontasks.js");
 
-crontasks.register();
-
 fastify.register(require("@fastify/cors"), {});
+
+fastify.register(require("@fastify/websocket"), {
+  options: { maxPayload: 1048576 },
+});
 
 fastify.register(require("@fastify/static"), {
   root: path.join(__dirname, "public/icons/"),
@@ -18,7 +20,9 @@ fastify.register(require("./routes/repository.js"));
 fastify.register(require("./routes/icon.js"));
 fastify.register(require("./routes/bookmarks.js"));
 fastify.register(require("./routes/rssproxy.js"));
+fastify.register(require("./routes/wsroutes.js"));
 
+crontasks.register(fastify);
 // Run the server!
 const listenPort = process.env.API_PORT || 9080;
 const listenAddress = process.env.API_LISTEN_ADDRESS || "0.0.0.0";

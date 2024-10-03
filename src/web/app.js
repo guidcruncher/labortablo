@@ -12,6 +12,12 @@ app.use(logger({ logger: require("./logger.js") }));
 app.locals.appTitle = "Labortablo";
 app.locals.API_BASE = process.env.API_BASE;
 
+if (!app.locals.API_BASE.includes("http")) {
+  app.locals.API_BASE = process.env.BASE_URL + process.env.API_BASE;
+}
+
+app.locals.WEBSOCKET_BASE = app.locals.API_BASE.replace("http", "ws");
+
 const hbs = handlebars.create({
   extname: ".hbs",
   layoutsDir: path.join(__dirname, "views/layouts"),
