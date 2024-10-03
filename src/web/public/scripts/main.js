@@ -1,4 +1,5 @@
-function reloadIconList() {w
+function reloadIconList() {
+  w;
   var url = window.API_BASE + "/containers";
   $.getJSON(url, function (data, status, jqXHR) {
     var html = Handlebars.templates["iconlist.hbs"](response.data);
@@ -58,4 +59,27 @@ function loadFeeds() {
   $.getJSON(url, function (data, status, jqXHR) {
     renderFeeds("#tabfeeds", data.feeds, "feeds.hbs");
   });
+}
+
+function initialiseSocket() {
+  const socket = new WebSocket(window.WEBSOCKET_BASE + "/socket/listen");
+
+  socket.onopen = (event) => {
+    alert(JSON.stringify(event));
+    socket.send('{type: "", data:""}');
+  };
+
+  socket.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    switch (data.type) {
+      case "ticker":
+        renderFeeds("footer", data.feeds, "ticker.hbs");
+        break;
+      case "feeds":
+        renderFeeds("#tabfeeds", data.feeds, "feeds.hbs");
+        break;
+      case "pong":
+        break;
+    }
+  };
 }

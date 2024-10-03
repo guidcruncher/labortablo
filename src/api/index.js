@@ -6,7 +6,17 @@ const crontasks = require("./crontasks/crontasks.js");
 fastify.register(require("@fastify/cors"), {});
 
 fastify.register(require("@fastify/websocket"), {
-  options: { maxPayload: 1048576 },
+  errorHandler: function (error, socket, req, reply) {
+    console.log("Websocket error ", error);
+    socket.terminate();
+  },
+  options: {
+    maxPayload: 1048576,
+    verifyClient: function (info, next) {
+      console.log("Websocket client verify");
+      next(true);
+    },
+  },
 });
 
 fastify.register(require("@fastify/static"), {
