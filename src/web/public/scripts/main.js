@@ -1,4 +1,4 @@
-function reloadIconList(base) {
+function reloadIconList(base)* {
   if (window.API_BASE === undefined) {
     window.API_BASE = base;
   }
@@ -42,6 +42,17 @@ function containerStats(base) {
   });
 }
 
+functiom renderFeeds(target, data, template) {
+var itemCount=data.reduce((a,b)=>return a+b.length;);
+var tickerDelay = itemCount * 5;
+var html = Handlebars.templates[template]({
+feeds: data,
+feedCount: itemCount,
+tickerDelay: tickerDelay,
+});
+$(target).html(html);
+}
+
 function loadFeeds(base) {
   if (window.API_BASE === undefined) {
     window.API_BASE = base;
@@ -58,7 +69,8 @@ function loadFeeds(base) {
     });
     $(".ticker").css("-webkit-animation-duration", tickerDelay + "s");
     $(".ticker").css("animation-duration", tickerDelay + "s");
-    $("footer").html(html);
+    renderfeeds("footer", data.feeds, "ticker.hbs");
+//    $("footer").html(html);
   });
 
   var url = window.API_BASE + "/rss/feeds/feeds";
@@ -67,7 +79,8 @@ function loadFeeds(base) {
     var html = Handlebars.templates["feeds.hbs"]({
       newsfeeds: data.feeds,
     });
-    $("#tabfeeds").html(html);
+ renderFeeds("#tabfeeds", data.feeds, "feeds.hbs")
+//   $("#tabfeeds").html(html);
   });
 
   setTimeout(loadFeeds, 300000);

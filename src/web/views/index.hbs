@@ -41,6 +41,19 @@
 <script type="text/javascript">
 $(function() {
   $('.nav-tabs').materialtab();
+
+  const socket = new WebSocket('{{WEBSOCKET_BASE}}');
+    socket.addEventListener('message', (event) => {
+        const data = JSON.parse(event.data);
+	switch (data.type) {
+		case "feed#":
+			break;
+		case "ticker":
+			break;
+	}
+
+    });
+
   setTimeout(function() {reloadIconList("{{API_BASE}}");}, 60000);
   setTimeout(function() {reloadBookmarks("{{API_BASE}}");}, 120000);
   containerStats("{{API_BASE}}");
