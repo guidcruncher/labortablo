@@ -4,7 +4,11 @@ RUN apk add --no-cache nano lighttpd nodejs-current npm curl
 
 RUN npm i --global npx handlebars pm2 prettier minify
 
+ENV NODE_CONFIG_DIR="/config"
 ENV PERSISTENCE_STORE="/cache"
+RUN mkdir -p "$NODE_CONFIG_DIR"
+RUN mkdir -p "$PERSISTENCE_STORE"
+
 ENV API_BASE="/api"
 
 ENV API_INTERNAL_URL="http://127.0.0.201:9080"
@@ -15,7 +19,6 @@ ENV DOCKER_IO_USER=""
 ENV DOCKER_IO_PASS=""
 ENV GHCR_IO_USER=""
 ENV GHCR_IO_PASS=""
-ENV CONFIG_DIR="/config"
 ENV API_PORT=9080
 ENV API_LISTEN_ADDRESS="0.0.0.0"
 ENV WEB_PORT=9081

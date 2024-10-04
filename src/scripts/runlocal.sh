@@ -1,18 +1,10 @@
 #!/bin/bash
 version="development"
 
-export API_INTERNAL_URL="http://dev.thecrockers.localcert.net:9080"
-export API_BASE="http://dev.thecrockers.localcert.net:9080"
 export PERSISTENCE_STORE="$HOME/src/dev/labortablo/cache"
-export DOCKER_SOCKET="/var/run/docker.sock"
-export CONFIG_DIR="$HOME/src/dev/labortablo/config"
-export OIDC_ENABLED="false"
-export OIDC_CLIENTID="labortablo"
-export OIDC_SECRET="replace-with-some-long-random-string-please"
-export OIDC_CLIENTSECRET="859MZPNnKgrotpeix4h74zBdhKmtsmlM"
-export BASE_URL="http://dev.thecrockers.localcert.net:9081"
+export NODE_CONFIG_DIR="$HOME/src/dev/labortablo/config"
 
-mkdir -p "$CONFIG_DIR"
+mkdir -p "$NODE_CONFIG_DIR"
 mkdir -p "$PERSISTENCE_STORE"
 # rm "$PERSISTENCE_STORE"/*
 
