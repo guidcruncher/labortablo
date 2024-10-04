@@ -39,7 +39,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-const oidcEnabled = config.get("oidc.ensbled") || "false";
+const oidcEnabled = config.get("oidc.enabled") || "false";
 
 if (oidcEnabled == "true") {
   console.log("Initialising OIDC");
