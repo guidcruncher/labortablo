@@ -50,7 +50,7 @@ templates['bookmarks.hbs'] = template({"1":function(container,depth0,helpers,par
     };
 
   return alias1(container.lambda(((stack1 = (data && lookupProperty(data,"root"))) && lookupProperty(stack1,"API_BASE")), depth0))
-    + "/bookmark/icon?host="
+    + "bookmarks/icon?host="
     + alias1((lookupProperty(helpers,"domainonly")||(depth0 && lookupProperty(depth0,"domainonly"))||container.hooks.helperMissing).call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"href") : depth0),{"name":"domainonly","hash":{},"data":data,"loc":{"start":{"line":6,"column":127},"end":{"line":6,"column":151}}}));
 },"7":function(container,depth0,helpers,partials,data) {
     return "";

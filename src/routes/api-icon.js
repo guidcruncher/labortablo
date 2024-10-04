@@ -57,7 +57,7 @@ router.get("/:iconName", function (req, reply) {
   );
 
   if (!fs.existsSync(fulliconName)) {
-    console.log(fulliconName +" Unavailable.");
+    console.log(fulliconName + " Unavailable.");
     fulliconName = path.join(__dirname, "../public/images/unknown.png");
     reply.status(200).end(fs.readFileSync(fulliconName), "binary");
     return;

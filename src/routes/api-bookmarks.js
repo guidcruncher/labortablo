@@ -17,7 +17,7 @@ router.get("/icon", function (req, reply) {
           "content-disposition",
           "inline; filename=" + req.query.host + ".ico",
         )
-        .end(content,"binary"),
+        .end(content, "binary"),
     )
     .catch((err) => reply.code(404).send(err));
 });
