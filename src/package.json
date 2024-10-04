@@ -18,7 +18,7 @@
   "scripts": {
     "api": "cd ./api && node ./index.js",
     "web": "cd ./web && node ./index.js",
-    "dev": "NODE_ENV=development && npx concurrently \"npm run api\" \"npm run web\" ",
-    "production": "NODE_ENV=production && npx concurrently \"npm run api\" \"npm run web\" "
+    "dev": "NODE_ENV=development && npx concurrently --group \"npm run api\" \"npm run web\" ",
+    "production": "NODE_ENV=production && npx concurrently --group \"npm run api\" \"npm run web\" "
   }
 }
