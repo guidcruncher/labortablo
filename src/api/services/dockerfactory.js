@@ -1,8 +1,9 @@
+const config = require("config");
 const Docker = require("dockerode");
 
 function createDocker() {
-  var dockerSocket = process.env.DOCKER_SOCKET;
-  var dockerHost = process.env.DOCKER_HOST;
+  var dockerSocket = config.get("docker.socket");
+  var dockerHost = config.get("docker.host");
 
   if (dockerSocket && dockerSocket != "") {
     return new Docker({ socketPath: dockerSocket });

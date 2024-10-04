@@ -1,3 +1,4 @@
+const config = require("config");
 const Client = require("node-rest-client").Client;
 
 const repositories = [
@@ -122,8 +123,8 @@ function query(image) {
         repository.name.replace(/\./g, "_").toUpperCase() + "_";
       login(
         repository,
-        process.env[userEnvPrefix + "USER"],
-        process.env[userEnvPrefix + "PASS"],
+        config.get("repositories." + userEnvPrefix + ".username"),
+        config.get("repositories." + userEnvPrefix + ".password"),
       )
         .then((token) => {
           _query(token);

@@ -1,3 +1,4 @@
+const config = require("config");
 const requiresAuth = require("../oidcHelper.js");
 var express = require("express");
 var router = express.Router();
@@ -16,7 +17,7 @@ router.get("/", requiresAuth(), function (req, res) {
 
   promises.push(
     new Promise((resolve, reject) => {
-      var url = process.env.API_INTERNAL_URL + "/rss/feeds/ticker";
+      var url = config.get("apiInternalUrl") + "/rss/feeds/ticker";
       var client = new Client();
       var req = client.get(url, function (result) {
         data.feeds = result.feeds;
@@ -32,7 +33,7 @@ router.get("/", requiresAuth(), function (req, res) {
 
   promises.push(
     new Promise((resolve, reject) => {
-      var url = process.env.API_INTERNAL_URL + "/rss/feeds/feeds";
+      var url = config.get("apiInternalUrl") + "/rss/feeds/feeds";
       var client = new Client();
       var req = client.get(url, function (result) {
         data.newsfeeds = result.feeds;
@@ -45,7 +46,7 @@ router.get("/", requiresAuth(), function (req, res) {
   );
   promises.push(
     new Promise((resolve, reject) => {
-      var url = process.env.API_INTERNAL_URL + "/containers";
+      var url = config.get("apiInternalUrl") + "/containers";
       var client = new Client();
       var req = client.get(url, function (containers) {
         data.containers = containers;
@@ -59,7 +60,7 @@ router.get("/", requiresAuth(), function (req, res) {
 
   promises.push(
     new Promise((resolve, reject) => {
-      var url = process.env.API_INTERNAL_URL + "/bookmarks";
+      var url = config.get("apiInternalUrl") + "/bookmarks";
       var client = new Client();
       var req = client.get(url, function (bookmarks) {
         data.bookmarks = bookmarks;

@@ -1,3 +1,4 @@
+const config = require("config");
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
@@ -10,10 +11,10 @@ const logger = require("pino-http");
 const app = express();
 app.use(logger({ logger: require("./logger.js") }));
 app.locals.appTitle = "Labortablo";
-app.locals.API_BASE = process.env.API_BASE;
+app.locals.API_BASE = config.get("apiBaseUrl");
 
 if (!app.locals.API_BASE.includes("http")) {
-  app.locals.API_BASE = process.env.BASE_URL + process.env.API_BASE;
+  app.locals.API_BASE = process.env.BASE_URL + config.get("apiBaseUrl");
 }
 
 const hbs = handlebars.create({

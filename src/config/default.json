@@ -14,11 +14,11 @@
     "socket": ""
   },
   "repositories": {
-    "docker.io": {
+    "docker_io": {
       "username": "",
       "password": ""
     },
-    "ghcr.io": {
+    "ghcr_io": {
       "username": "",
       "password": ""
     }

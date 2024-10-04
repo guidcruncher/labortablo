@@ -1,4 +1,3 @@
-// Require the framework and instantiate it
 const fastify = require("fastify")({ logger: true });
 const path = require("path");
 const crontasks = require("./crontasks/crontasks.js");

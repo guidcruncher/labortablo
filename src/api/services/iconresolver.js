@@ -1,3 +1,4 @@
+const config = require("config");
 const https = require("https");
 const urlparser = require("url");
 const fs = require("fs");
@@ -126,7 +127,10 @@ function determineIconUrl(data, preload) {
 
     if (fs.existsSync(filename)) {
       data.icon =
-        process.env.API_BASE + "/icon/" + imagename + path.extname(filename);
+        config.get("apiBaseUrl") +
+        "/icon/" +
+        imagename +
+        path.extname(filename);
       resolve(data);
       return;
     }
@@ -135,7 +139,10 @@ function determineIconUrl(data, preload) {
 
     if (fs.existsSync(filename)) {
       data.icon =
-        process.env.API_BASE + "/icon/" + imagename + path.extname(filename);
+        config.get("apiBaseUrl") +
+        "/icon/" +
+        imagename +
+        path.extname(filename);
       resolve(data);
       return;
     }
@@ -150,7 +157,10 @@ function determineIconUrl(data, preload) {
           downloadFile(validUrl.url, imagename + validUrl.format)
             .then(() => {
               data.icon =
-                process.env.API_BASE + "/icon/" + imagename + validUrl.format;
+                config.get("apiBaseUrl") +
+                "/icon/" +
+                imagename +
+                validUrl.format;
               resolve(data);
             })
             .catch(() => {
