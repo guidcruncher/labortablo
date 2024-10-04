@@ -21,12 +21,12 @@ function initialise() {
     });
 }
 
-function register(app) {
+function register() {
   cron.schedule("0 */1 * * *", () => {
     var promises = [];
     promises.push(rssproxy.checkFeedCache("feeds"));
     promises.push(rssproxy.checkFeedCache("ticker"));
-    Promise.allSettled(promises).then((results) => {
+    Promise.allSettled(promises).then(() => {
       console.log("Feed refresh finished.");
     });
   });

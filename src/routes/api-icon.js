@@ -10,7 +10,7 @@ router.get("/labortablo.svg", function (req, reply) {
 
   if (!fs.existsSync(fulliconName)) {
     fulliconName = path.join(__dirname, "../public/images/unknown.png");
-    reply.code(404).send(fs.createReadStream(fulliconName));
+    reply.code(404).send(fs.readFileSync(fulliconName));
     return;
   }
 
@@ -32,7 +32,7 @@ router.get("/logo", function (req, reply) {
 
   if (!fs.existsSync(fulliconName)) {
     fulliconName = path.join(__dirname, "../public/images/unknown.png");
-    reply.code(404).send(fs.createReadStream(fulliconName));
+    reply.code(404).end(fs.readFileSync(fulliconName), "binary");
     return;
   }
 
@@ -45,7 +45,7 @@ router.get("/logo", function (req, reply) {
     .header("content-disposition", `inline; filename="logo.svg"`)
     .header("content-type", iconresolver.getMimeType(fulliconName))
     .header("content-length", fs.statSync(fulliconName).size)
-    .send(fileContents);
+    .end(fileContents);
 });
 
 router.get("/:iconName", function (req, reply) {
@@ -57,8 +57,9 @@ router.get("/:iconName", function (req, reply) {
   );
 
   if (!fs.existsSync(fulliconName)) {
+    console.log(fulliconName +" Unavailable.");
     fulliconName = path.join(__dirname, "../public/images/unknown.png");
-    reply.code(404).send(fs.createReadStream(fulliconName));
+    reply.status(200).end(fs.readFileSync(fulliconName), "binary");
     return;
   }
 
@@ -67,7 +68,7 @@ router.get("/:iconName", function (req, reply) {
     .header("content-disposition", `inline; filename="${iconName}"`)
     .header("content-type", iconresolver.getMimeType(fulliconName))
     .header("content-length", fs.statSync(fulliconName).size)
-    .send(fs.createReadStream(fulliconName));
+    .end(fs.readFileSync(fulliconName), "binary");
 });
 
-module.exports = rpiter;
+module.exports = router;

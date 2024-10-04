@@ -3,11 +3,11 @@ const router = express.Router();
 const bookmarks = require("../services/bookmarks.js");
 const iconResolver = require("../services/iconresolver.js");
 
-router.get("/bookmarks", function (req, reply) {
+router.get("/", function (req, reply) {
   reply.send(bookmarks.loadBookmarks());
 });
 
-router.get("/bookmark/icon", function (req, reply) {
+router.get("/icon", function (req, reply) {
   iconResolver
     .getWebsiteIcon(req.query.host)
     .then((content) =>
@@ -17,7 +17,7 @@ router.get("/bookmark/icon", function (req, reply) {
           "content-disposition",
           "inline; filename=" + req.query.host + ".ico",
         )
-        .send(content),
+        .end(content,"binary"),
     )
     .catch((err) => reply.code(404).send(err));
 });

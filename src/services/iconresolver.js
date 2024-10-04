@@ -127,8 +127,8 @@ function determineIconUrl(data, preload) {
 
     if (fs.existsSync(filename)) {
       data.icon =
-        config.get("apiBaseUrl") +
-        "/icon/" +
+        config.get("baseUrl") +
+        "/api/icons/" +
         imagename +
         path.extname(filename);
       resolve(data);
@@ -139,8 +139,8 @@ function determineIconUrl(data, preload) {
 
     if (fs.existsSync(filename)) {
       data.icon =
-        config.get("apiBaseUrl") +
-        "/icon/" +
+        config.get("baseUrl") +
+        "/api/icons/" +
         imagename +
         path.extname(filename);
       resolve(data);
@@ -157,8 +157,8 @@ function determineIconUrl(data, preload) {
           downloadFile(validUrl.url, imagename + validUrl.format)
             .then(() => {
               data.icon =
-                config.get("apiBaseUrl") +
-                "/icon/" +
+                config.get("baseUrl") +
+                "/api/icons/" +
                 imagename +
                 validUrl.format;
               resolve(data);

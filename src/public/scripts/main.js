@@ -55,7 +55,7 @@ function loadFeeds() {
     renderFeeds("footer", data.feeds, "ticker.hbs");
   });
 
-  var url = window.API_BASE + "/rss/feeds/feeds";
+  url = window.API_BASE + "/rss/feeds/feeds";
   $.getJSON(url, function (data, status, jqXHR) {
     renderFeeds("#tabfeeds", data.feeds, "feeds.hbs");
   });

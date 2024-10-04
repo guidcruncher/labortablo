@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const config = require("config");
 const requiresAuth = require("../oidcHelper.js");
 const Client = require("node-rest-client").Client;
 

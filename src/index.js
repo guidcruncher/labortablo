@@ -5,17 +5,36 @@ const cookieParser = require("cookie-parser");
 const helpers = require("./helpers/helpers.js");
 const handlebars = require("express-handlebars");
 const { auth } = require("express-openid-connect");
-const logger = require("pino-http");
 const crontasks = require("./services/crontasks");
+const morgan = require("morgan");
+const crypto = require("crypto");
 
 const app = express();
-app.use(logger({ logger: require("./logger.js") }));
-app.locals.appTitle = "Labortablo";
-app.locals.API_BASE = config.get("apiBaseUrl");
 
-if (!app.locals.API_BASE.includes("http")) {
-  app.locals.API_BASE = process.env.BASE_URL + config.get("apiBaseUrl");
-}
+app.use((req, res, next) => {
+  const headerName = "X-Request-Id";
+  var value = req.get(headerName);
+  var id = value === undefined ? crypto.randomUUID() : value;
+  req["id"] = id;
+  res.set(headerName, id);
+  next();
+});
+
+morgan.token("id", (req) => req.id.split("-")[0]);
+app.use(
+  morgan("[:date[iso] #:id] Started :method :url for :remote-addr", {
+    immediate: true,
+  }),
+);
+
+app.use(
+  morgan(
+    "[:date[iso] #:id] Completed :status :res[content-length] in :response-time ms",
+  ),
+);
+
+app.locals.appTitle = "Labortablo";
+app.locals.API_BASE = config.get("baseUrl") + "/api/";
 
 const hbs = handlebars.create({
   extname: ".hbs",
@@ -79,14 +98,15 @@ app.use("/api/containers", require("./routes/api-container.js"));
 app.use("/api/repeository", require("./routes/api-repository.js"));
 app.use("/api/icons", require("./routes/api-icon.js"));
 app.use("/api/bookmarks", require("./routes/api-bookmarks.js"));
+app.use("/api/rss", require("./routes/api-rssproxy.js"));
 
 crontasks.register(app);
 
-app.listen(9080, "127.0.0.1", function (err) {
+app.listen(9080, "0.0.0.0", function (err) {
   if (err) {
     console.error("Error starting web application", err);
     process.exit(1);
   }
 
-  console.log("Web listening on 127.0.0.1:9080");
+  console.log("Web listening on 0.0.0.0:9080");
 });
