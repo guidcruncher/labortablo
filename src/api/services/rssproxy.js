@@ -111,7 +111,8 @@ function getFeedAsJson(url) {
         if (res.statusCode !== 200) {
           reject(res.statusCode, "Failed");
         } else {
-          resolve(convert.xml2json(body, { compact: false, spaces: 4 }));
+          var result = convert.xml2json(body, { compact: false, spaces: 2 });
+          resolve(result);
         }
       });
     });
@@ -180,14 +181,19 @@ function getFeeds(name) {
           }
 
           var sorted = result.feeds.sort((a, b) => {
-            if (a.title < b.title) {
+            return (
+              list.find((l) => l.href == a.href).seq -
+              list.find((l) => l.href == b.href).seq
+            );
+          });
+          /*   if (a.title < b.title) {
               return -1;
             }
             if (a.title > b.title) {
               return 1;
             }
             return 0;
-          });
+          });*/
           result.feeds = sorted.filter(
             (value, index, self) =>
               index === self.findIndex((t) => t.title === value.title),

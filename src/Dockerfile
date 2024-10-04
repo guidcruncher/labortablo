@@ -2,7 +2,7 @@ FROM alpine:latest
 
 RUN apk add --no-cache nano lighttpd nodejs-current npm curl
 
-RUN npm i --global npx handlebars pm2 prettier minify
+RUN npm i --global npx handlebars concurrently prettier minify
 
 ENV NODE_CONFIG_DIR="/config"
 ENV PERSISTENCE_STORE="/cache"
@@ -32,6 +32,7 @@ ENV OIDC_SECRET="replace-with-some-long-random-string-please"
 
 RUN mkdir -p /config.default
 RUN mkdir -p /config
+RUN mkdir -p /config/user-icons
 RUN mkdir -p /app/api
 RUN mkdir -p /app/web
 RUN mkdir -p /app/web/public/icons

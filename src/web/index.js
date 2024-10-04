@@ -1,16 +1,14 @@
 const app = require("./app.js");
 const logger = require("./logger.js");
 
-const port = process.env.WEB_PORT || 9081;
-const listenAddress = process.env.WEB_LISTEN_ADDRESS || "0.0.0.0";
+console.log("Web Using configuration in folder " + process.env.NODE_CONFIG_DIR);
 
-app.listen(port, listenAddress, function (err) {
+app.listen(9081, "0.0.0.0", function (err) {
   if (err) {
     logger.error(err, "Error starting web application");
     console.error("Error starting web application", err);
     process.exit(1);
   }
 
-  console.log("Web listening on " + listenAddress + ":" + port);
-  logger.debug("Web listening on %s:%s", listenAddress, port);
+  console.log("Web listening on 0.0.0.0:9081");
 });

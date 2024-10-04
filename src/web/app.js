@@ -39,9 +39,9 @@ app.use(function (req, res, next) {
   next();
 });
 
-const oidcEnabled = config.get("oidc.enabled") || "false";
+const oidcEnabled = config.get("oidc.enabled") || false;
 
-if (oidcEnabled == "true") {
+if (oidcEnabled == true) {
   console.log("Initialising OIDC");
 
   var authConfig = {
@@ -54,7 +54,7 @@ if (oidcEnabled == "true") {
     auth0Logout: false,
     session: {
       cookie: {
-        domain: new URL(process.env.BASE_URL).host,
+        domain: new URL(config.get("baseUrl")).host,
       },
     },
     clientID: config.get("oidc.clientId"),
@@ -63,24 +63,15 @@ if (oidcEnabled == "true") {
     issuerBaseURL: config.get("oidc.discoverUrl"),
   };
 
-  const port = process.env.WEB_PORT || 9081;
-
-  if (
-    !process.env.BASE_URL &&
-    process.env.WEB_PORT &&
-    process.env.NODE_ENV !== "production"
-  ) {
-    authConfig.baseURL = `http://localhost:${port}`;
-    authConfig.authorizationParams.audience = authConfig.baseURL;
-  } else authConfig.baseURL = process.env.BASE_URL;
-  authConfig.authorizationParams.audience = authConfig.baseURL;
+  authConfig.authorizationParams.audience = config.get("baseUrl");
+  authConfig.baseURL = config.get("baseUrl");
   app.use(auth(authConfig));
 }
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
   "/user-icons",
-  express.static(path.join(process.env.NODE_CONFIG_DIR, "icons")),
+  express.static(path.join(process.env.NODE_CONFIG_DIR, "user-icons")),
 );
 
 app.use("/", indexRouter);

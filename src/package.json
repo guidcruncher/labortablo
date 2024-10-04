@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "pm2": "^5.4.2"
+    "concurrently": "^9.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.10.0",
@@ -16,7 +16,9 @@
     "prettier": "^3.3.3"
   },
   "scripts": {
-    "dev": "npx pm2 -s --env development --no-daemon restart ./ecosystem.development.config.js --update-env",
-    "production": "npx pm2 -s --env production --no-daemon restart ./ecosystem.config.js --update-env"
+    "api": "cd ./api && node ./index.js",
+    "web": "cd ./web && node ./index.js",
+    "dev": "NODE_ENV=development && npx concurrently \"npm run api\" \"npm run web\" ",
+    "production": "NODE_ENV=production && npx concurrently \"npm run api\" \"npm run web\" "
   }
 }

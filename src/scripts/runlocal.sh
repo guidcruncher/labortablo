@@ -34,5 +34,4 @@ if [ $? -ne 0 ]; then
 fi
 
 export NODE_ENV=development
-npx pm2 -s --no-daemon restart ./ecosystem.development.config.js --update-env
-
+npm run dev
