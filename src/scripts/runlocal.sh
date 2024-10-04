@@ -33,5 +33,6 @@ if [ $? -ne 0 ]; then
 	exit
 fi
 
+/usr/sbin/lighttpd -f ./lighttpd.development.conf
 export NODE_ENV=development
 npm run dev
