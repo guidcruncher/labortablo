@@ -1,2 +1,26 @@
 {
+  "baseUrl": "",
+  "apiBaseUrl": "/api",
+  "apiInternalUrl": "",
+  "oidc": {
+    "enabled": false,
+    "discoverUrl": "",
+    "clientId": "",
+    "clientSecret": "",
+    "secret": "replace-with-some-long-random-string-please"
+  },
+  "docker": {
+    "host": "",
+    "socket": ""
+  },
+  "repositories": {
+    "docker.io": {
+      "username": "",
+      "password": ""
+    },
+    "ghcr.io": {
+      "username": "",
+      "password": ""
+    }
+  }
 }
