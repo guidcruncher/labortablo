@@ -3,14 +3,14 @@
 cp /app/web/public/images/labortablo.svg /cache/
 cp /app/web/public/images/labortablo.svg /app/web/public/icons/
 
-mkdir -p "$COMFIG_DIR"
+mkdir -p "$CONFIG_DIR"
 
 if [ ! -f  "$CONFIG_DIR/bookmarks.json" ]; then
-	copy /config.default/bookmarks.json  "$CONFIG_DIR/bookmarks.json"
+	cp /config.default/bookmarks.json  "$CONFIG_DIR/bookmarks.json"
 fi
 
 if [ ! -f  "$CONFIG_DIR/config.json" ]; then
-	copy /config.default/config.json  "$CONFIG_DIR/config.json"
+	cp /config.default/config.json  "$CONFIG_DIR/config.json"
 fi
 
 
