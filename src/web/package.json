@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "bluebird": "^3.7.2",
+    "config": "^3.3.12",
     "cookie-parser": "~1.4.4",
     "debug": "^4.3.7",
     "express": "^4.21.0",
