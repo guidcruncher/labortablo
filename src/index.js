@@ -83,7 +83,7 @@ app.use("/api/bookmarks", require("./routes/api-bookmarks.js"));
 crontasks.register(app);
 
 app.listen(9080, "127.0.0.1", function (err) {
-s  if (err) {
+  if (err) {
     console.error("Error starting web application", err);
     process.exit(1);
   }

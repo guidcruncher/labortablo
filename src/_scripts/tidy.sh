@@ -1,6 +1,24 @@
 #!/bin/bash
-version="development"
 
-npx prettier --write "./api/**/*.js" "./web/**/*.js"
+npx prettier --write "./**/*.js"
+if [ $? -ne 0 ]; then
+        exit 1
+fi
 
-npx eslint -c ./eslint.config.mjs --ignore-pattern "web/public/**/*.*" --ignore-pattern "ecosystem*.config.js"
+rm ./public/scripts/main.min.js
+npx minify ./public/scripts/main.js >./public/scripts/main.min.js
+if [ $? -ne 0 ]; then
+        exit 1
+fi
+
+npx eslint -c ./eslint.config.mjs --ignore-pattern "./public/**/*.*" --ignore-pattern "ecosystem*.config.js"
+if [ $? -ne 0 ]; then
+        exit 1
+fi
+
+npx handlebars ./views/partials/*.hbs -f ./public/scripts/templates.js
+if [ $? -ne 0 ]; then
+        exit 1
+fi
+
+exit 0

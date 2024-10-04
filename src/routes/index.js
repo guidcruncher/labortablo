@@ -17,7 +17,7 @@ router.get("/", requiresAuth(), function (req, res) {
 
   promises.push(
     new Promise((resolve, reject) => {
-      var url = config.get("http://127.0.0.1/api/rss/ticker";
+      var url = "http://127.0.0.1:9080/api/rss/ticker";
       var client = new Client();
       var req = client.get(url, function (result) {
         data.feeds = result.feeds;
@@ -33,7 +33,7 @@ router.get("/", requiresAuth(), function (req, res) {
 
   promises.push(
     new Promise((resolve, reject) => {
-      var url = "http://127.0.0.1/api/rss/feeds";
+      var url = "http://127.0.0.1:9080/api/rss/feeds";
       var client = new Client();
       var req = client.get(url, function (result) {
         data.newsfeeds = result.feeds;
@@ -46,7 +46,7 @@ router.get("/", requiresAuth(), function (req, res) {
   );
   promises.push(
     new Promise((resolve, reject) => {
-      var url = "http://127.0.0.1/api/containers";
+      var url = "http://127.0.0.1:9080/api/containers";
       var client = new Client();
       var req = client.get(url, function (containers) {
         data.containers = containers;
@@ -60,7 +60,7 @@ router.get("/", requiresAuth(), function (req, res) {
 
   promises.push(
     new Promise((resolve, reject) => {
-      var url = "http://127.0.0.1/api/bookmarks";
+      var url = "http://127.0.0.1:9080/api/bookmarks";
       var client = new Client();
       var req = client.get(url, function (bookmarks) {
         data.bookmarks = bookmarks;
