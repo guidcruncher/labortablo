@@ -35,3 +35,6 @@ if [ $? -ne 0 ]; then
 fi
 
 docker push "guidcruncher/labortablo:$version"
+
+docker rm buildx_buildkit_multiarchbuilder0 -f
+docker volume rm buildx_buildkit_multiarchbuilder0_state

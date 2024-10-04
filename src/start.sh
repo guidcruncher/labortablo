@@ -3,8 +3,8 @@
 mkdir -p /cache
 mkdir -p /cache/bookmarks
 
-cp /labortablo/web/public/images/labortablo.svg /cache/
-cp /labortablo/web/public/images/labortablo.svg /labortablo/web/public/icons/
+cp /app/web/public/images/labortablo.svg /cache/
+cp /app/web/public/images/labortablo.svg /app/web/public/icons/
 
 if [ ! -f  "$CONFIG_DIR/bookmarks.json" ]; then
 	echo "{}" > "$CONFIG_DIR/bookmarks.json"
