@@ -13,7 +13,7 @@ function ensurePath() {
 }
 
 function loadFeeds(name) {
-  var filename = path.join(process.env.CONFIG_DIR, name + ".json");
+  var filename = path.join(process.env.NODE_CONFIG_DIR, name + ".json");
 
   if (fs.existsSync(filename)) {
     return JSON.parse(fs.readFileSync(filename));

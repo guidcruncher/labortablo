@@ -1,4 +1,4 @@
-!/bin/sh
+#!/bin/sh
 
 cp /app/web/public/images/labortablo.svg /cache/
 cp /app/web/public/images/labortablo.svg /app/web/public/icons/

@@ -1,4 +1,4 @@
-const express = require("express");
+		const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const helpers = require("./helpers/helpers.js");
@@ -15,8 +15,6 @@ app.locals.API_BASE = process.env.API_BASE;
 if (!app.locals.API_BASE.includes("http")) {
   app.locals.API_BASE = process.env.BASE_URL + process.env.API_BASE;
 }
-
-app.locals.WEBSOCKET_BASE = app.locals.API_BASE.replace("http", "ws");
 
 const hbs = handlebars.create({
   extname: ".hbs",
@@ -81,7 +79,7 @@ if (oidcEnabled == "true") {
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
   "/user-icons",
-  express.static(path.join(process.env.CONFIG_DIR, "icons")),
+  express.static(path.join(process.env.NODE_CONFIG_DIR, "icons")),
 );
 
 app.use("/", indexRouter);

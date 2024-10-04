@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 function loadBookmarks() {
-  var filename = path.join(process.env.CONFIG_DIR, "bookmarks.json");
+  var filename = path.join(process.env.NODE_CONFIG_DIR, "bookmarks.json");
 
   if (fs.existsSync(filename)) {
     return JSON.parse(fs.readFileSync(filename));
@@ -12,7 +12,7 @@ function loadBookmarks() {
 }
 
 function saveBookmarks(store) {
-  var filename = path.join(process.env.CONFIG_DIR, "bookmarks.json");
+  var filename = path.join(process.env.NODE_CONFIG_DIR, "bookmarks.json");
 
   if (fs.existsSync(filename)) {
     fs.copyFileSync(filename, filename + ".bak");
