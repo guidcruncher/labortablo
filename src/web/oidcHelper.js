@@ -3,7 +3,7 @@ const config = require("config");
 const { auth, requiresAuth } = require("express-openid-connect");
 
 module.exports = function () {
-  var oidcEnabled = config.get("oidc.enable") || false;
+  var oidcEnabled = config.get("oidc.enabled") || false;
   if (oidcEnabled == true) {
     return requiresAuth();
   }

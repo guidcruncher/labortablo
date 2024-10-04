@@ -141,7 +141,9 @@ function getFeed(url) {
 function getFeeds(name) {
   return new Promise((resolve, reject) => {
     if (isCacheStale(name)) {
-      var list = loadFeeds(name);
+      var list = loadFeeds(name)
+        .sort((a, b) => a.seq - b.seq)
+        .map((a) => a.href);
       var promises = [];
       var result = {
         urls: list,

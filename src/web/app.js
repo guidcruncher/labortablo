@@ -39,7 +39,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-const oidcEnabled = process.env.OIDC_ENABLED || "false";
+const oidcEnabled = config.get("oidc.ensbled") || "false";
 
 if (oidcEnabled == "true") {
   console.log("Initialising OIDC");
@@ -57,10 +57,10 @@ if (oidcEnabled == "true") {
         domain: new URL(process.env.BASE_URL).host,
       },
     },
-    clientID: process.env.OIDC_CLIENTID,
-    clientSecret: process.env.OIDC_CLIENTSECRET,
-    secret: process.env.OIDC_SECRET,
-    issuerBaseURL: process.env.OIDC_ISSUER_URL,
+    clientID: config.get("oidc.clientId"),
+    clientSecret: config.get("oidc.clientSecret"),
+    secret: config.get("oidc.secret"),
+    issuerBaseURL: config.get("oidc.discoverUrl"),
   };
 
   const port = process.env.WEB_PORT || 9081;
