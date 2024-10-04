@@ -27,6 +27,7 @@ ENV OIDC_CLIENTID=""
 ENV OIDC_CLIENTSECRET=""
 ENV OIDC_SECRET="replace-with-some-long-random-string-please"
 
+RUN mkdir -p /config.default
 RUN mkdir -p /config
 RUN mkdir -p /app/api
 RUN mkdir -p /app/web
@@ -40,6 +41,7 @@ WORKDIR /app/
 COPY ./lighttpd.conf /etc/lighttpd/lighttpd.conf
 
 COPY ./.minify.json /app/.minify.json
+COPY ./config/* /config.default/
 COPY ./start.sh /app/start.sh
 COPY ./ecosystem.config.js /app/ecosystem.config.js
 COPY ./package.json /app/package.json

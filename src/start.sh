@@ -1,13 +1,16 @@
-#!/bin/sh
-
-mkdir -p /cache
-mkdir -p /cache/bookmarks
+!/bin/sh
 
 cp /app/web/public/images/labortablo.svg /cache/
 cp /app/web/public/images/labortablo.svg /app/web/public/icons/
 
+mkdir -p "$COMFIG_DIR"
+
 if [ ! -f  "$CONFIG_DIR/bookmarks.json" ]; then
-	echo "{}" > "$CONFIG_DIR/bookmarks.json"
+	copy /config.default/bookmarks.json  "$CONFIG_DIR/bookmarks.json"
+fi
+
+if [ ! -f  "$CONFIG_DIR/config.json" ]; then
+	copy /config.default/config.json  "$CONFIG_DIR/config.json"
 fi
 
 
