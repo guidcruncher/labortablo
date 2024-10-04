@@ -1,12 +1,13 @@
+const express = require("express");
+const router = express.Router();
 const bookmarks = require("../services/bookmarks.js");
 const iconResolver = require("../services/iconresolver.js");
 
-module.exports = function (fastify, opts, done) {
-  fastify.get("/bookmarks", function (req, reply) {
+  router.get("/bookmarks", function (req, reply) {
     reply.send(bookmarks.loadBookmarks());
   });
 
-  fastify.get("/bookmark/icon", function (req, reply) {
+  router.get("/bookmark/icon", function (req, reply) {
     iconResolver
       .getWebsiteIcon(req.query.host)
       .then((content) =>
@@ -21,5 +22,5 @@ module.exports = function (fastify, opts, done) {
       .catch((err) => reply.code(404).send(err));
   });
 
-  done();
-};
+
+module.exports=router;

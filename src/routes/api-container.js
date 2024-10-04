@@ -1,7 +1,8 @@
+const express = require("express");
+const router = express.Router();
 const docker = require("../services/docker.js");
 
-module.exports = function (fastify, opts, done) {
-  fastify.get("/containers", function handler(request, reply) {
+  router.get("/", function handler(request, reply) {
     docker
       .isCacheStale()
       .then((stale) => {
@@ -32,12 +33,12 @@ module.exports = function (fastify, opts, done) {
       });
   });
 
-  fastify.get("/containers/cache/invalidate", function handler(request, reply) {
+  router.get("/cache/invalidate", function handler(request, reply) {
     docker.invalidateCache();
     reply.code(204).send();
   });
 
-  fastify.get("/container/:id", function handler(request, reply) {
+  router.get("/:id", function handler(request, reply) {
     docker
       .getContainer(request.params.id)
       .then((data) => {
@@ -49,7 +50,7 @@ module.exports = function (fastify, opts, done) {
       });
   });
 
-  fastify.get("/container/:id/stats", function handler(request, reply) {
+  router.get("/:id/stats", function handler(request, reply) {
     docker
       .getContainerStats(request.params.id)
       .then((data) => {
@@ -61,5 +62,4 @@ module.exports = function (fastify, opts, done) {
       });
   });
 
-  done();
-};
+module.exports=router;

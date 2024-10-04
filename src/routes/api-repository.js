@@ -1,7 +1,8 @@
+const express = require("express");
+const router = express.Router();
 const repository = require("../services/repository.js");
 
-module.exports = function (fastify, opts, done) {
-  fastify.get("/repository", function handler(request, reply) {
+  router.get("/", function handler(request, reply) {
     repository
       .query(request.query.image)
       .then((data) => {
@@ -13,7 +14,7 @@ module.exports = function (fastify, opts, done) {
       });
   });
 
-  fastify.get("/repository/summary", function handler(request, reply) {
+  router.get("/summary", function handler(request, reply) {
     repository
       .query(request.query.image)
       .then((data) => {
@@ -32,5 +33,4 @@ module.exports = function (fastify, opts, done) {
       });
   });
 
-  done();
-};
+module.exports=router;

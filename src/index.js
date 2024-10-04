@@ -3,10 +3,10 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const helpers = require("./helpers/helpers.js");
-const indexRouter = require("./routes/index");
 const handlebars = require("express-handlebars");
 const { auth } = require("express-openid-connect");
 const logger = require("pino-http");
+const crontasks = require("./services/crontasks");
 
 const app = express();
 app.use(logger({ logger: require("./logger.js") }));
@@ -60,7 +60,7 @@ if (oidcEnabled == true) {
     clientID: config.get("oidc.clientId"),
     clientSecret: config.get("oidc.clientSecret"),
     secret: config.get("oidc.secret"),
-    issuerBaseURL: config.get("oidc.discoverUrl"),
+    issuerBaseURL: config.get("oidc.issuerBaseUrl"),
   };
 
   authConfig.authorizationParams.audience = config.get("baseUrl");
@@ -74,6 +74,19 @@ app.use(
   express.static(path.join(process.env.NODE_CONFIG_DIR, "user-icons")),
 );
 
-app.use("/", indexRouter);
+app.use("/", require("./routes/index.js"));
+app.use("/api/containers", require("./routes/api-container.js"));
+app.use("/api/repeository", require("./routes/api-repository.js"));
+app.use("/api/icons", require("./routes/api-icon.js"));
+app.use("/api/bookmarks", require("./routes/api-bookmarks.js"));
 
-module.exports = app;
+crontasks.register(app);
+
+app.listen(9080, "127.0.0.1", function (err) {
+s  if (err) {
+    console.error("Error starting web application", err);
+    process.exit(1);
+  }
+
+  console.log("Web listening on 127.0.0.1:9080");
+});

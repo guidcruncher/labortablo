@@ -1,10 +1,8 @@
 {
   "baseUrl": "",
-  "apiBaseUrl": "/api",
-  "apiInternalUrl": "",
   "oidc": {
     "enabled": false,
-    "discoverUrl": "",
+    "issuerBaseUrl": "",
     "clientId": "",
     "clientSecret": "",
     "secret": "replace-with-some-long-random-string-please"

@@ -1,9 +1,10 @@
+const express = require("express");
+const router = express.Router();
 const iconresolver = require("../services/iconresolver.js");
 const fs = require("fs");
 const path = require("path");
 
-module.exports = function (fastify, opts, done) {
-  fastify.get("/labortablo.svg", function (req, reply) {
+  router.get("/labortablo.svg", function (req, reply) {
     var fulliconName = path.join(__dirname, "../public/images", "/logo.svg");
     var color = req.query.color ? req.query.color : "0C0310";
 
@@ -25,7 +26,7 @@ module.exports = function (fastify, opts, done) {
       .send(fileContents);
   });
 
-  fastify.get("/logo", function (req, reply) {
+  router.get("/logo", function (req, reply) {
     var fulliconName = path.join(__dirname, "../public/images", "/logo.svg");
     var color = req.query.color ? req.query.color : "0C0310";
 
@@ -47,7 +48,7 @@ module.exports = function (fastify, opts, done) {
       .send(fileContents);
   });
 
-  fastify.get("/icon/:iconName", function (req, reply) {
+  router.get("/:iconName", function (req, reply) {
     var iconCacheFolder = process.env.PERSISTENCE_STORE;
 
     var fulliconName = path.join(
@@ -69,5 +70,4 @@ module.exports = function (fastify, opts, done) {
       .send(fs.createReadStream(fulliconName));
   });
 
-  done();
-};
+module.exports =rpiter;

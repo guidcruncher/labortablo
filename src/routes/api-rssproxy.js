@@ -1,7 +1,8 @@
+const express = require("express");
+const router = express.Router();
 const rssproxy = require("../services/rssproxy.js");
 
-module.exports = function (fastify, opts, done) {
-  fastify.get("/rss/proxy", function (req, reply) {
+  router.get("/fetchjson", function (req, reply) {
     var url = req.query.url;
     rssproxy
       .getFeedAsJson(url)
@@ -13,7 +14,7 @@ module.exports = function (fastify, opts, done) {
       });
   });
 
-  fastify.get("/rss", function (req, reply) {
+  router.get("/fetchxml", function (req, reply) {
     var url = req.query.url;
     rssproxy
       .getFeed(url)
@@ -25,7 +26,7 @@ module.exports = function (fastify, opts, done) {
       });
   });
 
-  fastify.get("/rss/feeds/:name", function (req, reply) {
+  router.get("/:name", function (req, reply) {
     var name = req.params.name;
     if (rssproxy.isCacheStale(name)) {
       rssproxy
@@ -41,5 +42,4 @@ module.exports = function (fastify, opts, done) {
     }
   });
 
-  done();
-};
+module.exports=router;
