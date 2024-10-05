@@ -154,6 +154,28 @@ function getContainer(id) {
   });
 }
 
+function formatBytes(bytes, decimals = 2) {
+  if (!+bytes) return "0 Bytes";
+
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = [
+    "Bytes",
+    "KiB",
+    "MiB",
+    "GiB",
+    "TiB",
+    "PiB",
+    "EiB",
+    "ZiB",
+    "YiB",
+  ];
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+}
+
 function getContainerStats(id) {
   return new Promise((resolve, reject) => {
     var docker = dockerFactory.createDocker();
@@ -178,7 +200,12 @@ function getContainerStats(id) {
           data.cpuCorePercent =
             (cpuDelta / systemDelta) * data.cpu_stats.online_cpus * 100;
         }
-        resolve(data);
+        resolve({
+          cpuPercent: data.cpuPercent,
+          cpuCorePercent: data.cpuCorePercent,
+          memoryUsage: formatBytes(data.memory_stats.usage),
+          memoryUsageBytes: data.memory_stats.usage,
+        });
       }
     });
   });

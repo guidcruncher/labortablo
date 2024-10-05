@@ -1,5 +1,5 @@
 function reloadIconList() {
-  var url = window.API_BASE + "/containers";
+  var url = window.API_BASE + "containers";
   $.getJSON(url, function (data, status, jqXHR) {
     var html = Handlebars.templates["iconlist.hbs"](response.data);
     $(".services").html(html);
@@ -9,34 +9,12 @@ function reloadIconList() {
 }
 
 function reloadBookmarks() {
-  var url = window.API_BASE + "/bookmarks";
+  var url = window.API_BASE + "bookmarks";
   $.getJSON(url, function (data, status, jqXHR) {
     var html = Handlebars.templates["bookmarks.hbs"](response.data);
     $(".bookmarks").html(html);
     setTimeout(reloadBookmarks, 60000);
   });
-}
-
-function formatBytes(bytes, decimals = 2) {
-  if (!+bytes) return "0 Bytes";
-
-  const k = 1024;
-  const dm = decimals < 0 ? 0 : decimals;
-  const sizes = [
-    "Bytes",
-    "KiB",
-    "MiB",
-    "GiB",
-    "TiB",
-    "PiB",
-    "EiB",
-    "ZiB",
-    "YiB",
-  ];
-
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
 }
 
 function containerStats() {
@@ -49,10 +27,10 @@ function containerStats() {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
       }).format(data.cpuPercent);
-      var memUsage = formatBytes(data.memory_stats.usage);
-      $(ctl).html("CPU " + cpuPercent + ", MEM " + memUsage);
+      $(ctl).html("CPU " + cpuPercent + ", MEM " + data.memoryUsage);
     });
   });
+  setTimeout(containerStats, 10000);
 }
 
 function renderFeeds(target, data, template) {
@@ -72,12 +50,12 @@ function renderFeeds(target, data, template) {
 }
 
 function loadFeeds() {
-  var url = window.API_BASE + "/rss/feeds/ticker";
+  var url = window.API_BASE + "rss/feeds/ticker";
   $.getJSON(url, function (data, status, jqXHR) {
     renderFeeds("footer", data.feeds, "ticker.hbs");
   });
 
-  url = window.API_BASE + "/rss/feeds/feeds";
+  url = window.API_BASE + "rss/feeds/feeds";
   $.getJSON(url, function (data, status, jqXHR) {
     renderFeeds("#tabfeeds", data.feeds, "feeds.hbs");
   });

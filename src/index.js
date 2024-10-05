@@ -34,7 +34,10 @@ app.use(
 );
 
 app.locals.appTitle = "Labortablo";
-app.locals.API_BASE = config.get("baseUrl") + "/api/";
+app.locals.API_BASE = config.get("baseUrl");
+
+if (app.locals.API_BASE.endsWith("/")) app.locals.API_BASE += "api/";
+else app.locals.API_BASE += "/api/";
 
 const hbs = handlebars.create({
   extname: ".hbs",
