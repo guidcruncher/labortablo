@@ -71,7 +71,21 @@ router.get("/", requiresAuth(), function (req, res) {
     }),
   );
 
-  Promise.all(promises)
+  promises.push(
+    new Promise((resolve, reject) => {
+      var url = "http://127.0.0.1:9080/api/system";
+      var client = new Client();
+      var req = client.get(url, function (sysinfo) {
+        data.systeminfo = sysinfo;
+        resolve(sysinfo);
+      });
+      req.on("error", function (err) {
+        reject(err);
+      });
+    }),
+  );
+
+  Promise.allSettled(promises)
     .then(() => {
       data.tickerDelay = data.feedCount * 5;
       res.render("index", data);
