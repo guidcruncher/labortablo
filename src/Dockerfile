@@ -2,7 +2,7 @@ FROM alpine:latest
 
 RUN apk add --no-cache nano lighttpd nodejs-current npm curl
 
-RUN npm i --global npx handlebars pm2 prettier minify
+RUN npm i --global npx handlebars prettier minify
 
 ENV NODE_CONFIG_DIR="/config"
 ENV PERSISTENCE_STORE="/cache"
