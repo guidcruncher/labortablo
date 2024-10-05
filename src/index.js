@@ -106,6 +106,13 @@ app.use("/api/system", require("./routes/api-system.js"));
 
 crontasks.register(app);
 
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, next) => {
+  console.log(err);
+  res.status(500);
+  res.send(err);
+});
+
 app.listen(9080, "0.0.0.0", function (err) {
   if (err) {
     console.error("Error starting web application", err);

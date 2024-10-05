@@ -15,4 +15,3 @@ fi
 export DOCKER_GATEWAY_HOST=$(ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+')
 export NODE_ENV=development
 npm run start-dev
-
