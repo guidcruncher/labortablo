@@ -1,8 +1,8 @@
-FROM alpine:latest
+FROM node:22.9.0-alpine3.20
 
-RUN apk add --no-cache nano lighttpd nodejs-current npm curl
+RUN apk add --no-cache nano lighttpd bash curl
 
-RUN npm i --global npx handlebars prettier minify
+RUN npm i --global handlebars prettier minify
 
 ENV NODE_CONFIG_DIR="/config"
 ENV PERSISTENCE_STORE="/cache"
