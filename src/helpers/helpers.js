@@ -1,3 +1,5 @@
+const Handlebars = require("handlebars");
+
 module.exports = {
   eachwhen: function (list, k, v, opts) {
     var i,
@@ -32,10 +34,12 @@ module.exports = {
   debug: function (v) {
     return new Handlebars.SafeString(JSON.stringify(v, null, 2));
   },
-  script: function(u) {
-	if (process.env.NODE_ENV == "production") {
-		return new Handlebars.SafeString("<script src=\" + u + ".min.js" + "\"></script>");
-	}
-	 return new Handlebars.SafeString("<script src=\" + u + ".js" + "\"></script>");
-  }
+  script: function (u) {
+    if (process.env.NODE_ENV == "production") {
+      return new Handlebars.SafeString(
+        '<script src="' + u + '.min.js"></script>',
+      );
+    }
+    return new Handlebars.SafeString('<script src="' + u + '.js"></script>');
+  },
 };

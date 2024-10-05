@@ -37,4 +37,3 @@ Handlebars.registerHelper("urlencode", function (v) {
 Handlebars.registerHelper("debug", function (v) {
   return new Handlebars.SafeString(JSON.stringify(v, null, 2));
 });
-
