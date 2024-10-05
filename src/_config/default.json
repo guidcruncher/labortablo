@@ -1,5 +1,10 @@
 {
   "baseUrl": "",
+  "useSystemInfoHostHelper": {
+    "enabled": true,
+    "hostName": "${DOCKER_GATEWAY_HOST}",
+    "port": 9081
+  },
   "oidc": {
     "enabled": false,
     "issuerBaseUrl": "",

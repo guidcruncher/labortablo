@@ -1,0 +1,18 @@
+{
+  "name": "labortablo-hosthelper",
+  "version": "1.0.0",
+  "description": "Labortablo Host Helper App used by Labortablo to get Host information securely.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./index.js",
+    "start-dev": "nodemon ./index.js"
+  },
+  "author": "guidcruncher",
+  "license": "ISC",
+  "dependencies": {
+    "systeminformation": "^5.23.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
