@@ -465,8 +465,26 @@ function getWebsiteIcon(hostname) {
   });
 }
 
+function simpleIcon(slug) {
+  var url =
+    "https://cdn.jsdelivr.net/npm/simple-icons@13.12.0/icons/" +
+    slug.toLowerCase() +
+    ".svg";
+
+  return new Promise((resolve, reject) => {
+    checkUrlExists(url)
+      .then((uri) => {
+        resolve(uri);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+
 module.exports = {
   determineIconUrl,
   getMimeType,
   getWebsiteIcon,
+  simpleIcon,
 };
