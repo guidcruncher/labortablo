@@ -78,7 +78,7 @@ templates['feeds.hbs'] = template({"1":function(container,depth0,helpers,partial
 
   return "  <li class=\"list-group-item list-group-item-primary\">\n<div onclick=\"window.open('"
     + alias4(((helper = (helper = lookupProperty(helpers,"link") || (depth0 != null ? lookupProperty(depth0,"link") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"link","hash":{},"data":data,"loc":{"start":{"line":4,"column":27},"end":{"line":4,"column":35}}}) : helper)))
-    + "'); return false;\" class=\"container primary\" >\n<div class=\"row\">\n<div class=\"col-2\"><img style=\"max-height:80px;\" src=\""
+    + "'); return false;\" class=\"container primary\" >\n<div class=\"row\">\n<div class=\"col-2 mobile-hide\"><img style=\"max-height:80px;\" src=\""
     + alias4(alias5(((stack1 = (depth0 != null ? lookupProperty(depth0,"image") : depth0)) != null ? lookupProperty(stack1,"url") : stack1), depth0))
     + "\" alt=\""
     + alias4(alias5(((stack1 = (depth0 != null ? lookupProperty(depth0,"image") : depth0)) != null ? lookupProperty(stack1,"title") : stack1), depth0))
@@ -228,7 +228,7 @@ templates['iconlist.hbs'] = template({"1":function(container,depth0,helpers,part
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"name") : depth0), depth0))
     + "</span></div>\n    <div class=\"row\"><div class=\"col col-md-auto\" style=\"font-size: 12px;white-space:nowrap;overflow:hidden; !important;\">"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"description") : depth0), depth0))
-    + "</div></div>\n  </div>\n  <div class=\"col\"><div class=\"containerstats\" container-id=\""
+    + "</div></div>\n  </div>\n  <div class=\"col\"><div class=\"containerstats mobile-hide\" container-id=\""
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"id") : depth0), depth0))
     + "\">CPU: -</div></div>\n  <div class=\"col col-md-auto\"> \n    <span class=\"state "
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"state") : depth0), depth0))

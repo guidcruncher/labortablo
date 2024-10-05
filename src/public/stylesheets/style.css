@@ -94,3 +94,6 @@
 .state.exited { color: #778899 !important;}
 state.dead { color: #808080 !important;}
 
+@media only screen and (max-width: 479px) {
+   .mobile-hide{ display: none !important; }
+}

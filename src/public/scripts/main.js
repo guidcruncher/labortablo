@@ -1,5 +1,4 @@
 function reloadIconList() {
-  w;
   var url = window.API_BASE + "/containers";
   $.getJSON(url, function (data, status, jqXHR) {
     var html = Handlebars.templates["iconlist.hbs"](response.data);
@@ -18,17 +17,40 @@ function reloadBookmarks() {
   });
 }
 
+function formatBytes(bytes, decimals = 2) {
+  if (!+bytes) return "0 Bytes";
+
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = [
+    "Bytes",
+    "KiB",
+    "MiB",
+    "GiB",
+    "TiB",
+    "PiB",
+    "EiB",
+    "ZiB",
+    "YiB",
+  ];
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+}
+
 function containerStats() {
   $(".containerstats").each(function (i, ctl) {
     var url =
-      window.API_BASE + "/container/" + $(ctl).attr("container-id") + "/stats";
+      window.API_BASE + "containers/" + $(ctl).attr("container-id") + "/stats";
     $.getJSON(url, function (data, status, jqXHR) {
       var cpuPercent = new Intl.NumberFormat("default", {
         style: "percent",
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
       }).format(data.cpuPercent);
-      $(ctl).html("CPU " + cpuPercent);
+      var memUsage = formatBytes(data.memory_stats.usage);
+      $(ctl).html("CPU " + cpuPercent + ", MEM " + memUsage);
     });
   });
 }
