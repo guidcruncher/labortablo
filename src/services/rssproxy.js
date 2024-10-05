@@ -112,6 +112,7 @@ function getFeedAsJson(url) {
           reject(res.statusCode, "Failed");
         } else {
           var result = convert.xml2json(body, { compact: false, spaces: 2 });
+          result.href = url;
           resolve(result);
         }
       });
@@ -129,6 +130,7 @@ function getFeed(url) {
     parser
       .parseURL(url)
       .then((feed) => {
+        feed.href = url;
         resolve(feed);
       })
       .catch((err) => {
@@ -142,19 +144,18 @@ function getFeed(url) {
 function getFeeds(name) {
   return new Promise((resolve, reject) => {
     if (isCacheStale(name)) {
-      var list = loadFeeds(name)
-        .sort((a, b) => a.seq - b.seq)
-        .map((a) => a.href);
+      var list = loadFeeds(name).sort((a, b) => a.seq - b.seq);
+      var feedurls = list.map((a) => a.href);
       var promises = [];
       var result = {
-        urls: list,
+        urls: feedurls,
         feeds: [],
         itemCount: 0,
       };
-      for (var i = 0; i < list.length; i++) {
+      for (var i = 0; i < feedurls.length; i++) {
         promises.push(
           new Promise((resolve, reject) => {
-            getFeed(list[i])
+            getFeed(feedurls[i])
               .then(function (feed) {
                 console.log(feed.title);
                 result.feeds.push(feed);
@@ -186,14 +187,6 @@ function getFeeds(name) {
               list.find((l) => l.href == b.href).seq
             );
           });
-          /*   if (a.title < b.title) {
-              return -1;
-            }
-            if (a.title > b.title) {
-              return 1;
-            }
-            return 0;
-          });*/
           result.feeds = sorted.filter(
             (value, index, self) =>
               index === self.findIndex((t) => t.title === value.title),
