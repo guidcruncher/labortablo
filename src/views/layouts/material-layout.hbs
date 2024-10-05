@@ -3,11 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js" ></script>
+  {{script "https://code.jquery.com/jquery-3.7.1" }}
+  {{script "https://cdn.jsdelivr.net/npm/chart.js@4.4.4/chart.umd" }}
   <script type="text/javascript">
   window.API_BASE='{{API_BASE}}';
   </script>
-  <script src="/scripts/main.js"></script>
+  {{script "/scripts/main"}}
   <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/@materialstyle/materialstyle@3.1.1/dist/css/materialstyle.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -64,11 +65,9 @@
 </footer>		
 
 <!-- Popper JS -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@materialstyle/materialstyle@3.1.1/dist/js/materialstyle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+{{script "https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper"}}
+{{script "https://cdn.jsdelivr.net/npm/@materialstyle/materialstyle@3.1.1/dist/js/materialstyle"}}
+{{script "https://cdn.jsdelivr.net/npm/handlebars@4.7.8/dist/cjs/handlebars"}}
 <script src="/scripts/helpers.js" ></script>
 <script src="/scripts/templates.js" ></script>
 </body>

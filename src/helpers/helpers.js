@@ -8,28 +8,34 @@ module.exports = {
   },
   lowercase: function (str) {
     if (str && typeof str === "string") {
-      return str.toLowerCase();
+      return new Handlebars.SafeString(str.toLowerCase());
     }
     return "";
   },
   ident: function (str) {
     if (str && typeof str === "string") {
-      return str.toLowerCase().replace(" ", "-");
+      return new Handlebars.SafeString(str.toLowerCase().replace(" ", "-"));
     }
     return "";
   },
   hostonly: function (uri) {
     var parts = new URL(uri);
-    return parts.protocol + "://" + parts.host;
+    return new Handlebars.SafeString(parts.protocol + "://" + parts.host);
   },
   domainonly: function (uri) {
     var parts = new URL(uri);
-    return parts.hostname;
+    return new Handlebars.SafeString(parts.hostname);
   },
   urlencode: function (v) {
-    return encodeURIComponent(v);
+    return new Handlebars.SafeString(encodeURIComponent(v));
   },
   debug: function (v) {
-    return JSON.stringify(v, null, 2);
+    return new Handlebars.SafeString(JSON.stringify(v, null, 2));
   },
+  script: function(u) {
+	if (process.env.NODE_ENV == "production") {
+		return new Handlebars.SafeString("<script src=\" + u + ".min.js" + "\"></script>");
+	}
+	 return new Handlebars.SafeString("<script src=\" + u + ".js" + "\"></script>");
+  }
 };
