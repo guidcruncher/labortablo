@@ -25,5 +25,24 @@
       "username": "",
       "password": ""
     }
+  },
+  "icons": {
+    "simpleIcons": {
+      "baseUrl": "https://cdn.jsdelivr.net/npm/simple-icons@13.13.0"
+    },
+    "serviceIconResolvers": [
+      {
+        "url": "https://cdn.jsdelivr.net/gh/selfhst/icons/png/",
+        "serves": ".png"
+      },
+      {
+        "url": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/",
+        "serves": ".png"
+      }
+    ],
+    "siteIconResolvers": [
+      "https://icons.duckduckgo.com/ip3/{hostname}.ico",
+      "https://www.google.com/s2/favicons?domain={hostname}&sz=64"
+    ]
   }
 }

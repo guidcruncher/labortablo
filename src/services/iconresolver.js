@@ -1,17 +1,20 @@
-const config = require("config");
 const https = require("https");
+const http = require("http");
 const urlparser = require("url");
 const fs = require("fs");
 const path = require("path");
+const config = require("config");
 
-const urltemplates = [
-  { url: "https://cdn.jsdelivr.net/gh/selfhst/icons/png/", serves: ".png" },
-  {
-    url: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/",
-    serves: ".png",
-  },
-  //	{url: 'https://cdn.jsdelivr.net/npm/simple-icons@13.10.0/icons/', serves: '.svg'}
-];
+const serviceIconResolvers = config.get("icons.serviceIconResolvers");
+const siteIconResolvers = config.get("icons.siteIconResolvers");
+
+function httpConnection(url) {
+  if (url.startsWith("https")) {
+    return https;
+  }
+
+  return http;
+}
 
 function getIconCacheFolder() {
   var dir = path.join(process.env.PERSISTENCE_STORE, "services");
@@ -29,17 +32,21 @@ function getIconCacheFolder() {
 
 function checkUrlExists(url) {
   return new Promise((resolve, reject) => {
-    https
-      .get(url, function (response) {
-        if (response.statusCode != 200) {
-          reject(response.statusCode);
-          return;
-        }
+    var parsedurl = urlparser.parse(url);
+    var options = {
+      method: "HEAD",
+      host: parsedurl.hostname,
+      port: 443,
+      path: parsedurl.pathname,
+    };
+    var req = httpConnection(url).request(options, function (r) {
+      if (r.statusCode == 200) {
         resolve(url);
-      })
-      .on("error", function (err) {
-        reject(err);
-      });
+      } else {
+        reject(r.statusCode);
+      }
+    });
+    req.end();
   });
 }
 
@@ -49,7 +56,7 @@ function downloadUrl(url, filename) {
 
     console.log("Downloading => " + url + " => " + filename);
 
-    https
+    httpConnection(url)
       .get(url, function (response) {
         if (response.statusCode != 200) {
           if (fs.existsSync(filename)) {
@@ -106,7 +113,7 @@ function checkIconUrl(url, format, name) {
       port: 443,
       path: parsedurl.pathname,
     };
-    var req = https.request(options, function (r) {
+    var req = httpConnection(url).request(options, function (r) {
       if (r.statusCode == 200) {
         resolve({ url: url + name + format, format: format });
       } else {
@@ -148,7 +155,7 @@ function determineIconUrl(data, preload) {
     }
 
     if (preload) {
-      urltemplates.forEach(function (template) {
+      serviceIconResolvers.forEach(function (template) {
         requests.push(checkIconUrl(template.url, template.serves, imagename));
       });
 
@@ -371,75 +378,58 @@ function getWebsiteIcon(hostname) {
 
     var promises = [];
 
-    promises.push(
-      new Promise((resolve, reject) => {
-        var url = "https://icons.duckduckgo.com/ip3/" + hostname + ".ico";
-        checkUrlExists(url)
-          .then((uri) => {
-            resolve(uri);
-          })
-          .catch((err) => {
-            reject(err);
-          });
-      }),
-    );
+    siteIconResolvers.forEach((urlTemplate) => {
+      promises.push(
+        new Promise((resolve, reject) => {
+          var url = urlTemplate.replace("{hostname}", hostname);
+          checkUrlExists(url)
+            .then((uri) => {
+              resolve(uri);
+            })
+            .catch((err) => {
+              reject(err);
+            });
+        }),
+      );
 
-    promises.push(
-      new Promise((resolve, reject) => {
-        var domain =
-          "www." +
-          parts
+      promises.push(
+        new Promise((resolve, reject) => {
+          var domain =
+            "www." +
+            parts
+              .slice(0)
+              .slice(-(parts.length === 4 ? 3 : 2))
+              .join(".");
+
+          var url = urlTemplate.replace("{hostname}", domain);
+          checkUrlExists(url)
+            .then((uri) => {
+              resolve(uri);
+            })
+            .catch((err) => {
+              reject(err);
+            });
+        }),
+      );
+
+      promises.push(
+        new Promise((resolve, reject) => {
+          var domain = parts
             .slice(0)
             .slice(-(parts.length === 4 ? 3 : 2))
             .join(".");
 
-        var url = "https://icons.duckduckgo.com/ip3/" + domain + ".ico";
-        checkUrlExists(url)
-          .then((uri) => {
-            resolve(uri);
-          })
-          .catch((err) => {
-            reject(err);
-          });
-      }),
-    );
-
-    promises.push(
-      new Promise((resolve, reject) => {
-        var domain = parts
-          .slice(0)
-          .slice(-(parts.length === 4 ? 3 : 2))
-          .join(".");
-
-        var url = "https://icons.duckduckgo.com/ip3/" + domain + ".ico";
-        checkUrlExists(url)
-          .then((uri) => {
-            resolve(uri);
-          })
-          .catch((err) => {
-            reject(err);
-          });
-      }),
-    );
-
-    promises.push(
-      new Promise((resolve, reject) => {
-        var domain = parts
-          .slice(0)
-          .slice(-(parts.length === 4 ? 3 : 2))
-          .join(".");
-
-        var url =
-          "https://www.google.com/s2/favicons?domain=" + domain + "&sz=64";
-        checkUrlExists(url)
-          .then((uri) => {
-            resolve(uri);
-          })
-          .catch((err) => {
-            reject(err);
-          });
-      }),
-    );
+          var url = urlTemplate.replace("{hostname}", domain);
+          checkUrlExists(url)
+            .then((uri) => {
+              resolve(uri);
+            })
+            .catch((err) => {
+              reject(err);
+            });
+        }),
+      );
+    });
 
     Promise.any(promises)
       .then((uri) => {
@@ -465,9 +455,38 @@ function getWebsiteIcon(hostname) {
   });
 }
 
+function cacheSimpleIconData() {
+  var url =
+    config.get("icons.simpleIcons.baseUrl") + "/_data/simple-icons.json";
+  var filename = path.join(
+    process.env.PERSISTENCE_STORE,
+    "simple~icon-data.json",
+  );
+
+  return new Promise((resolve, reject) => {
+    const file = fs.createWriteStream(filename);
+    httpConnection(url)
+      .get(url, function (response) {
+        if (response.statusCode != 200) {
+          reject(response.statusCode);
+        }
+        response.pipe(file);
+
+        file.on("finish", () => {
+          file.close();
+          resolve({ url: url, filenamee: filename });
+        });
+      })
+      .on("error", function (err) {
+        reject(err);
+      });
+  });
+}
+
 function simpleIcon(slug) {
   var url =
-    "https://cdn.jsdelivr.net/npm/simple-icons@13.12.0/icons/" +
+    config.get("icons.simpleIcons.baseUrl") +
+    "/icons/" +
     slug.toLowerCase() +
     ".svg";
 
@@ -487,4 +506,5 @@ module.exports = {
   getMimeType,
   getWebsiteIcon,
   simpleIcon,
+  cacheSimpleIconData,
 };

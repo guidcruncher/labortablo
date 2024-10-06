@@ -341,7 +341,7 @@ templates['icontabs.hbs'] = template({"1":function(container,depth0,helpers,part
   return ((stack1 = lookupProperty(helpers,"if").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"isBootstrap") : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0, blockParams, depths),"inverse":container.program(5, data, 0, blockParams, depths),"data":data,"loc":{"start":{"line":1,"column":0},"end":{"line":30,"column":7}}})) != null ? stack1 : "");
 },"usePartial":true,"useData":true,"useDepths":true});
 templates['system.hbs'] = template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
-    var stack1, lookupProperty = container.lookupProperty || function(parent, propertyName) {
+    var stack1, alias1=container.lambda, alias2=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
           return parent[propertyName];
         }
@@ -349,8 +349,44 @@ templates['system.hbs'] = template({"compiler":[8,">= 4.3.0"],"main":function(co
     };
 
   return "<div class=\"card border border-primary\" style=\"max-width:400px\">\n  <div class=\"card-body\">\n    <h4 class=\"card-title text-primary\">"
-    + container.escapeExpression(container.lambda(((stack1 = (depth0 != null ? lookupProperty(depth0,"system") : depth0)) != null ? lookupProperty(stack1,"model") : stack1), depth0))
-    + "</h4>\n    <p class=\"card-text\">\n    </p>\n  </div>\n  <div class=\"d-flex justify-content-between align-items-center flex-wrap p-2\">\n    <div>\n    </div>\n  </div>\n</div>\n";
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"system") : depth0)) != null ? lookupProperty(stack1,"model") : stack1), depth0))
+    + "</h4>\n    <p class=\"card-text\">\n   <table class=\"table table-hover\">\n  <tbody>\n    <tr>\n      <th scope=\"row\">Manufacturer</th>\n      <td>"
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"system") : depth0)) != null ? lookupProperty(stack1,"manufacturer") : stack1), depth0))
+    + "</td>\n    </tr>\n<tr>\n<th scope=\"row\">CPU</th>\n<td>"
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"manufacturer") : stack1), depth0))
+    + " "
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"brand") : stack1), depth0))
+    + "</td>\n</tr>\n<tr>\n<th scope=\"row\">Vendor</th>\n<td>"
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"vendor") : stack1), depth0))
+    + "</td>\n</tr>\n<tr>\n<th scope=\"row\">Manufacturer</th>\n<td>"
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"family") : stack1), depth0))
+    + " "
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"socket") : stack1), depth0))
+    + "</td>\n</tr>\n  </tbody>\n</table>\n    </p>\n  </div>\n  <div class=\"d-flex justify-content-between align-items-center flex-wrap p-2\">\n    <div>\n    </div>\n  </div>\n</div>\n\n<div class=\"card border border-primary\" style=\"max-width:400px\">\n  <div class=\"card-body\">\n    <h4 class=\"card-title text-primary\">Processor</h4>\n    <p class=\"card-text\">\n   <table class=\"table table-hover\">\n  <tbody>\n    <tr>\n      <th scope=\"row\">Manufacturer</th>\n      <td>"
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"system") : depth0)) != null ? lookupProperty(stack1,"manufacturer") : stack1), depth0))
+    + "</td>\n    </tr>\n<tr>\n<th scope=\"row\">CPU</th>\n<td>"
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"manufacturer") : stack1), depth0))
+    + " "
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"brand") : stack1), depth0))
+    + "</td>\n</tr>\n<tr>\n<th scope=\"row\">Vendor</th>\n<td>"
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"vendor") : stack1), depth0))
+    + "</td>\n</tr>\n<tr>\n<th scope=\"row\">Manufacturer</th>\n<td>"
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"family") : stack1), depth0))
+    + " "
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"socket") : stack1), depth0))
+    + "</td>\n</tr>\n  </tbody>\n</table>\n    </p>\n  </div>\n  <div class=\"d-flex justify-content-between align-items-center flex-wrap p-2\">\n    <div>\n    </div>\n  </div>\n</div>\n\n<div class=\"card border border-primary\" style=\"max-width:400px\">\n  <div class=\"card-body\">\n    <h4 class=\"card-title text-primary\">Storag xe</h4>\n    <p class=\"card-text\">\n   <table class=\"table table-hover\">\n  <tbody>\n    <tr>\n      <th scope=\"row\">Manufacturer</th>\n      <td>"
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"system") : depth0)) != null ? lookupProperty(stack1,"manufacturer") : stack1), depth0))
+    + "</td>\n    </tr>\n<tr>\n<th scope=\"row\">CPU</th>\n<td>"
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"manufacturer") : stack1), depth0))
+    + " "
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"brand") : stack1), depth0))
+    + "</td>\n</tr>\n<tr>\n<th scope=\"row\">Vendor</th>\n<td>"
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"vendor") : stack1), depth0))
+    + "</td>\n</tr>\n<tr>\n<th scope=\"row\">Manufacturer</th>\n<td>"
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"family") : stack1), depth0))
+    + " "
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"socket") : stack1), depth0))
+    + "</td>\n</tr>\n  </tbody>\n</table>\n    </p>\n  </div>\n  <div class=\"d-flex justify-content-between align-items-center flex-wrap p-2\">\n    <div>\n    </div>\n  </div>\n</div>\n";
 },"useData":true});
 templates['ticker.hbs'] = template({"1":function(container,depth0,helpers,partials,data) {
     var stack1, alias1=container.lambda, alias2=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
