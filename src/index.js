@@ -104,6 +104,7 @@ app.use("/api/bookmarks", require("./routes/api-bookmarks.js"));
 app.use("/api/rss", require("./routes/api-rssproxy.js"));
 app.use("/api/system", require("./routes/api-system.js"));
 
+crontasks.initialise(app);
 crontasks.register(app);
 
 // eslint-disable-next-line no-unused-vars

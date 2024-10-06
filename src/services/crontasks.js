@@ -1,6 +1,7 @@
 const cron = require("node-cron");
 const rssproxy = require("./rssproxy");
 const docker = require("./docker.js");
+const iconresolver = require("./iconresolver.js");
 
 function initialise() {
   console.log("Performing service preload...");
@@ -12,6 +13,7 @@ function initialise() {
       var promises = [];
       promises.push(rssproxy.checkFeedCache("feeds"));
       promises.push(rssproxy.checkFeedCache("ticker"));
+      promises.push(iconresolver.cacheSimpleIconData());
       Promise.allSettled(promises).then(() => {
         console.log("Service preload finished.");
       });
