@@ -340,7 +340,32 @@ templates['icontabs.hbs'] = template({"1":function(container,depth0,helpers,part
 
   return ((stack1 = lookupProperty(helpers,"if").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"isBootstrap") : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0, blockParams, depths),"inverse":container.program(5, data, 0, blockParams, depths),"data":data,"loc":{"start":{"line":1,"column":0},"end":{"line":30,"column":7}}})) != null ? stack1 : "");
 },"usePartial":true,"useData":true,"useDepths":true});
-templates['system.hbs'] = template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
+templates['system.hbs'] = template({"1":function(container,depth0,helpers,partials,data) {
+    var stack1, alias1=container.lambda, alias2=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
+        if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
+          return parent[propertyName];
+        }
+        return undefined
+    };
+
+  return "    <tr>\n      <th scope=\"row\">Device</th>\n      <td>"
+    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"fs") : depth0), depth0))
+    + "</td>\n    </tr>\n<tr>\n<th scope=\"row\">Capacity</th>\n<td>"
+    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"strsize") : depth0), depth0))
+    + "</td>\n</tr>\n<tr>\n<th scope=\"row\">Used</th>\n<td>"
+    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"strused") : depth0), depth0))
+    + " ("
+    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"use") : depth0), depth0))
+    + "%)</td>\n</tr>\n<tr>\n<th scope=\"row\">Free</th>\n<td>"
+    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"stravailsble") : depth0), depth0))
+    + "</t>\n</tr>\n"
+    + ((stack1 = lookupProperty(helpers,"if").call(depth0 != null ? depth0 : (container.nullContext || {}),(data && lookupProperty(data,"last")),{"name":"if","hash":{},"fn":container.program(2, data, 0),"inverse":container.program(4, data, 0),"data":data,"loc":{"start":{"line":125,"column":0},"end":{"line":130,"column":7}}})) != null ? stack1 : "")
+    + "\n";
+},"2":function(container,depth0,helpers,partials,data) {
+    return "";
+},"4":function(container,depth0,helpers,partials,data) {
+    return "\n<tr>\n<th scope=\"row\">&nbsp;</th>\n<td>&nbsp;</td>\n</tr>\n";
+},"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, alias1=container.lambda, alias2=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
           return parent[propertyName];
@@ -362,31 +387,29 @@ templates['system.hbs'] = template({"compiler":[8,">= 4.3.0"],"main":function(co
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"family") : stack1), depth0))
     + " "
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"socket") : stack1), depth0))
-    + "</td>\n</tr>\n  </tbody>\n</table>\n    </p>\n  </div>\n  <div class=\"d-flex justify-content-between align-items-center flex-wrap p-2\">\n    <div>\n    </div>\n  </div>\n</div>\n\n<div class=\"card border border-primary\" style=\"max-width:400px\">\n  <div class=\"card-body\">\n    <h4 class=\"card-title text-primary\">Processor</h4>\n    <p class=\"card-text\">\n   <table class=\"table table-hover\">\n  <tbody>\n    <tr>\n      <th scope=\"row\">Manufacturer</th>\n      <td>"
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"system") : depth0)) != null ? lookupProperty(stack1,"manufacturer") : stack1), depth0))
-    + "</td>\n    </tr>\n<tr>\n<th scope=\"row\">CPU</th>\n<td>"
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"manufacturer") : stack1), depth0))
-    + " "
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"brand") : stack1), depth0))
-    + "</td>\n</tr>\n<tr>\n<th scope=\"row\">Vendor</th>\n<td>"
+    + "</td>\n</tr>\n  </tbody>\n</table>\n    </p>\n  </div>\n  <div class=\"d-flex justify-content-between align-items-center flex-wrap p-2\">\n    <div>\n    </div>\n  </div>\n</div>\n\n<div class=\"card border border-primary\" style=\"max-width:400px\">\n  <div class=\"card-body\">\n    <h4 class=\"card-title text-primary\">Processor</h4>\n    <p class=\"card-text\">\n   <table class=\"table table-hover\">\n  <tbody>\n<tr>\n<th scope=\"row\">CPU</th>\n<td>"
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"vendor") : stack1), depth0))
-    + "</td>\n</tr>\n<tr>\n<th scope=\"row\">Manufacturer</th>\n<td>"
+    + " "
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"family") : stack1), depth0))
-    + " "
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"socket") : stack1), depth0))
-    + "</td>\n</tr>\n  </tbody>\n</table>\n    </p>\n  </div>\n  <div class=\"d-flex justify-content-between align-items-center flex-wrap p-2\">\n    <div>\n    </div>\n  </div>\n</div>\n\n<div class=\"card border border-primary\" style=\"max-width:400px\">\n  <div class=\"card-body\">\n    <h4 class=\"card-title text-primary\">Storag xe</h4>\n    <p class=\"card-text\">\n   <table class=\"table table-hover\">\n  <tbody>\n    <tr>\n      <th scope=\"row\">Manufacturer</th>\n      <td>"
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"system") : depth0)) != null ? lookupProperty(stack1,"manufacturer") : stack1), depth0))
-    + "</td>\n    </tr>\n<tr>\n<th scope=\"row\">CPU</th>\n<td>"
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"manufacturer") : stack1), depth0))
-    + " "
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"brand") : stack1), depth0))
-    + "</td>\n</tr>\n<tr>\n<th scope=\"row\">Vendor</th>\n<td>"
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"vendor") : stack1), depth0))
-    + "</td>\n</tr>\n<tr>\n<th scope=\"row\">Manufacturer</th>\n<td>"
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"family") : stack1), depth0))
-    + " "
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"socket") : stack1), depth0))
-    + "</td>\n</tr>\n  </tbody>\n</table>\n    </p>\n  </div>\n  <div class=\"d-flex justify-content-between align-items-center flex-wrap p-2\">\n    <div>\n    </div>\n  </div>\n</div>\n";
+    + "</td>\n</tr>\n<tr>\n<th scope=\"row\">Avg Speed</th>\n<td>"
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpuCurrentSpeed") : depth0)) != null ? lookupProperty(stack1,"avg") : stack1), depth0))
+    + "ghz</td>\n</tr>\n<tr>\n<th scope=\"row\">Temperature</th>\n<td>"
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpuTemperature") : depth0)) != null ? lookupProperty(stack1,"main") : stack1), depth0))
+    + "&#8451;</td>\n</tr>\n  </tbody>\n</table>\n    </p>\n  </div>\n  <div class=\"d-flex justify-content-between align-items-center flex-wrap p-2\">\n    <div>\n    </div>\n  </div>\n</div>\n\n<div class=\"card border border-primary\" style=\"max-width:400px\">\n  <div class=\"card-body\">\n    <h4 class=\"card-title text-primary\">Memory</h4>\n    <p class=\"card-text\">\n   <table class=\"table table-hover\">\n  <tbody>\n<tr>\n<th scope=\"row\">Capacity</th>\n<td>"
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"mem") : depth0)) != null ? lookupProperty(stack1,"strtotal") : stack1), depth0))
+    + "</td>\n</tr>\n<tr>\n<th scope=\"row\">Used</th>\n<td>"
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"mem") : depth0)) != null ? lookupProperty(stack1,"strused") : stack1), depth0))
+    + " </td>\n</tr>\n<tr>\n<th scope=\"row\">Free</th>\n<td>"
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"mem") : depth0)) != null ? lookupProperty(stack1,"strfree") : stack1), depth0))
+    + "</td>\n</tr>\n\n<tr>\n<th scope=\"row\">Swap Capacity</th>\n<td>"
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"mem") : depth0)) != null ? lookupProperty(stack1,"strswaptotal") : stack1), depth0))
+    + "</td>\n</tr>\n<tr>\n<th scope=\"row\">Swap Used</th>\n<td>"
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"mem") : depth0)) != null ? lookupProperty(stack1,"strswapused") : stack1), depth0))
+    + " </td>\n</tr>\n<tr>\n<th scope=\"row\">Swap Free</th>\n<td>"
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"mem") : depth0)) != null ? lookupProperty(stack1,"strswapfree") : stack1), depth0))
+    + "</td>\n</tr>\n  </tbody>\n</table>\n    </p>\n  </div>\n  <div class=\"d-flex justify-content-between align-items-center flex-wrap p-2\">\n    <div>\n    </div>\n  </div>\n</div>\n\n<div class=\"card border border-primary\" style=\"max-width:400px\">\n  <div class=\"card-body\">\n    <h4 class=\"card-title text-primary\">Storage</h4>\n    <p class=\"card-text\">\n   <table class=\"table table-hover\">\n  <tbody>\n"
+    + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"fsSize") : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":108,"column":0},"end":{"line":132,"column":9}}})) != null ? stack1 : "")
+    + "  </tbody>\n</table>\n    </p>\n  </div>\n  <div class=\"d-flex justify-content-between align-items-center flex-wrap p-2\">\n    <div>\n    </div>\n  </div>\n</div>\n";
 },"useData":true});
 templates['ticker.hbs'] = template({"1":function(container,depth0,helpers,partials,data) {
     var stack1, alias1=container.lambda, alias2=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
