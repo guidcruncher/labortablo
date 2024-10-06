@@ -36,21 +36,17 @@
     <p class="card-text">
    <table class="table table-hover">
   <tbody>
-    <tr>
-      <th scope="row">Manufacturer</th>
-      <td>{{system.manufacturer}}</td>
-    </tr>
 <tr>
 <th scope="row">CPU</th>
-<td>{{cpu.manufacturer}} {{cpu.brand}}</td>
+<td>{{cpu.vendor}} {{cpu.family}}</td>
 </tr>
 <tr>
-<th scope="row">Vendor</th>
-<td>{{cpu.vendor}}</td>
+<th scope="row">Avg Speed</th>
+<td>{{cpuCurrentSpeed.avg}}ghz</td>
 </tr>
 <tr>
-<th scope="row">Manufacturer</th>
-<td>{{cpu.family}} {{cpu.socket}}</td>
+<th scope="row">Temperature</th>
+<td>{{cpuTemperature.main}}&#8451;</td>
 </tr>
   </tbody>
 </table>
@@ -64,26 +60,76 @@
 
 <div class="card border border-primary" style="max-width:400px">
   <div class="card-body">
-    <h4 class="card-title text-primary">Storag xe</h4>
+    <h4 class="card-title text-primary">Memory</h4>
     <p class="card-text">
    <table class="table table-hover">
   <tbody>
+<tr>
+<th scope="row">Capacity</th>
+<td>{{mem.strtotal}}</td>
+</tr>
+<tr>
+<th scope="row">Used</th>
+<td>{{mem.strused}} </td>
+</tr>
+<tr>
+<th scope="row">Free</th>
+<td>{{mem.strfree}}</td>
+</tr>
+
+<tr>
+<th scope="row">Swap Capacity</th>
+<td>{{mem.strswaptotal}}</td>
+</tr>
+<tr>
+<th scope="row">Swap Used</th>
+<td>{{mem.strswapused}} </td>
+</tr>
+<tr>
+<th scope="row">Swap Free</th>
+<td>{{mem.strswapfree}}</td>
+</tr>
+  </tbody>
+</table>
+    </p>
+  </div>
+  <div class="d-flex justify-content-between align-items-center flex-wrap p-2">
+    <div>
+    </div>
+  </div>
+</div>
+
+<div class="card border border-primary" style="max-width:400px">
+  <div class="card-body">
+    <h4 class="card-title text-primary">Storage</h4>
+    <p class="card-text">
+   <table class="table table-hover">
+  <tbody>
+{{# each this.fsSize}}
     <tr>
-      <th scope="row">Manufacturer</th>
-      <td>{{system.manufacturer}}</td>
+      <th scope="row">Device</th>
+      <td>{{this.fs}}</td>
     </tr>
 <tr>
-<th scope="row">CPU</th>
-<td>{{cpu.manufacturer}} {{cpu.brand}}</td>
+<th scope="row">Capacity</th>
+<td>{{this.strsize}}</td>
 </tr>
 <tr>
-<th scope="row">Vendor</th>
-<td>{{cpu.vendor}}</td>
+<th scope="row">Used</th>
+<td>{{this.strused}} ({{this.use}}%)</td>
 </tr>
 <tr>
-<th scope="row">Manufacturer</th>
-<td>{{cpu.family}} {{cpu.socket}}</td>
+<th scope="row">Free</th>
+<td>{{this.stravailsble}}</t>
 </tr>
+{{#if @last }}{{else}}
+<tr>
+<th scope="row">&nbsp;</th>
+<td>&nbsp;</td>
+</tr>
+{{/if}}
+
+{{/each}}
   </tbody>
 </table>
     </p>
