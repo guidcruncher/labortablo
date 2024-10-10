@@ -1,0 +1,17 @@
+{{#if isBootstrap}} {{#each this.groups}}
+    <div class="card" style="margin-bottom:5px">
+      <div class="card-body">
+        <h5 class="card-title">{{this}}</h5> {{#eachwhen ../this.items "group" this }} {{> iconbutton this}} {{/eachwhen}}
+      </div>
+    </div>
+  {{/each}}
+{{else}} {{# each this.groups}}
+    <div class="card border border-primary" style="max-width:400px">
+      <div class="card-body">
+        <h4 class="card-title text-primary">{{this}}</h4>
+        <p class="card-text">
+          {{#eachwhen ../this.items "group" this }} {{> iconbutton this}} {{/eachwhen}}
+        </p>
+      </div>
+    </div>
+    {{/each}} {{/if}}
