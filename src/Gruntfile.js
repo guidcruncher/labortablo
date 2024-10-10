@@ -61,11 +61,11 @@ module.exports = function(grunt) {
       },
       build: {
         command: [
-	  'docker buildx create --name labortablo-builder --node labortablo-builder --platform linux/arm64 --use --bootstrap',
+          'docker buildx create --name labortablo-builder --node labortablo-builder --platform linux/arm64 --use --bootstrap',
           'docker buildx prune --builder labortablo-builder -f',
           'docker buildx build --pull --no-cache --load --platform linux/arm64 --builder labortablo-builder -t "guidcruncher/labortablo:development" .',
           'docker push "guidcruncher/labortablo:development"',
-	  'docker buildx rm labortablo-builder -f'
+          'docker buildx rm labortablo-builder -f'
         ].join(' && ')
       },
       publish: {
@@ -105,4 +105,3 @@ module.exports = function(grunt) {
   grunt.registerTask('deploy', ['shell:deploy']);
   grunt.registerTask('publish', ['shell:publish']);
 };
-
