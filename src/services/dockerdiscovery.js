@@ -73,114 +73,117 @@ function create() {
 }
 
 function resolveExtendedData(container) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     var promises = [];
-    promises.push(iconResolver.determineIconUrl(container));
+    promises.push(iconresolver.determineIconUrl(container));
     promises.push(repository.summary(container.image));
-    Promise.allSettled(promises).then((results) =>{
+    Promise.allSettled(promises).then((results) => {
       results.forEach((result) => {
         if (result.status == "fulfilled") {
           switch (result.value.type) {
             case "icon":
-              containerw.iconHre = value.value;
+              container.iconHref = result.value.value;
               break;
             case "summary":
-              containers.description = value.value.trim().split(" ")[0];
+              container.description = result.value.trim().split(" ")[0];
           }
         }
       });
+      resolve(container);
     });
   });
 }
 
 function getContainer(id) {
   return new Promise((resolve, reject) => {
-      var docker = dockerFactory.createDocker();
-      var container = docker.getContainer(id);
-      container.inspect(function(err, data) {
-          if (err) {
-            reject(err);
-            return;
-          }
+    var docker = dockerFactory.createDocker();
+    var container = docker.getContainer(id);
+    container.inspect(function(err, data) {
+      if (err) {
+        reject(err);
+        return;
+      }
 
-          var record = {
-            id: container.id,
-            shortid: container.substring(0, 12),
-            group: container.Config.Labels["homepage.group"],
-            name: container.Config.Labels["homepage.name"].toLowerCase(),
-            href: container.Config.Labels["homepage.href"];,
-            icon: container.Config.Labels["homepage.icon"],
-            iconHref: "",
-            image: "",
-            imageHref: "",
-            description: container.Config.Labels["Homepage.description",
-              tag: "",
-              container: container.Name.substring(1)
-            };
+      var record = {
+        id: data.id,
+        shortid: data.id.substring(0, 12),
+        group: data.Config.Labels["homepage.group"],
+        name: data.Config.Labels["homepage.name"],
+        href: data.Config.Labels["homepage.href"],
+        icon: data.Config.Labels["homepage.icon"].toLoweCase(),
+        iconHref: "",
+        image: "",
+        imageHref: "",
+        imageName: "",
+        description: data.Config.Labels["Homepage.description"],
+        tag: "",
+        container: data.Name.substring(1)
+      };
 
-            var image = container.Config.Image.split(":");
-            if (image.length >= 2) {
-              record.tag = image[image.length - 1]
-            }
-            if (container.Config.Image.split("/").length <= 2) {
-              record.image = "docker.io/" + image[0];
-              record.imageHref = "https://docker.io/" + image[0];
-            } else {
-              record.image = image[0];
-              record.imageHref = "https://" + image[0];
-            }
+      var image = data.Config.Image.split(":");
+      var imageParts = data.Config.Image.split("/");
+      record.imageName = imageParts[imageParts.length - 1].split(":")[0];
+      if (image.length >= 2) {
+        record.tag = image[image.length - 1]
+      }
+      if (imageParts.length <= 2) {
+        record.image = "docker.io/" + image[0];
+        record.imageHref = "https://docker.io/" + image[0];
+      } else {
+        record.image = image[0];
+        record.imageHref = "https://" + image[0];
+      }
 
-            if (record.icon == "") {
-              record.icon = record.name.split(" ")[0].toLowerCase();
-            }
+      if (record.icon == "") {
+        record.icon = record.name.split(" ")[0].toLowerCase();
+      }
 
-            resolveExtendedData(record)
-            .then(function(iconHref) {
-              record.iconHref = iconHref;
-              resolve(record);
-            })
-            catch (function(err) {
-              logger.error("Error resolving icon for " + record.icon);
-              reject("Icon not found");
-            });
-          });
+      resolveExtendedData(record)
+        .then(function(iconHref) {
+          record.iconHref = iconHref;
+          resolve(record);
+        });
+    });
+  });
+}
+
+function ensureDiscovery() {
+  return new Promise((resolve, reject) => {
+    var data = create();
+    var docker = dockerFactory.createDocker();
+    var promises = [];
+
+    docker.listContainers(function(err, containers) {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      containers.forEach((c) => {
+        promises.push(getContainer(c.Id));
       });
-  }
 
-  function ensureDiscovery() {
-    return new Promise((resolve, reject) => {
-      var data = create();
-      var docker = dockerFactory.createDocker();
-      var promises = [];
-
-      docker.listContainers(function(err, containers) {
-        if (err) {
-          reject(err);
-          return;
-        }
-
-        containers.forEach((c) => {
-          promises.push(getContainer(c.Id));
-        });
-
-        Promise.allSettled(promises).then((results) => {
-          data.services.items = results.find((result) => {
-              return result.status == "fulfilled";
-            })
-            .map((result) => {
-              return result.value;
-            })
-            .sort((a, b) => {
-              return a.name.localeCompare(b.name);
-            });
-          data.services.groups = Array.from(new Set(data.services.map((item) => item.group))).sort();
-          save(data);
-          resolve(data);
-        });
+      Promise.allSettled(promises).then((results) => {
+        data.services.items = results.find((result) => {
+            return result.status == "fulfilled";
+          })
+          .map((result) => {
+            return result.value;
+          })
+          .sort((a, b) => {
+            return a.name.localeCompare(b.name);
+          });
+        data.services.groups = Array.from(new Set(data.services.map((item) => item.group))).sort();
+        save(data);
+        resolve(data);
       });
     });
-  }
+  });
+}
 
-  module.exports = {
-    ensureDiscovery,
-  };
+module.exports = {
+  load,
+  save,
+  invalidate,
+  ensureDiscovery,
+};

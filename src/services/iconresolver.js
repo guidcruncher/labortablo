@@ -171,11 +171,17 @@ function determineIconUrl(data) {
             });
         })
         .catch(() => {
-            resolve({
-              type: "icon",
-              value: "/icons/" + data.icon
-            });
+          resolve({
+            type: "icon",
+            value: "/icons/" + data.icon
+          });
         });
+    } else {
+      resolve({
+        type: "icon",
+        value: "/icons/" + data.icon
+      });
+    }
   });
 }
 
