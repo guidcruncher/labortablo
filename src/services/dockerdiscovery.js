@@ -116,7 +116,6 @@ function getContainer(id) {
         imageHref: "",
         imageName: "",
         description: data.Config.Labels["Homepage.description"] ? data.Config.Labels["homepage.description"] : "",
-        ,
         tag: "",
         container: data.Name.substring(1)
       };
@@ -165,7 +164,7 @@ function ensureDiscovery() {
       });
 
       Promise.allSettled(promises).then((results) => {
-        data.services.items = results.find((result) => {
+        data.services.items = results.filter((result) => {
             return result.status == "fulfilled";
           })
           .map((result) => {
