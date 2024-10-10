@@ -133,34 +133,49 @@ function determineIconUrl(data) {
       filename = iconCacheFolder + "/services/" + imagename + ".png";
 
       if (fs.existsSync(filename)) {
-        resolve({type:"icon", value: config.get("baseUrl") + "/api/icons/" + imagename + path.extname(filename)});
+        resolve({
+          type: "icon",
+          value: config.get("baseUrl") + "/api/icons/" + imagename + path.extname(filename)
+        });
         return;
       }
 
       filename = iconCacheFolder + "/services/" + imagename + ".svg";
 
       if (fs.existsSync(filename)) {
-	resolve({type:"icon", value: config.get("baseUrl") + "/api/icons/" + imagename + path.extname(filename)});
-	return;
-     }
+        resolve({
+          type: "icon",
+          value: config.get("baseUrl") + "/api/icons/" + imagename + path.extname(filename)
+        });
+        return;
+      }
 
-    serviceIconResolvers.forEach(function(template) {
-      requests.push(checkIconUrl(template.url, template.serves, imagename));
-    });
-
-    Promise.any(requests)
-      .then((validUrl) => {
-        downloadFile(validUrl.url, imagename + validUrl.format)
-          .then(() => {
-            resolve({type: "icon", value:config.get("baseUrl") + "/api/icons/" + imagename + validUrl.format});
-          })
-          .catch(() => {
-            resolve({type:"icon", value:"/icons/" + data.icon});
-          });
-      })
-      .catch(() => {
-        resolve{type:"icon", value: "/icons/" + data.icon});
+      serviceIconResolvers.forEach(function(template) {
+        requests.push(checkIconUrl(template.url, template.serves, imagename));
       });
+
+      Promise.any(requests)
+        .then((validUrl) => {
+          downloadFile(validUrl.url, imagename + validUrl.format)
+            .then(() => {
+              resolve({
+                type: "icon",
+                value: config.get("baseUrl") + "/api/icons/" + imagename + validUrl.format
+              });
+            })
+            .catch(() => {
+              resolve({
+                type: "icon",
+                value: "/icons/" + data.icon
+              });
+            });
+        })
+        .catch(() => {
+            resolve({
+              type: "icon",
+              value: "/icons/" + data.icon
+            });
+        });
   });
 }
 

@@ -74,19 +74,22 @@ function create() {
 
 function resolveExtendedData(container) {
   return new Promise((resolve, reject) => {
-	var promises = [];
-	promises.push(iconResolver.determineIconUrl(container));
-	promises.push(repository.summary(container.image));
-	Promise.allSettled(promises).then((results) { 
-		results.forEach((result)=>{
-			if (result.status == "fulfilled") {
-				switch (result.value.type) {
-					case "icon": containerw.iconHre = value.value;break;
-					case "summary": containers.description = value.value.trim().split(" ")[0];
-				}
-			}
-		});
-	});
+    var promises = [];
+    promises.push(iconResolver.determineIconUrl(container));
+    promises.push(repository.summary(container.image));
+    Promise.allSettled(promises).then((results) =>{
+      results.forEach((result) => {
+        if (result.status == "fulfilled") {
+          switch (result.value.type) {
+            case "icon":
+              containerw.iconHre = value.value;
+              break;
+            case "summary":
+              containers.description = value.value.trim().split(" ")[0];
+          }
+        }
+      });
+    });
   });
 }
 

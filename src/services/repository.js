@@ -179,14 +179,14 @@ function summary(image) {
             data.imageName = image;
             if (data.name && data.name != undefined) {
               resolve({
-		type: "repositorydata", 
+                type: "repositorydata",
                 name: data.name,
                 value: data.description,
                 imageName: image,
               });
             } else {
               resolve({
-		type: "repositorydata",
+                type: "repositorydata",
                 name: "",
                 value: "",
                 imageName: ""
