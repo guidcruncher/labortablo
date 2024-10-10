@@ -1,0 +1,29 @@
+<div class="list-group">
+  {{#each this.groups}}
+    <div class="list-group-item list-group-item-primary">{{this}}</div>
+    {{#eachwhen ../this.items "group" this }}
+      <div class="list-group-item d-flex align-items-center gap-3 list-group-item-action" onclick="window.open('{{this.href}}','_blank');return false;">
+        <div class="container">
+          <div class="row">
+            <div class="col" style="width:36px !important;max-width:36px !important;height:40px !important;padding: 0px;" />
+            <img src="{{this.icon}}" style="align:middle;max-width:32px;height:32px;" />
+          </div>
+          <div class="col" style="overflow:hidden;">
+            <div class="row"><span>{{this.name}}</span></div>
+            <div class="row">
+              <div class="col col-md-auto" style="font-size: 12px;white-space:nowrap;overflow:hidden; !important;">{{this.description}}</div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="containerstats mobile-hide" container-id="{{this.id}}">CPU: -</div>
+          </div>
+          <div class="col col-md-auto">
+            <span class="state {{this.state}}">{{this.state}}</span>
+          </div>
+        </div>
+      </div>
+</div>
+{{/eachwhen}} {{#if @last}}{{else}}
+  <div class="list-group-item list-divider"></div>
+{{/if}} {{/each}}
+</div>

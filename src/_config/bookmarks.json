@@ -1,0 +1,27 @@
+
+{
+  "Web": {
+    "Labortablo": {
+      "description": "A cool dashboard and homepage",
+      "icon": "labortablo.svg",
+      "href": "https://github.com/guidcruncher/labortablo"
+    },
+    "GitHub": {
+      "description": "",
+      "icon": "",
+      "href": "https://www.github.com/guidcruncher"
+    },
+    "selfh.st": {
+      "description": "",
+      "icon": "",
+      "href": "https://selfh.st/"
+    }
+  },
+  "Search": {
+      "Google": {
+      "description": "",
+      "icon": "",
+      "href": "https://www.google.com"
+    }
+  }
+}

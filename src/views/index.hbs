@@ -1,0 +1,67 @@
+<ul class="icon-left nav nav-tabs nav-justified" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" data-bs-toggle="tab" role="tab" data-bs-target="#tabservices">
+      <i class="bi bi-server m-1"></i> Services
+    </button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#tabbookmarks">
+      <i class="bi bi-pc-display-horizontal m-1"></i> Bookmarks
+    </button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#tabfeeds">
+      <i class="bi bi-rss m-1"></i> Feeds
+    </button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#tabsystem">
+      <i class="bi bi-clipboard-data m-1"></i> System
+    </button>
+  </li>
+</ul>
+<div class="tab-content ">
+  <div class="tab-pane container-fluid active " role="tabpanel" id="tabservices">
+    {{> iconlist containers }}
+  </div>
+  <div class="tab-pane container-fluid fade " role="tabpanel" id="tabbookmarks">
+    {{> bookmarks bookmarks }}
+  </div>
+  <div class="tab-pane container-fluid fade " role="tabpanel" id="tabfeeds">
+    {{> feeds this.newsfeeds }}
+  </div>
+  <div class="tab-pane container-fluid fade " role="tabpanel" id="tabsystem">
+    {{> system this.systeminfo }}
+  </div>
+</div>
+<script type="text/javascript">
+  $(function () {
+    $('*[data-bs-toggle="tab"]').click(function (e) {
+      window.API_BASE = '{{API_BASE}}';
+      var target = $(this).attr("data-bs-target");
+      switch (target) {
+      case "#tabservices":
+        reloadIconList();
+        break;
+      case "#tabbookmarks":
+        reloadBookmarks();
+        break;
+      case "#tabfeeds":
+        loadFeeds();
+        break;
+      case "#tabsystem":
+        reloadSystem();
+        break;
+      }
+      return false;
+    });
+    window.API_BASE = '{{API_BASE}}';
+    $('.nav-tabs').materialtab();
+    setTimeout(reloadIconList, 60000);
+    setTimeout(reloadBookmarks, 120000);
+    setTimeout(loadFeeds, 60000);
+    setTimeout(reloadSystem, 15000);
+    containerStats();
+  });
+
+</script>

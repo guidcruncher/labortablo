@@ -1,0 +1,52 @@
+{
+  "theme": {
+     "name": "auto",
+     "darkModeHours": {"start": 19, "end": 7}
+  },
+  "baseUrl": "",
+  "useSystemInfoHostHelper": {
+    "enabled": true,
+    "hostName": "${DOCKER_GATEWAY_HOST}",
+    "port": 9081
+  },
+  "oidc": {
+    "enabled": false,
+    "issuerBaseUrl": "",
+    "clientId": "",
+    "clientSecret": "",
+    "secret": "replace-with-some-long-random-string-please"
+  },
+  "docker": {
+    "host": "",
+    "socket": ""
+  },
+  "repositories": {
+    "docker_io": {
+      "username": "",
+      "password": ""
+    },
+    "ghcr_io": {
+      "username": "",
+      "password": ""
+    }
+  },
+  "icons": {
+    "simpleIcons": {
+      "baseUrl": "https://cdn.jsdelivr.net/npm/simple-icons@13.13.0"
+    },
+    "serviceIconResolvers": [
+      {
+        "url": "https://cdn.jsdelivr.net/gh/selfhst/icons/png/",
+        "serves": ".png"
+      },
+      {
+        "url": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/",
+        "serves": ".png"
+      }
+    ],
+    "siteIconResolvers": [
+      "https://icons.duckduckgo.com/ip3/{hostname}.ico",
+      "https://www.google.com/s2/favicons?domain={hostname}&sz=64"
+    ]
+  }
+}
