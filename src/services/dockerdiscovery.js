@@ -36,7 +36,7 @@ function invalidate() {
     process.env.NODE_CONFIG_DIR,
     "services.json",
   );
-  logger.debug("Invalidating discovery data at " + filename;
+  logger.debug("Invalidating discovery data at " + filename);
 
     if (fs.existsSync(filename)) {
       fs.unlinkSync(filename);
