@@ -1,4 +1,7 @@
 # labortablo
+
+[![Development](https://github.com/guidcruncher/labortablo/actions/workflows/npm-grunt.yml/badge.svg?branch=dev)](https://github.com/guidcruncher/labortablo/actions/workflows/npm-grunt.yml)
+
 A cool Dashboard and Homepage
 
 Here is a preview of the mobile view. 
