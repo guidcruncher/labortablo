@@ -332,7 +332,7 @@ this["JST"]["views/partials/iconlist.hbs"] = Handlebars.template({"1":function(c
   return "      <div class=\"list-group-item d-flex align-items-center gap-3 list-group-item-action\" onclick=\"window.open('"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"href") : depth0), depth0))
     + "','_blank');return false;\">\n        <div class=\"container\">\n          <div class=\"row\">\n            <div class=\"col\" style=\"width:36px !important;max-width:36px !important;height:40px !important;padding: 0px;\" />\n            <img src=\""
-    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"iconHref") : depth0), depth0))
+    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"iconhref") : depth0), depth0))
     + "\" style=\"align:middle;max-width:32px;height:32px;\" />\n          </div>\n          <div class=\"col\" style=\"overflow:hidden;\">\n            <div class=\"row\"><span>"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"name") : depth0), depth0))
     + "</span></div>\n            <div class=\"row\">\n              <div class=\"col col-md-auto\" style=\"font-size: 12px;white-space:nowrap;overflow:hidden; !important;\">"

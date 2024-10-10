@@ -91,7 +91,7 @@ function resolveExtendedData(container) {
         if (result.status == "fulfilled") {
           switch (result.value.type) {
             case "icon":
-              container.iconHref = result.value.value.trim();
+              container.iconhref = result.value.value.trim();
               break;
             case "summary":
               container.description = result.value.trim().split(" ")[0];
@@ -122,7 +122,7 @@ function getContainer(id) {
         name: data.Config.Labels["homepage.name"] ? data.Config.Labels["homepage.name"] : "",
         href: data.Config.Labels["homepage.href"] ? data.Config.Labels["homepage.href"] : "",
         icon: data.Config.Labels["homepage.icon"] ? data.Config.Labels["homepage.icon"].toLowerCase() : "",
-        iconHref: "",
+        iconhref: "",
         image: "",
         imageHref: "",
         imageName: "",
