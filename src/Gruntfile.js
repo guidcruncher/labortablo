@@ -59,6 +59,9 @@ module.exports = function(grunt) {
       jsprettify: {
         command: 'find . -type f -name "*.js" -not -path "**/node_modules/*" -exec npx js-beautify -s 2 -n -w 0 --type js {} +'
       },
+      cssprettify: {
+        command: 'find . -type f -name "*.css" -not -path "**/node_modules/*" -exec npx js-beautify -r -s 2 -n -w 0 --type css {} +'
+      },
       build: {
         command: [
           'docker buildx create --name labortablo-builder --node labortablo-builder --platform linux/arm64 --use --bootstrap',
@@ -99,7 +102,7 @@ module.exports = function(grunt) {
 
   // Default task(s).
   grunt.registerTask('default', ['package', 'npm-command:dev']);
-  grunt.registerTask('package', ['env:dev', 'shell:jsprettify', 'shell:prettify', 'handlebars', 'eslint', 'uglify']);
+  grunt.registerTask('package', ['env:dev', 'shell:cssprettify', 'shell:jsprettify', 'shell:prettify', 'handlebars', 'eslint', 'uglify']);
   grunt.registerTask('build', ['shell:build']);
   grunt.registerTask('build-deploy', ['build', 'deploy']);
   grunt.registerTask('deploy', ['shell:deploy']);

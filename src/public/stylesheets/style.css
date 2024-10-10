@@ -6,7 +6,7 @@
   font-weight: 400;
   font-style: normal;
 }
- 
+
 .roboto-flex-main {
   font-family: "Roboto Flex", sans-serif;
   font-optical-sizing: auto;
@@ -40,30 +40,35 @@
     transform: translate3d(0, 0, 0);
     visibility: visible;
   }
+
   100% {
     -webkit-transform: translate3d(-100%, 0, 0);
     transform: translate3d(-100%, 0, 0);
   }
 }
+
 @keyframes ticker {
   0% {
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
     visibility: visible;
   }
+
   100% {
     -webkit-transform: translate3d(-100%, 0, 0);
     transform: translate3d(-100%, 0, 0);
   }
 }
+
 .ticker-wrap {
-/*  position: fixed;
+  /*  position: fixed;
   bottom: 0; */
   width: 100%;
   overflow: hidden;
   padding-left: 100%;
   box-sizing: content-box;
 }
+
 .ticker-wrap .ticker {
   display: inline-block;
   white-space: nowrap;
@@ -78,22 +83,59 @@
   -webkit-animation-duration: 30s;
   animation-duration: 30s;
 }
+
 .ticker-wrap .ticker__item {
   display: inline-block;
   padding: 0 2rem;
 }
 
-.containerstats {font-size: 0.7rem;border:solid 1px;padding:5px; border-radius:5px;border-color:gray;color:gray !important;}
+.containerstats {
+  font-size: 0.7rem;
+  border: solid 1px;
+  padding: 5px;
+  border-radius: 5px;
+  border-color: gray;
+  color: gray !important;
+}
 
-.state {font-size: 0.7rem;border:solid 1px;padding:5px; border-radius:5px;}
-.state.healthy, .state.running { color: #77fc00 !important; }
-.state.unhealthy { color: #ff5733 !important; }	
-.state.created { color: #ffff00 !important; }
-.state.restarting { color: #ff8c00 !important;}
-.state.paused { color: #77fc00 !important}
-.state.exited { color: #778899 !important;}
-state.dead { color: #808080 !important;}
+.state {
+  font-size: 0.7rem;
+  border: solid 1px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.state.healthy,
+.state.running {
+  color: #77fc00 !important;
+}
+
+.state.unhealthy {
+  color: #ff5733 !important;
+}
+
+.state.created {
+  color: #ffff00 !important;
+}
+
+.state.restarting {
+  color: #ff8c00 !important;
+}
+
+.state.paused {
+  color: #77fc00 !important
+}
+
+.state.exited {
+  color: #778899 !important;
+}
+
+state.dead {
+  color: #808080 !important;
+}
 
 @media only screen and (max-width: 479px) {
-   .mobile-hide{ display: none !important; }
+  .mobile-hide {
+    display: none !important;
+  }
 }
