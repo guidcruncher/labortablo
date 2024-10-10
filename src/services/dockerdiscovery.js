@@ -38,46 +38,46 @@ function invalidate() {
   );
   logger.debug("Invalidating discovery data at " + filename);
 
-    if (fs.existsSync(filename)) {
-      fs.unlinkSync(filename);
+  if (fs.existsSync(filename)) {
+    fs.unlinkSync(filename);
+  }
+}
+
+function load() {
+  ensurePath();
+  var filename = path.join(
+    process.env.NODE_CONFIG_DIR,
+    "services.json"
+  );
+
+
+  if (!fs.existsSync(filename)) {
+    return create();
+  }
+
+  logger.debug("Loading discovery data from " + filename);
+
+  var data = JSON.parse(fs.readFileSync(filename));
+
+  return data;
+}
+
+function create() {
+  return {
+    created: moment().format("yyyy-MM-DD hh:mm:ss"),
+    services: {
+      groups: [],
+      items: []
     }
-  }
-
-  function load() {
-    ensurePath();
-    var filename = path.join(
-      process.env.NODE_CONFIG_DIR,
-      "services.json"
-    );
-
-
-    if (!fs.existsSync(filename)) {
-      return create();
-    }
-
-    logger.debug("Loading discovery data from " + filename);
-
-    var data = JSON.parse(fs.readFileSync(filename));
-
-    return data;
-  }
-
-  function create() {
-    return {
-      created: moment().format("yyyy-MM-DD hh:mm:ss"),
-      services: {
-        groups: [],
-        items: []
-      }
-    };
-  }
-
-  function ensureDiscovery() {
-    return new Promise((resolve, reject) => {
-
-    });
-  }
-
-  module.exports = {
-    ensureDiscovery,
   };
+}
+
+function ensureDiscovery() {
+  return new Promise((resolve, reject) => {
+
+  });
+}
+
+module.exports = {
+  ensureDiscovery,
+};
