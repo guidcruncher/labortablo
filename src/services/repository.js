@@ -120,9 +120,10 @@ function query(image) {
       }
     }
 
+
     if (repository.authorization) {
       var userEnvPrefix =
-        repository.name.replace(/\./g, "_").toLowerCase() + "_";
+        repository.name.replace(/\./g, "_").toLowerCase();
       var username = config.get("repositories." + userEnvPrefix + ".username");
       var password = config.get("repositories." + userEnvPrefix + ".password");
 
@@ -153,7 +154,7 @@ function summary(image) {
       reject("No repository");
       return;
     }
-    var userEnvPrefix = repository.name.replace(/\./g, "_").toLowerCase() + "_";
+    var userEnvPrefix = repository.name.replace(/\./g, "_").toLowerCase();
     var username = config.get("repositories." + userEnvPrefix + ".username");
     var password = config.get("repositories." + userEnvPrefix + ".password");
     logger.log("Looking for credentials for " + repository.name + " via repositories." + userEnvPrefix);

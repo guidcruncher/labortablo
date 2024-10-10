@@ -96,6 +96,8 @@ function resolveExtendedData(container) {
             case "summary":
               container.description = result.value.trim().split(" ")[0];
           }
+        } else {
+          logger.error("Promise not fulfilled", result);
         }
       });
       resolve(container);
