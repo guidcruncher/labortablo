@@ -72,7 +72,7 @@ module.exports = function(grunt) {
         command: [
           'docker buildx create --name labortablo-builder --node labortablo-builder --platform linux/arm64,linux/amd64  --use --bootstrap',
           'docker buildx prune --builder labortablo-builder -f',
-          'docker buildx build --pull --no-cache --platform linux/arm64,linux/amd64 --builder labortablo-builder -t "guidcruncher/labortablo:latest" .',
+          'docker buildx build --pull --no-cache --platform linux/arm64,linux/amd64 --builder labortablo-builder -t "guidcruncher/labortablo:latest" --push .',
           'docker push "guidcruncher/labortablo:latest"',
           'docker buildx rm labortablo-builder -f'
         ].join(' && ')
