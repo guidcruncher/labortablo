@@ -179,14 +179,16 @@ function summary(image) {
             data.imageName = image;
             if (data.name && data.name != undefined) {
               resolve({
+		type: "repositorydata", 
                 name: data.name,
-                description: data.description,
+                value: data.description,
                 imageName: image,
               });
             } else {
               resolve({
+		type: "repositorydata",
                 name: "",
-                description: "",
+                value: "",
                 imageName: ""
               });
             }

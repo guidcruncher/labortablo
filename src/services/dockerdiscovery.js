@@ -72,12 +72,112 @@ function create() {
   };
 }
 
-function ensureDiscovery() {
+function resolveExtendedData(container) {
   return new Promise((resolve, reject) => {
-
+	var promises = [];
+	promises.push(iconResolver.determineIconUrl(container));
+	promises.push(repository.summary(container.image));
+	Promise.allSettled(promises).then((results) { 
+		results.forEach((result)=>{
+			if (result.status == "fulfilled") {
+				switch (result.value.type) {
+					case "icon": containerw.iconHre = value.value;break;
+					case "summary": containers.description = value.value.trim().split(" ")[0];
+				}
+			}
+		});
+	});
   });
 }
 
-module.exports = {
-  ensureDiscovery,
-};
+function getContainer(id) {
+  return new Promise((resolve, reject) => {
+      var docker = dockerFactory.createDocker();
+      var container = docker.getContainer(id);
+      container.inspect(function(err, data) {
+          if (err) {
+            reject(err);
+            return;
+          }
+
+          var record = {
+            id: container.id,
+            shortid: container.substring(0, 12),
+            group: container.Config.Labels["homepage.group"],
+            name: container.Config.Labels["homepage.name"].toLowerCase(),
+            href: container.Config.Labels["homepage.href"];,
+            icon: container.Config.Labels["homepage.icon"],
+            iconHref: "",
+            image: "",
+            imageHref: "",
+            description: container.Config.Labels["Homepage.description",
+              tag: "",
+              container: container.Name.substring(1)
+            };
+
+            var image = container.Config.Image.split(":");
+            if (image.length >= 2) {
+              record.tag = image[image.length - 1]
+            }
+            if (container.Config.Image.split("/").length <= 2) {
+              record.image = "docker.io/" + image[0];
+              record.imageHref = "https://docker.io/" + image[0];
+            } else {
+              record.image = image[0];
+              record.imageHref = "https://" + image[0];
+            }
+
+            if (record.icon == "") {
+              record.icon = record.name.split(" ")[0].toLowerCase();
+            }
+
+            resolveExtendedData(record)
+            .then(function(iconHref) {
+              record.iconHref = iconHref;
+              resolve(record);
+            })
+            catch (function(err) {
+              logger.error("Error resolving icon for " + record.icon);
+              reject("Icon not found");
+            });
+          });
+      });
+  }
+
+  function ensureDiscovery() {
+    return new Promise((resolve, reject) => {
+      var data = create();
+      var docker = dockerFactory.createDocker();
+      var promises = [];
+
+      docker.listContainers(function(err, containers) {
+        if (err) {
+          reject(err);
+          return;
+        }
+
+        containers.forEach((c) => {
+          promises.push(getContainer(c.Id));
+        });
+
+        Promise.allSettled(promises).then((results) => {
+          data.services.items = results.find((result) => {
+              return result.status == "fulfilled";
+            })
+            .map((result) => {
+              return result.value;
+            })
+            .sort((a, b) => {
+              return a.name.localeCompare(b.name);
+            });
+          data.services.groups = Array.from(new Set(data.services.map((item) => item.group))).sort();
+          save(data);
+          resolve(data);
+        });
+      });
+    });
+  }
+
+  module.exports = {
+    ensureDiscovery,
+  };
