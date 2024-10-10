@@ -7,7 +7,7 @@ const moment = require("moment");
 const repository = require("./repository.js");
 
 function ensurePath() {
-  var dir = path.join(process.env.NODE_CONFIG_DIRP);
+  var dir = process.env.NODE_CONFIG_DIR;
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
   }
@@ -173,7 +173,7 @@ function ensureDiscovery() {
           .sort((a, b) => {
             return a.name.localeCompare(b.name);
           });
-        data.services.groups = Array.from(new Set(data.services.map((item) => item.group))).sort();
+        data.services.groups = Array.from(new Set(data.services.items.map((item) => item.group))).sort();
         save(data);
         resolve(data);
       });
