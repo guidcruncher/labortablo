@@ -135,7 +135,7 @@ function determineIconUrl(icon) {
       if (fs.existsSync(filename)) {
         resolve({
           type: "icon",
-          value: config.get("baseUrl") + "/api/icons/" + imagename + path.extname(filename)
+          value: "/api/icons/" + imagename + path.extname(filename)
         });
         return;
       }

@@ -94,18 +94,22 @@ function query(image) {
       var url =
         repository.api +
         repository.queryEndpoint.replace("[image]", getImagePath(imageUrl));
-
+      logger.trace("Repository " + url);
       if (repository.authorization) {
         var args = {};
         args.headers = {
           Authorization: repository.authorization + " " + token,
         };
-        client.get(url, args, function(data) {
+        client.get(url, args, function(data, response) {
+          if (response) {
+            logger.warn(response);
+          }
           if (data) {
             data.imageName = image;
             resolve(data);
             return;
           }
+
           resolve();
         });
       } else {
