@@ -1,4 +1,7 @@
 {
+  "logging": {
+     "level": "debug"
+  },
   "theme": {
      "name": "auto",
      "darkModeHours": {"start": 19, "end": 7}
