@@ -4,39 +4,28 @@ const router = express.Router();
 const docker = require("../services/docker.js");
 
 router.get("/", function handler(request, reply) {
-  docker
-    .isCacheStale()
-    .then((stale) => {
-      var containers = {
-        groups: [],
-        items: []
-      };
+  var containers = {
+    groups: [],
+    items: []
+  };
 
-      if (stale) {
-        docker.invalidateCache();
-      } else {
-        containers = docker.loadFromCache();
-      }
+  containers = docker.loadFromCache();
 
-      if (containers.items.length <= 0) {
-        docker
-          .listContainers()
-          .then((data) => {
-            docker.saveToCache(data);
-            reply.send(data);
-          })
-          .catch((err) => {
-            throw new Error(err);
-          });
-      } else {
-        reply.send(containers);
-      }
-    })
-    .catch((err) => {
-      logger.error("Error in getcontainers", err);
-      reply.status(500).send();
-    });
+  if (containers.items.length <= 0) {
+    docker
+      .listContainers()
+      .then((data) => {
+        docker.saveToCache(data);
+        reply.send(data);
+      })
+      .catch((err) => {
+        throw new Error(err);
+      });
+  } else {
+    reply.send(containers);
+  }
 });
+
 
 router.get("/cache/invalidate", function handler(request, reply) {
   docker.invalidateCache();
