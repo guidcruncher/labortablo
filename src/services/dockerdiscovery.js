@@ -64,7 +64,7 @@ function load() {
 
 function create() {
   return {
-    created: moment().format("yyyy-MM-DD hh:mm:ss"),
+    created: moment().format("yyyy-MM-DD HH:mm:ss"),
     services: {
       groups: [],
       items: []
@@ -75,14 +75,23 @@ function create() {
 function resolveExtendedData(container) {
   return new Promise((resolve) => {
     var promises = [];
-    promises.push(iconresolver.determineIconUrl(container));
+    if (container.icon != "") {
+      promises.push(iconresolver.determineIconUrl(container.icon));
+    } else {
+      if (container.icon != "") {
+        promises.push(iconresolver.determineIconUrl(container.name));
+      } else {
+        promises.push(iconresolver.determineIconUrl(container.imageName));
+      }
+    }
+
     promises.push(repository.summary(container.image));
     Promise.allSettled(promises).then((results) => {
       results.forEach((result) => {
         if (result.status == "fulfilled") {
           switch (result.value.type) {
             case "icon":
-              container.iconHref = result.value.value;
+              container.iconHref = result.value.value.trim();
               break;
             case "summary":
               container.description = result.value.trim().split(" ")[0];
@@ -139,9 +148,8 @@ function getContainer(id) {
       }
 
       resolveExtendedData(record)
-        .then(function(iconHref) {
-          record.iconHref = iconHref;
-          resolve(record);
+        .then(function(result) {
+          resolve(result);
         });
     });
   });
@@ -164,7 +172,7 @@ function ensureDiscovery() {
       });
 
       Promise.allSettled(promises).then((results) => {
-        data.services.items = results.filter((result) => {
+        data.services.items = Array.from(results.filter((result) => {
             return result.status == "fulfilled";
           })
           .map((result) => {
@@ -172,7 +180,7 @@ function ensureDiscovery() {
           })
           .sort((a, b) => {
             return a.name.localeCompare(b.name);
-          });
+          }));
         data.services.groups = Array.from(new Set(data.services.items.map((item) => item.group))).sort();
         save(data);
         resolve(data);

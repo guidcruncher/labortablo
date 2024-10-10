@@ -119,7 +119,7 @@ function checkIconUrl(url, format, name) {
   });
 }
 
-function determineIconUrl(data) {
+function determineIconUrl(icon) {
   var iconCacheFolder = getIconCacheFolder();
 
   return new Promise((resolve) => {
@@ -127,9 +127,9 @@ function determineIconUrl(data) {
     var imagename = ""
     var filename = "";
 
-    if (data.icon != "") {
+    if (icon != "") {
 
-      imagename = data.icon.split(".")[0].toLowerCase();
+      imagename = icon.split(".")[0].toLowerCase();
       filename = iconCacheFolder + "/services/" + imagename + ".png";
 
       if (fs.existsSync(filename)) {
@@ -145,7 +145,7 @@ function determineIconUrl(data) {
       if (fs.existsSync(filename)) {
         resolve({
           type: "icon",
-          value: config.get("baseUrl") + "/api/icons/" + imagename + path.extname(filename)
+          value: "/api/icons/" + imagename + path.extname(filename)
         });
         return;
       }
@@ -160,26 +160,26 @@ function determineIconUrl(data) {
             .then(() => {
               resolve({
                 type: "icon",
-                value: config.get("baseUrl") + "/api/icons/" + imagename + validUrl.format
+                value: "/api/icons/" + imagename + validUrl.format
               });
             })
             .catch(() => {
               resolve({
                 type: "icon",
-                value: "/icons/" + data.icon
+                value: "/icons/" + icon
               });
             });
         })
         .catch(() => {
           resolve({
             type: "icon",
-            value: "/icons/" + data.icon
+            value: "/icons/" + icon
           });
         });
     } else {
       resolve({
         type: "icon",
-        value: "/icons/" + data.icon
+        value: "/icons/" + icon
       });
     }
   });
