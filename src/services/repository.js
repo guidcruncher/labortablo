@@ -194,11 +194,11 @@ function summary(image) {
             logger.debug("Summary query response " + response.statusCode);
           }
           if (data) {
-              resolve({
-                type: "repositorydata",
-                name: data.name ? data.name :"",
-                description: data.description?data.description:""
-              });
+            resolve({
+              type: "repositorydata",
+              name: data.name ? data.name : "",
+              description: data.description ? data.description : ""
+            });
           } else {
             logger.warn("No results from summary query");
             reject("No results");

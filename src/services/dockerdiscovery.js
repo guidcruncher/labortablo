@@ -163,6 +163,22 @@ function getContainer(id) {
   });
 }
 
+function updateState(containers) {
+  var promises = [];
+  containers.forEach((c) => {
+    var p = new Promise((resolve, reject) => {
+      getContainer(c.container).then((data) => resolve({
+        name: c.container,
+        id: data.Id,
+        state: data.State.Status,
+        health: data.State.Health ? data.State.Health.Status : ""
+      })).catch((err) => reject(err));
+    });
+    promises.push(p);
+  });
+  return promises;
+}
+
 function ensureDiscovery() {
   return new Promise((resolve, reject) => {
     var data = create();
@@ -191,7 +207,21 @@ function ensureDiscovery() {
           }));
         data.services.groups = Array.from(new Set(data.services.items.map((item) => item.group))).sort();
         save(data);
-        resolve(data);
+
+        Promise.allSettled(updateState(data.services.items)).then((results) => {
+          var fulfilled = results.filter((result) => {
+            return result.status == "fulfilled";
+          });
+          fulfilled.forEach((f) => {
+            var i = data.services.items.findIndex((a) => {
+              return a.name == f.name;
+            });
+            if (i >= 0) {
+              data.services.items[i].state = f.health == "" ? f.state : f.health;
+            }
+          });
+          resolve(data);
+        });
       });
     });
   });
