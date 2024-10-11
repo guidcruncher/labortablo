@@ -33,11 +33,13 @@ function getImageUrl(image) {
 }
 
 function getImagePath(image) {
-  var imageUrl = getImageUrl(image);
-  var items = imageUrl.split("/");
-  var url = items.splice(1).join("/");
-  if (items.length < 3) {
-    url = "library/" + items.splice(1).join("/");
+  var items = image.split("/");
+  var url = "";
+
+  if (items.length <= 2) {
+    url = "library/" + items[1];
+  } else {
+    url = items.splice(1).join("/");
   }
 
   return url;
@@ -86,7 +88,7 @@ function login(repository, username, password) {
 
 function query(image) {
   return new Promise((resolve, reject) => {
-    var imageUrl = getImageUrl(image);
+    var imageUrl = image;
     var repository = getRepositorySettings(image);
 
     if (repository == null) {
@@ -192,19 +194,11 @@ function summary(image) {
             logger.debug("Summary query response " + response.statusCode);
           }
           if (data) {
-            data.imageName = image;
-            if (data.name && data.name != undefined) {
               resolve({
                 type: "repositorydata",
-                name: data.name,
-                value: data.description,
-                imageName: image,
+                name: data.name ? data.name :"",
+                description: data.description?data.description:""
               });
-            } else {
-              logger.warn("No results from summary query");
-              reject("No results");
-            }
-            return;
           } else {
             logger.warn("No results from summary query");
             reject("No results");

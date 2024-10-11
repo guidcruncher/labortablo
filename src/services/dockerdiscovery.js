@@ -1,4 +1,4 @@
-const logger = require("../logger.js");
+	const logger = require("../logger.js");
 const dockerFactory = require("./dockerfactory.js");
 const iconresolver = require("./iconresolver.js");
 const fs = require("fs");
@@ -99,8 +99,8 @@ function resolveExtendedData(container) {
             case "icon":
               container.iconhref = result.value.value.trim();
               break;
-            case "summary":
-              container.description = result.value.trim().split(" ")[0];
+            case "repositorydata":
+              container.description = result.value.description.trim().split(".")[0];
           }
         } else {
           logger.error("Promise not fulfilled", result);
