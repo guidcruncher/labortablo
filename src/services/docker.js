@@ -1,143 +1,7 @@
 const logger = require("../logger.js");
 const dockerFactory = require("./dockerfactory.js");
 const iconresolver = require("./iconresolver.js");
-const fs = require("fs");
-const path = require("path");
-const moment = require("moment");
 const repository = require("./repository.js");
-
-function ensurePath() {
-  var dir = path.join(process.env.PERSISTENCE_STORE, "services");
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir);
-  }
-}
-
-function saveToCache(data) {
-  ensurePath();
-  var filename = path.join(
-    process.env.PERSISTENCE_STORE,
-    "services",
-    "services.json",
-  );
-  fs.writeFileSync(
-    filename,
-    JSON.stringify({
-        created: moment().format("yyyy-MM-DD hh:mm:ss"),
-        services: data,
-      },
-      null,
-      2,
-    ),
-  );
-}
-
-function invalidateCache() {
-  ensurePath();
-  var filename = path.join(
-    process.env.PERSISTENCE_STORE,
-    "services",
-    "services.json",
-  );
-
-  if (fs.existsSync(filename)) {
-    fs.unlinkSync(filename);
-  }
-}
-
-function isCacheStale() {
-  ensurePath();
-
-  return new Promise((resolve) => {
-    var filename = path.join(
-      process.env.PERSISTENCE_STORE,
-      "services",
-      "services.json",
-    );
-
-    if (!fs.existsSync(filename)) {
-      resolve(true);
-      return
-    }
-
-    var cache = JSON.parse(fs.readFileSync(filename));
-    if (cache.services.items.length <= 0) {
-      resolve(true);
-      return;
-    }
-
-    var created = new Date(cache.created);
-
-    var now = new Date();
-    var duration = moment(now).diff(created, "minutes");
-    logger.log(
-      "Service Cache created : " + moment(created).format("yyyy-MM-DD hh:mm:ss"),
-    );
-
-    logger.log("Now           : " + moment(now).format("yyyy-MM-DD hh:mm:ss"));
-    logger.log("Age (minutes) : " + duration);
-
-    if (duration < 0 || duration > 60) {
-      logger.log("**** SERVICE CACHE EXPIRED ****");
-      invalidateCache();
-      resolve(true);
-      return;
-    }
-
-    var docker = dockerFactory.createDocker();
-
-    docker.listContainers(function(err, containers) {
-      if (err) {
-        resolve(true);
-        return;
-      }
-
-      var cacheids = cache.services.items.map((item) => item.id);
-      var containerids = containers
-        .filter((x) => {
-          return x.Labels["homepage.group"] ? true : false;
-        })
-        .map((item) => item.Id);
-      var difference = cacheids.filter((x) => !containerids.includes(x));
-
-      if (difference.length > 0) {
-        logger.log("*** SERVICE CACHE IS STALE ***");
-        resolve(true);
-        return;
-      }
-
-      difference = containerids.filter((x) => !cacheids.includes(x));
-
-      if (difference.length > 0) {
-        logger.log("*** SERVICE CACHE IS STALE ***");
-        resolve(true);
-        return;
-      }
-
-      resolve(false);
-    });
-  });
-}
-
-function loadFromCache() {
-  ensurePath();
-  var filename = path.join(
-    process.env.PERSISTENCE_STORE,
-    "services",
-    "services.json"
-  );
-
-  if (!fs.existsSync(filename)) {
-    return {
-      groups: [],
-      items: []
-    };
-  }
-
-  var data = JSON.parse(fs.readFileSync(filename));
-
-  return data.services;
-}
 
 function getContainerMetaData(container) {
   return new Promise((resolve) => {
@@ -158,26 +22,18 @@ function getContainerMetaData(container) {
   });
 }
 
-function preload() {
-  return new Promise((resolve) => {
-    listContainers(true)
-      .then((data) => {
-        saveToCache(data);
-        resolve();
-      })
-      .catch(() => {
-        resolve();
-      });
-  });
-}
-
 function getContainer(id) {
   return new Promise((resolve, reject) => {
     var docker = dockerFactory.createDocker();
     var container = docker.getContainer(id);
 
     container.inspect(function(err, data) {
-      err ? reject(err) : resolve(data);
+      if (err) {
+        logger.error("Error in getcontainer", err);
+        reject(err);
+        return;
+      }
+      resolve(data);
     });
   });
 }
@@ -215,6 +71,7 @@ function getContainerStats(id) {
       stream: false
     }, function(err, data) {
       if (err) {
+        logger.error("Error in getcontainerstats", err);
         reject(err);
       } else {
         data.cpuPercent = 0.0;
@@ -257,7 +114,8 @@ function __getContainer(record) {
         record.containerName = container.Name.substring(1);
         resolve(record);
       })
-      .catch(() => {
+      .catch((err) => {
+        logger.error("Error in __getcontainer", err);
         resolve(record);
       });
   });
@@ -270,6 +128,7 @@ function listContainers(preload) {
       all: true
     }, function(err, containers) {
       if (err) {
+        logger.error("Error in listcontainers", err);
         reject(err);
         return;
       }
@@ -343,6 +202,7 @@ function listContainers(preload) {
           resolve(result);
         })
         .catch((error) => {
+          logger.error("Error in listcontainers", err);
           reject(error);
         });
     });
@@ -350,12 +210,7 @@ function listContainers(preload) {
 }
 
 module.exports = {
-  preload,
   listContainers,
-  isCacheStale,
   getContainer,
-  loadFromCache,
-  invalidateCache,
-  saveToCache,
   getContainerStats,
 };

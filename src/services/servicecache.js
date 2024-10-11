@@ -5,6 +5,31 @@ const moment = require("moment");
 
 var serviceFilename = "";
 
+function createRecord(args) {
+  var record = {
+    id: "",
+    shortid: "",
+    group: "",
+    name: "",
+    href: "",
+    icon: "",
+    iconhref: "",
+    image: "",
+    imageHref: "",
+    imageName: "",
+    description: "",
+    tag: "",
+    container: "",
+    visible: true,
+    created: moment().format("yyyy-MM-DD HH:mm:ss")
+  };
+  Object.seal(record);
+  if (args) {
+    return Object.assign(record, args);
+  }
+  return record;
+}
+
 function ensurePath() {
   var dir = process.env.NODE_CONFIG_DIR;
   if (!fs.existsSync(dir)) {
@@ -72,6 +97,7 @@ module.exports = function(filename) {
   serviceFilename = filename;
   return {
     create,
+    createRecord,
     save,
     load,
     invalidate,

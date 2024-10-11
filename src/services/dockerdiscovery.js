@@ -3,7 +3,7 @@ const dockerFactory = require("./dockerfactory.js");
 const iconresolver = require("./iconresolver.js");
 const repository = require("./repository.js");
 
-const serviceFilename = "services.docker.json";
+const serviceFilename = "services-docker.json";
 const cache = require("./servicecache.js")(serviceFilename);
 
 function load() {
@@ -102,21 +102,16 @@ function getContainer(id) {
         return;
       }
 
-      var record = {
+      var record = cache.createRecord({
         id: data.Id ? data.Id : "",
         shortid: data.Id.substring(0, 12),
         group: data.Config.Labels["homepage.group"] ? data.Config.Labels["homepage.group"] : "",
         name: data.Config.Labels["homepage.name"] ? data.Config.Labels["homepage.name"] : "",
         href: data.Config.Labels["homepage.href"] ? data.Config.Labels["homepage.href"] : "",
         icon: data.Config.Labels["homepage.icon"] ? data.Config.Labels["homepage.icon"].toLowerCase() : "",
-        iconhref: "",
-        image: "",
-        imageHref: "",
-        imageName: "",
         description: data.Config.Labels["Homepage.description"] ? data.Config.Labels["homepage.description"] : "",
-        tag: "",
         container: data.Name.substring(1)
-      };
+      });
 
       var image = data.Config.Image.split(":");
       var imageParts = data.Config.Image.split("/");
