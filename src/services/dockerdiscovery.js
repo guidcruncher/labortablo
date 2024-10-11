@@ -1,62 +1,14 @@
 const logger = require("../logger.js");
 const dockerFactory = require("./dockerfactory.js");
 const iconresolver = require("./iconresolver.js");
-const fs = require("fs");
-const path = require("path");
-const moment = require("moment");
 const repository = require("./repository.js");
 
-function ensurePath() {
-  var dir = process.env.NODE_CONFIG_DIR;
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir);
-  }
-}
-
-function save(data) {
-  ensurePath();
-  var filename = path.join(
-    process.env.NODE_CONFIG_DIR,
-    "services.json",
-  );
-  logger.debug("Saving discovery data to " + filename);
-
-  fs.writeFileSync(
-    filename,
-    JSON.stringify(data,
-      null,
-      2,
-    ),
-  );
-}
-
-function invalidate() {
-  ensurePath();
-  var filename = path.join(
-    process.env.NODE_CONFIG_DIR,
-    "services.json",
-  );
-  logger.debug("Invalidating discovery data at " + filename);
-
-  if (fs.existsSync(filename)) {
-    fs.unlinkSync(filename);
-  }
-}
+const serviceFilename = "services.docker.json";
+const cache = require("./servicecache.js")(serviceFilename);
 
 function load() {
   return new Promise((resolve, reject) => {
-    ensurePath();
-    var filename = path.join(
-      process.env.NODE_CONFIG_DIR,
-      "services.json"
-    );
-    var result = create();
-
-    if (fs.existsSync(filename)) {
-      logger.debug("Loading discovery data from " + filename);
-      result = JSON.parse(fs.readFileSync(filename));
-    }
-
+    var result = cache.load();
     if (result.services.items.length <= 0) {
       logger.debug("Refreshing discovery data");
       ensureDiscovery()
@@ -79,22 +31,12 @@ function load() {
             result.services.items[i].shortid = f.value.id.substring(0, 12);
           }
         });
-        save(result);
+        cache.save(result);
         resolve(result);
       });
 
     }
   });
-}
-
-function create() {
-  return {
-    created: moment().format("yyyy-MM-DD HH:mm:ss"),
-    services: {
-      groups: [],
-      items: []
-    }
-  };
 }
 
 function resolveExtendedData(container) {
@@ -226,7 +168,7 @@ function updateState(containers) {
 
 function ensureDiscovery() {
   return new Promise((resolve, reject) => {
-    var data = create();
+    var data = cache.create();
     var docker = dockerFactory.createDocker();
     var promises = [];
 
@@ -268,7 +210,7 @@ function ensureDiscovery() {
               data.services.items[i].state = f.value.health == "" ? f.value.status : f.value.health;
             }
           });
-          save(data);
+          cache.save(data);
           resolve(data);
         });
       });
@@ -279,7 +221,6 @@ function ensureDiscovery() {
 
 module.exports = {
   load,
-  save,
-  invalidate,
+  save: cache.save,
   ensureDiscovery,
 };
