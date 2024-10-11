@@ -21,8 +21,7 @@ function saveBookmarks(store) {
   fs.writeFileSync(filename, JSON.stringify(store, null, 2));
 }
 
-function importLinkding() {
-}
+function importLinkding() {}
 
 
 module.exports = {

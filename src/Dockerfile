@@ -1,6 +1,6 @@
 FROM node:22.9.0-alpine3.20
 
-RUN apk add --no-cache nano bash curl
+RUN apk add --no-cache nano bash curl sqlite
 
 RUN npm i --global handlebars
 

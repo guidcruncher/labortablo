@@ -1,7 +1,7 @@
 {
   "name": "labortablo",
   "description": "Labortablo Web UI",
-  "version": "0.0.14-0",
+  "version": "0.0.15-0",
   "private": true,
   "scripts": {
     "start": "node ./index.js",
@@ -30,6 +30,7 @@
     "node-cron": "^3.0.3",
     "node-rest-client": "^3.1.1",
     "rss-parser": "^3.13.0",
+    "sqlite3": "^5.1.7",
     "systeminformation": "^5.23.5",
     "xml-js": "^1.6.11"
   },
