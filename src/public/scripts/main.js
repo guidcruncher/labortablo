@@ -31,6 +31,13 @@ function applyTheme(name, s, e, useSystemSettings) {
 
   if (useSystemSettings) {
     const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
+    result = "light";
+    if (darkThemeMq.matches) {
+      result = "dark";
+    }
+    var html = document.getElementsByTagName("html")[0];
+    html.setAttribute("data-bs-theme", result);
+
     darkThemeMq.addListener(e => {
       var theme = "light";
       if (e.matches) {
