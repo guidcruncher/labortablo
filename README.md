@@ -1,6 +1,6 @@
 # labortablo
-[![Main](https://github.com/guidcruncher/labortablo/actions/workflows/main-npm-grunt.yml/badge.svg?branch=main)](https://github.com/guidcruncher/labortablo/actions/workflows/main-npm-grunt.yml)
-[![Development](https://github.com/guidcruncher/labortablo/actions/workflows/npm-grunt.yml/badge.svg?branch=dev)](https://github.com/guidcruncher/labortablo/actions/workflows/npm-grunt.yml)
+
+[![Main Branch Build](https://github.com/guidcruncher/labortablo/actions/workflows/main-npm-grunt.yml/badge.svg)](https://github.com/guidcruncher/labortablo/actions/workflows/main-npm-grunt.yml)
 
 A cool Dashboard and Homepage
 
