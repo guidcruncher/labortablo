@@ -74,8 +74,11 @@ function load() {
           });
           if (i >= 0) {
             result.services.items[i].state = f.health == "" ? f.state : f.health;
+	    result.services.items[i].id = f.id;
+	    result.services.items[i].shortid = f.id.substring(0, 12);
           }
         });
+	save(result);
         resolve(result);
       });
 
@@ -116,6 +119,11 @@ function resolveExtendedData(container) {
               break;
             case "repositorydata":
               container.description = result.value.description.trim().split(".")[0];
+              if (container.id != result.value.id) {
+                container.id = result.value.id;
+                container.shortid = result.value.shortid;
+              }
+              break;
           }
         } else {
           logger.error("Promise not fulfilled", result);
@@ -242,7 +250,6 @@ function ensureDiscovery() {
             return a.name.localeCompare(b.name);
           }));
         data.services.groups = Array.from(new Set(data.services.items.map((item) => item.group))).sort();
-        save(data);
 
         Promise.allSettled(updateState(data.services.items)).then((results) => {
           var fulfilled = results.filter((result) => {
@@ -253,9 +260,12 @@ function ensureDiscovery() {
               return a.container == f.container;
             });
             if (i >= 0) {
+              data.services.items[i].id = f.id;
+              data.services.items[i].shortid = f.id.substring(0, 12);
               data.services.items[i].state = f.health == "" ? f.state : f.health;
             }
           });
+          save(data);
           resolve(data);
         });
       });
