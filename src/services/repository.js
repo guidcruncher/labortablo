@@ -6,7 +6,7 @@ const repositories = [{
   name: "docker.io",
   api: "https://hub.docker.com/v2",
   loginUrl: "https://hub.docker.com/v2/users/login/",
-  authorization: "JWT",
+  authorization: "wJWT",
   queryEndpoint: "/repositories/[image]",
 }, {
   name: "ghcr.io",
@@ -155,6 +155,7 @@ function summary(image) {
     var imageUrl = getImageUrl(image);
     var repository = getRepositorySettings(image);
     if (repository == null) {
+      logger.error("Unsupported or unknown repository  " + image);
       reject("No repository");
       return;
     }
@@ -174,12 +175,16 @@ function summary(image) {
           repository.api +
           repository.queryEndpoint.replace("[image]", getImagePath(imageUrl));
         var args = {};
+        logger.debug("Query URL " + url);
         if (token != "") {
           args.headers = {
-            Authorization: "JWT " + token
+            Authorization: repository.authorization + " " + token
           };
         }
-        client.get(url, args, function(data) {
+        client.get(url, args, function(data, response) {
+          if (response) {
+            logger.debug(response);
+          }
           if (data) {
             data.imageName = image;
             if (data.name && data.name != undefined) {
@@ -190,28 +195,19 @@ function summary(image) {
                 imageName: image,
               });
             } else {
-              resolve({
-                type: "repositorydata",
-                name: "",
-                value: "",
-                imageName: ""
-              });
+              logger.warn("No results from summary query");
+              reject("No results");
             }
             return;
+          } else {
+            logger.warn("No results from summary query");
+            reject("No results");
           }
-          resolve({
-            name: "",
-            description: "",
-            imageName: ""
-          });
         });
       })
-      .catch(() => {
-        resolve({
-          name: "",
-          description: "",
-          imageName: ""
-        });
+      .catch((err) => {
+        logger.error("Error in repository summary", err);
+        reject(err);
       });
   });
 }
