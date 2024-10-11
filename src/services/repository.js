@@ -6,7 +6,7 @@ const repositories = [{
   name: "docker.io",
   api: "https://hub.docker.com/v2",
   loginUrl: "https://hub.docker.com/v2/users/login/",
-  authorization: "wJWT",
+  authorization: "JWT",
   queryEndpoint: "/repositories/[image]",
 }, {
   name: "ghcr.io",
@@ -35,7 +35,12 @@ function getImageUrl(image) {
 function getImagePath(image) {
   var imageUrl = getImageUrl(image);
   var items = imageUrl.split("/");
-  return items.splice(1).join("/");
+  var url = items.splice(1).join("/");
+  if (items.length < 3) {
+    url = "library/" + items.splice(1).join("/");
+  }
+
+  return url;
 }
 
 function getRepositorySettings(image) {
@@ -100,9 +105,10 @@ function query(image) {
         args.headers = {
           Authorization: repository.authorization + " " + token,
         };
+        logger.debug("Repository query " + url);
         client.get(url, args, function(data, response) {
           if (response) {
-            logger.warn(response);
+            logger.debug("Query response statuscode " + response.statusCode);
           }
           if (data) {
             data.imageName = image;
@@ -183,7 +189,7 @@ function summary(image) {
         }
         client.get(url, args, function(data, response) {
           if (response) {
-            logger.debug(response);
+            logger.debug("Summary query response " + response.statusCode);
           }
           if (data) {
             data.imageName = image;
