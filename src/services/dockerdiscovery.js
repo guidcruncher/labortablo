@@ -68,17 +68,20 @@ function load() {
         var fulfilled = results.filter((result) => {
           return result.status == "fulfilled";
         });
+
+        logger.error("Fulfilled ", fulfilled.length);
+
         fulfilled.forEach((f) => {
           var i = result.services.items.findIndex((a) => {
-            return a.container == f.container;
+            return a.container.toLowerCase() == f.value.container;
           });
           if (i >= 0) {
-            result.services.items[i].state = f.health == "" ? f.state : f.health;
-	    result.services.items[i].id = f.id;
-	    result.services.items[i].shortid = f.id.substring(0, 12);
+            result.services.items[i].state = f.value.health=="" ? f.value.status : f.value.health;
+            result.services.items[i].id = f.value.id;
+            result.services.items[i].shortid = f.value.id.substring(0, 12);
           }
         });
-	save(result);
+        save(result);
         resolve(result);
       });
 
@@ -143,6 +146,7 @@ function __getContainer(id) {
         reject(err);
         return;
       }
+      data.container = container.id;
       resolve(data);
     });
   });
@@ -159,7 +163,7 @@ function getContainer(id) {
       }
 
       var record = {
-        id: data.Id,
+        id: data.Id ? data.Id : "",
         shortid: data.Id.substring(0, 12),
         group: data.Config.Labels["homepage.group"] ? data.Config.Labels["homepage.group"] : "",
         name: data.Config.Labels["homepage.name"] ? data.Config.Labels["homepage.name"] : "",
@@ -206,12 +210,11 @@ function updateState(containers) {
     var p = new Promise((resolve, reject) => {
       __getContainer(c.container).then((data) => {
         var result = {
-          container: c.container,
+          container: data.container,
           id: data.Id,
-          state: (data.State ? data.State.Status : "Unknown"),
+          status: (data.State ? data.State.Status : ""),
           health: (data.State ? (data.State.Health ? data.State.Health.Status : "") : "")
         };
-        logger.debug("Status", result);
         resolve(result);
       }).catch((err) => {
         logger.error("Error in get stats", err);
@@ -250,19 +253,21 @@ function ensureDiscovery() {
             return a.name.localeCompare(b.name);
           }));
         data.services.groups = Array.from(new Set(data.services.items.map((item) => item.group))).sort();
+        var containers = Array.from(data.services.items);
 
-        Promise.allSettled(updateState(data.services.items)).then((results) => {
+        Promise.allSettled(updateState(containers)).then((results) => {
           var fulfilled = results.filter((result) => {
             return result.status == "fulfilled";
           });
+
           fulfilled.forEach((f) => {
             var i = data.services.items.findIndex((a) => {
-              return a.container == f.container;
+              return a.container.toLowerCase() == f.value.container;
             });
             if (i >= 0) {
-              data.services.items[i].id = f.id;
-              data.services.items[i].shortid = f.id.substring(0, 12);
-              data.services.items[i].state = f.health == "" ? f.state : f.health;
+              data.services.items[i].id = f.value.id;
+              data.services.items[i].shortid = f.value.id.substring(0, 12);
+              data.services.items[i].state = f.value.health == "" ? f.value.status : f.value.health;
             }
           });
           save(data);
@@ -272,6 +277,7 @@ function ensureDiscovery() {
     });
   });
 }
+
 
 module.exports = {
   load,
