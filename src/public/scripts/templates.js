@@ -338,7 +338,7 @@ this["JST"]["views/partials/iconlist.hbs"] = Handlebars.template({"1":function(c
     + "</span></div>\n            <div class=\"row\">\n              <div class=\"col col-md-auto\" style=\"font-size: 12px;white-space:nowrap;overflow:hidden; !important;\">"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"description") : depth0), depth0))
     + "</div>\n            </div>\n          </div>\n          <div class=\"col\">\n            <div class=\"containerstats mobile-hide\" container-id=\""
-    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"id") : depth0), depth0))
+    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"container") : depth0), depth0))
     + "\">CPU: -</div>\n          </div>\n          <div class=\"col col-md-auto\">\n            <span class=\"state "
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"state") : depth0), depth0))
     + "\">"

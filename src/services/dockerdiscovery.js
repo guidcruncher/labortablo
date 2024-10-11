@@ -44,22 +44,28 @@ function invalidate() {
 }
 
 function load() {
-  ensurePath();
-  var filename = path.join(
-    process.env.NODE_CONFIG_DIR,
-    "services.json"
-  );
+  return new Promise((resolve, reject) => {
+    ensurePath();
+    var filename = path.join(
+      process.env.NODE_CONFIG_DIR,
+      "services.json"
+    );
+    var result = create();
 
+    if (fs.existsSync(filename)) {
+      logger.debug("Loading discovery data from " + filename);
+      result = JSON.parse(fs.readFileSync(filename));
+    }
 
-  if (!fs.existsSync(filename)) {
-    return create();
-  }
-
-  logger.debug("Loading discovery data from " + filename);
-
-  var data = JSON.parse(fs.readFileSync(filename));
-
-  return data;
+    if (result.services.items.length <= 0) {
+      logger.debug("Refreshing discovery data");
+      ensureDiscovery()
+        .then((data) => resolve(data))
+        .catch((err) => reject(err));
+    } else {
+      resolve(result);
+    }
+  });
 }
 
 function create() {

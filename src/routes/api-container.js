@@ -2,33 +2,22 @@ const logger = require("../logger.js");
 const express = require("express");
 const router = express.Router();
 const docker = require("../services/docker.js");
+const dockerdiscovery = require("../services/dockerdiscovery.js");
 
 router.get("/", function handler(request, reply) {
-  var containers = {
-    groups: [],
-    items: []
-  };
-
-  containers = docker.loadFromCache();
-
-  if (containers.items.length <= 0) {
-    docker
-      .listContainers()
-      .then((data) => {
-        docker.saveToCache(data);
-        reply.send(data);
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
-  } else {
-    reply.send(containers);
-  }
+  dockerdiscovery.load()
+    .then((data) => {
+      reply.send(data.services);
+    })
+    .catch((err) => {
+      logger.error("Error in list containers", err);
+      reply.status(500).send(err);
+    });
 });
 
 
 router.get("/cache/invalidate", function handler(request, reply) {
-  docker.invalidateCache();
+  dockerdiscovery.invalidate();
   reply.status(204).send();
 });
 
