@@ -62,9 +62,8 @@ function resolveExtendedData(container) {
               break;
             case "repositorydata":
               container.description = result.value.description.trim().split(".")[0];
-              if (container.id != result.value.id) {
-                container.id = result.value.id;
-                container.shortid = result.value.shortid;
+              if (container.name == "") {
+                container.name = result.value.name;
               }
               break;
           }
