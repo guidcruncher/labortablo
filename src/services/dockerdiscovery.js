@@ -63,7 +63,22 @@ function load() {
         .then((data) => resolve(data))
         .catch((err) => reject(err));
     } else {
-      resolve(result);
+
+      Promise.allSettled(updateState(result.services.items)).then((results) => {
+          var fulfilled = results.filter((result) => {
+            return result.status == "fulfilled";
+          });
+          fulfilled.forEach((f) => {
+            var i = result.services.items.findIndex((a) => {
+              return a.container == f.container;
+            });
+            if (i >= 0) {
+              result.services.items[i].state = f.health == "" ? f.state : f.health;
+            }
+          });
+          resolve(result);
+        });
+
     }
   });
 }
@@ -111,6 +126,20 @@ function resolveExtendedData(container) {
   });
 }
 
+function __getContainer(id) {
+return new Promise((resolve, reject) => {
+    var docker = dockerFactory.createDocker();
+    var container = docker.getContainer(id);
+    container.inspect(function(err, data) {
+      if (err) {
+        reject(err);
+        return;
+      }
+resolve(data);
+});
+});
+}
+ 
 function getContainer(id) {
   return new Promise((resolve, reject) => {
     var docker = dockerFactory.createDocker();
@@ -167,12 +196,12 @@ function updateState(containers) {
   var promises = [];
   containers.forEach((c) => {
     var p = new Promise((resolve, reject) => {
-      getContainer(c.container).then((data) => resolve({
-        name: c.container,
+      __getContainer(c.container).then((data) => {var result ={
+        container: c.container,
         id: data.Id,
-        state: data.State.Status,
-        health: data.State.Health ? data.State.Health.Status : ""
-      })).catch((err) => reject(err));
+        state: (data.State ? data.State.Status : "Unknown"),
+        health: (data.State ? (data.State.Health ? data.State.Health.Status : "") : "")
+      }; logger.debug("Status",result); resolve(result); }).catch((err) => {logger.error("Error in get stats", err); reject(err)});
     });
     promises.push(p);
   });
@@ -214,7 +243,7 @@ function ensureDiscovery() {
           });
           fulfilled.forEach((f) => {
             var i = data.services.items.findIndex((a) => {
-              return a.name == f.name;
+              return a.container == f.container;
             });
             if (i >= 0) {
               data.services.items[i].state = f.health == "" ? f.state : f.health;
