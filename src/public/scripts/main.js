@@ -24,6 +24,14 @@ function applyTheme(name, s, e) {
     start.setDate(start.getDate() - 1);
   }
 
+  if (e < s) {
+    end.setDate(start.getDate() + 1);
+    end.setHours(e);
+  }
+
+  console.log(start);
+  console.log(end);
+
   if (result == "auto") {
     result = "light";
 

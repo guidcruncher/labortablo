@@ -9,7 +9,15 @@ module.exports = function(grunt) {
       },
       build: {
         files: {
-          './public/scripts/main.min.js': ['./public/scripts/helpers.js', './public/scripts/templates.js', './public/scripts/gaugemeter.js', './public/scripts/main.js']
+          './public/scripts/main.min.js': ['./public/scripts/jquery.min.js',
+            './public/scripts/handlebars.min.js',
+            './public/scripts/helpers.js',
+            './public/scripts/templates.js',
+            './public/scripts/materialstyle.min.js',
+            './public/scripts/mdc.ripple.min.js',
+            './public/scripts/popper.min.js',
+            './public/scripts/main.js'
+          ]
         }
       }
     },
@@ -59,6 +67,9 @@ module.exports = function(grunt) {
       jsprettify: {
         command: 'find . -type f -name "*.js" -not -path "**/node_modules/*" -exec npx js-beautify -s 2 -n -w 0 --type js {} +'
       },
+      cssprettify: {
+        command: 'find . -type f -name "*.css" -not -path "**/node_modules/*" -exec npx js-beautify -r -s 2 -n -w 0 --type css {} +'
+      },
       build: {
         command: [
           'docker buildx create --name labortablo-builder --node labortablo-builder --platform linux/arm64 --use --bootstrap',
@@ -99,7 +110,7 @@ module.exports = function(grunt) {
 
   // Default task(s).
   grunt.registerTask('default', ['package', 'npm-command:dev']);
-  grunt.registerTask('package', ['env:dev', 'shell:jsprettify', 'shell:prettify', 'handlebars', 'eslint', 'uglify']);
+  grunt.registerTask('package', ['env:dev', 'shell:cssprettify', 'shell:jsprettify', 'shell:prettify', 'handlebars', 'eslint', 'uglify']);
   grunt.registerTask('build', ['shell:build']);
   grunt.registerTask('build-deploy', ['build', 'deploy']);
   grunt.registerTask('deploy', ['shell:deploy']);

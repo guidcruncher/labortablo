@@ -2,6 +2,7 @@ const logger = require("../logger.js");
 const express = require("express");
 const router = express.Router();
 const iconresolver = require("../services/iconresolver.js");
+const mime = require("mrmime");
 const fs = require("fs");
 const path = require("path");
 
@@ -22,7 +23,7 @@ router.get("/labortablo.svg", function(req, reply) {
 
   reply
     .header("content-disposition", `inline; filename="logo.svg"`)
-    .header("content-type", iconresolver.getMimeType(fulliconName))
+    .header("content-type", mime.lookup(fulliconName))
     .header("content-length", fs.statSync(fulliconName).size)
     .send(fileContents);
 });
@@ -44,7 +45,7 @@ router.get("/logo", function(req, reply) {
 
   reply
     .header("content-disposition", `inline; filename="logo.svg"`)
-    .header("content-type", iconresolver.getMimeType(fulliconName))
+    .header("content-type", mime.lookup(fulliconName))
     .header("content-length", fs.statSync(fulliconName).size)
     .end(fileContents);
 });
@@ -82,7 +83,7 @@ router.get("/:iconName", function(req, reply) {
   } = req.params;
   reply
     .header("content-disposition", `inline; filename="${iconName}"`)
-    .header("content-type", iconresolver.getMimeType(fulliconName))
+    .header("content-type", mime.lookup(fulliconName))
     .header("content-length", fs.statSync(fulliconName).size)
     .end(fs.readFileSync(fulliconName), "binary");
 });

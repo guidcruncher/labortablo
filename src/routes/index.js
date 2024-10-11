@@ -23,7 +23,7 @@ router.get("/", requiresAuth(), function(req, res) {
     return;
   }
 
-  logger.debug("Rendering dashboard pasge");
+  logger.debug("Rendering dashboard page");
 
   var promises = [];
   var data = {

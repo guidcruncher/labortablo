@@ -33,9 +33,16 @@ function getImageUrl(image) {
 }
 
 function getImagePath(image) {
-  var imageUrl = getImageUrl(image);
-  var items = imageUrl.split("/");
-  return items.splice(1).join("/");
+  var items = image.split("/");
+  var url = "";
+
+  if (items.length <= 2) {
+    url = "library/" + items[1];
+  } else {
+    url = items.splice(1).join("/");
+  }
+
+  return url;
 }
 
 function getRepositorySettings(image) {
@@ -81,7 +88,7 @@ function login(repository, username, password) {
 
 function query(image) {
   return new Promise((resolve, reject) => {
-    var imageUrl = getImageUrl(image);
+    var imageUrl = image;
     var repository = getRepositorySettings(image);
 
     if (repository == null) {
@@ -94,18 +101,23 @@ function query(image) {
       var url =
         repository.api +
         repository.queryEndpoint.replace("[image]", getImagePath(imageUrl));
-
+      logger.trace("Repository " + url);
       if (repository.authorization) {
         var args = {};
         args.headers = {
           Authorization: repository.authorization + " " + token,
         };
-        client.get(url, args, function(data) {
+        logger.debug("Repository query " + url);
+        client.get(url, args, function(data, response) {
+          if (response) {
+            logger.debug("Query response statuscode " + response.statusCode);
+          }
           if (data) {
             data.imageName = image;
             resolve(data);
             return;
           }
+
           resolve();
         });
       } else {
@@ -120,9 +132,10 @@ function query(image) {
       }
     }
 
+
     if (repository.authorization) {
       var userEnvPrefix =
-        repository.name.replace(/\./g, "_").toLowerCase() + "_";
+        repository.name.replace(/\./g, "_").toLowerCase();
       var username = config.get("repositories." + userEnvPrefix + ".username");
       var password = config.get("repositories." + userEnvPrefix + ".password");
 
@@ -150,10 +163,11 @@ function summary(image) {
     var imageUrl = getImageUrl(image);
     var repository = getRepositorySettings(image);
     if (repository == null) {
+      logger.error("Unsupported or unknown repository  " + image);
       reject("No repository");
       return;
     }
-    var userEnvPrefix = repository.name.replace(/\./g, "_").toLowerCase() + "_";
+    var userEnvPrefix = repository.name.replace(/\./g, "_").toLowerCase();
     var username = config.get("repositories." + userEnvPrefix + ".username");
     var password = config.get("repositories." + userEnvPrefix + ".password");
     logger.log("Looking for credentials for " + repository.name + " via repositories." + userEnvPrefix);
@@ -169,42 +183,31 @@ function summary(image) {
           repository.api +
           repository.queryEndpoint.replace("[image]", getImagePath(imageUrl));
         var args = {};
+        logger.debug("Query URL " + url);
         if (token != "") {
           args.headers = {
-            Authorization: "JWT " + token
+            Authorization: repository.authorization + " " + token
           };
         }
-        client.get(url, args, function(data) {
-          if (data) {
-            data.imageName = image;
-            if (data.name && data.name != undefined) {
-              resolve({
-                name: data.name,
-                description: data.description,
-                imageName: image,
-              });
-            } else {
-              resolve({
-                name: "",
-                description: "",
-                imageName: ""
-              });
-            }
-            return;
+        client.get(url, args, function(data, response) {
+          if (response) {
+            logger.debug("Summary query response " + response.statusCode);
           }
-          resolve({
-            name: "",
-            description: "",
-            imageName: ""
-          });
+          if (data) {
+            resolve({
+              type: "repositorydata",
+              name: data.name ? data.name : "",
+              description: data.description ? data.description : ""
+            });
+          } else {
+            logger.warn("No results from summary query");
+            reject("No results");
+          }
         });
       })
-      .catch(() => {
-        resolve({
-          name: "",
-          description: "",
-          imageName: ""
-        });
+      .catch((err) => {
+        logger.error("Error in repository summary", err);
+        reject(err);
       });
   });
 }
