@@ -8,7 +8,7 @@ function apiBase() {
   return url;
 }
 
-function applyTheme(name, s, e) {
+function applyTheme(name, s, e, useSystemSettings) {
   var curr = new Date();
   var start = new Date();
   var end = new Date();
@@ -29,8 +29,20 @@ function applyTheme(name, s, e) {
     end.setHours(e);
   }
 
-  console.log(start);
-  console.log(end);
+  if (useSystemSettings) {
+    const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
+    darkThemeMq.addListener(e => {
+      var theme = "light";
+      if (e.matches) {
+        theme = "dark";
+      } else {
+        theme = "light";
+      }
+      var html = document.getElementsByTagName("html")[0];
+      html.setAttribute("data-bs-theme", theme);
+    });
+    return;
+  }
 
   if (result == "auto") {
     result = "light";

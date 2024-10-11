@@ -16,9 +16,15 @@
 
     app.locals.appTitle = "Labortablo";
     app.locals.API_BASE = config.get("baseUrl") + "/api";
-    app.locals.THEME_START = config.get("theme.darkModeHours.start");
-    app.locals.THEME_END = config.get("theme.darkModeHours.end");
+    if (config.has("theme.darkModeHours")) {
+      app.locals.THEME_START = config.get("theme.darkModeHours.start");
+      app.locals.THEME_END = config.get("theme.darkModeHours.end");
+    } else {
+      app.locals.THEME_START = -1;
+      app.locals.THEME_END = -1;
+    }
     app.locals.THEME_NAME = config.get("theme.name");
+    app.locals.THEME_USESYSTEM = config.get("theme.useSystemSettings");
 
     app.locals.API_INTERNAL_URL = process.env.API_INTERNAL_URL;
 
