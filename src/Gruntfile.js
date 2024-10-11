@@ -70,8 +70,12 @@ module.exports = function(grunt) {
       cssprettify: {
         command: 'find . -type f -name "*.css" -not -path "**/node_modules/*" -exec npx js-beautify -r -s 2 -n -w 0 --type css {} +'
       },
+      prebuild: {
+        command: 'npm version prepatch'
+      },
       build: {
         command: [
+          'npm version patch',
           'docker buildx create --name labortablo-builder --node labortablo-builder --platform linux/arm64 --use --bootstrap',
           'docker buildx prune --builder labortablo-builder -f',
           'docker buildx build --pull --no-cache --load --platform linux/arm64 --builder labortablo-builder -t "guidcruncher/labortablo:development" .',
@@ -81,6 +85,7 @@ module.exports = function(grunt) {
       },
       publish: {
         command: [
+          'npm version minor',
           'docker buildx create --name labortablo-builder --node labortablo-builder --platform linux/arm64,linux/amd64  --use --bootstrap',
           'docker buildx prune --builder labortablo-builder -f',
           'docker buildx build --pull --no-cache --platform linux/arm64,linux/amd64 --builder labortablo-builder -t "guidcruncher/labortablo:latest" --push .',
@@ -109,7 +114,7 @@ module.exports = function(grunt) {
 
 
   // Default task(s).
-  grunt.registerTask('default', ['package', 'npm-command:dev']);
+  grunt.registerTask('default', ['package', 'shell:prebuild', 'npm-command:dev']);
   grunt.registerTask('package', ['env:dev', 'shell:cssprettify', 'shell:jsprettify', 'shell:prettify', 'handlebars', 'eslint', 'uglify']);
   grunt.registerTask('build', ['shell:build']);
   grunt.registerTask('build-deploy', ['build', 'deploy']);
