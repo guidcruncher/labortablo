@@ -69,14 +69,12 @@ function load() {
           return result.status == "fulfilled";
         });
 
-        logger.error("Fulfilled ", fulfilled.length);
-
         fulfilled.forEach((f) => {
           var i = result.services.items.findIndex((a) => {
             return a.container.toLowerCase() == f.value.container;
           });
           if (i >= 0) {
-            result.services.items[i].state = f.value.health=="" ? f.value.status : f.value.health;
+            result.services.items[i].state = f.value.health == "" ? f.value.status : f.value.health;
             result.services.items[i].id = f.value.id;
             result.services.items[i].shortid = f.value.id.substring(0, 12);
           }
