@@ -224,7 +224,7 @@ function summary(image) {
             logger.debug("Summary query response " + response.statusCode);
           }
           if (data) {
-        resolve({
+            resolve({
               type: "repositorydata",
               name: data.name ? data.name : "",
               description: data.description ? data.description : ""
