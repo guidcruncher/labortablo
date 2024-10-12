@@ -36,7 +36,7 @@ function applyTheme(name, s, e, useSystemSettings) {
       result = "dark";
     }
     var html = document.getElementsByTagName("html")[0];
-    html.setAttribute("data-bs-theme", result);
+    html.setAttribute("data-mdb-theme", result);
 
     darkThemeMq.addListener(e => {
       var theme = "light";
@@ -46,7 +46,7 @@ function applyTheme(name, s, e, useSystemSettings) {
         theme = "light";
       }
       var html = document.getElementsByTagName("html")[0];
-      html.setAttribute("data-bs-theme", theme);
+      html.setAttribute("data-mdb-theme", theme);
     });
     return;
   }
@@ -60,7 +60,7 @@ function applyTheme(name, s, e, useSystemSettings) {
   }
 
   var html = document.getElementsByTagName("html")[0];
-  html.setAttribute("data-bs-theme", result);
+  html.setAttribute("data-mdb-theme", result);
 }
 
 
