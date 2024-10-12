@@ -45,11 +45,13 @@ function save(data) {
   );
   logger.debug("Saving discovery data to " + filename);
 
-  if (fs.existsSync(filename + ".bak")) {
-    fs.unlinkSync(filename + ".bak");
-  }
+  if (fs.existsSync(filename)) {
+    if (fs.existsSync(filename + ".bak")) {
+      fs.unlinkSync(filename + ".bak");
+    }
 
-  fs.copyFileSync(filename, filename + ".bak");
+    fs.copyFileSync(filename, filename + ".bak");
+  }
 
   fs.writeFileSync(
     filename,
