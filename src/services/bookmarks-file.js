@@ -3,13 +3,13 @@ const path = require("path");
 
 function loadBookmarks() {
   return new Promise((resolve) => {
-  var filename = path.join(process.env.NODE_CONFIG_DIR, "bookmarks.json");
+    var filename = path.join(process.env.NODE_CONFIG_DIR, "bookmarks.json");
 
-  if (fs.existsSync(filename)) {
-    resolve(JSON.parse(fs.readFileSync(filename)));
-  }
+    if (fs.existsSync(filename)) {
+      resolve(JSON.parse(fs.readFileSync(filename)));
+    }
 
-  return {};
+    return {};
   });
 }
 

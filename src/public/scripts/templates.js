@@ -101,20 +101,6 @@ this["JST"]["views/layouts/material-setup.hbs"] = Handlebars.template({"compiler
 },"useData":true});
 
 this["JST"]["views/partials/bookmarks.hbs"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
-    var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), lookupProperty = container.lookupProperty || function(parent, propertyName) {
-        if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
-          return parent[propertyName];
-        }
-        return undefined
-    };
-
-  return "    <div class=\"list-group-item list-group-item-primary\">"
-    + container.escapeExpression(((helper = (helper = lookupProperty(helpers,"key") || (data && lookupProperty(data,"key"))) != null ? helper : container.hooks.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"key","hash":{},"data":data,"loc":{"start":{"line":3,"column":57},"end":{"line":3,"column":65}}}) : helper)))
-    + "</div>\n"
-    + ((stack1 = lookupProperty(helpers,"each").call(alias1,depth0,{"name":"each","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":4,"column":4},"end":{"line":12,"column":13}}})) != null ? stack1 : "")
-    + " "
-    + ((stack1 = lookupProperty(helpers,"if").call(alias1,(data && lookupProperty(data,"last")),{"name":"if","hash":{},"fn":container.program(7, data, 0),"inverse":container.program(9, data, 0),"data":data,"loc":{"start":{"line":12,"column":14},"end":{"line":14,"column":11}}})) != null ? stack1 : "");
-},"2":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=container.lambda, alias2=container.escapeExpression, alias3=depth0 != null ? depth0 : (container.nullContext || {}), lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
           return parent[propertyName];
@@ -122,16 +108,16 @@ this["JST"]["views/partials/bookmarks.hbs"] = Handlebars.template({"1":function(
         return undefined
     };
 
-  return "      <a href=\""
+  return "    <a href=\""
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"href") : depth0), depth0))
-    + "\" target=\"_blank\" class=\"list-group-item d-flex align-items-center gap-3 list-group-item-action\">\n        <span style=\"width:36px\"><img src=\""
-    + ((stack1 = lookupProperty(helpers,"if").call(alias3,(depth0 != null ? lookupProperty(depth0,"icon") : depth0),{"name":"if","hash":{},"fn":container.program(3, data, 0),"inverse":container.program(5, data, 0),"data":data,"loc":{"start":{"line":6,"column":43},"end":{"line":6,"column":163}}})) != null ? stack1 : "")
-    + "\" style=\"max-width:32px;max-height:32px;\" /></span>\n        <span>\n          "
-    + alias2(((helper = (helper = lookupProperty(helpers,"key") || (data && lookupProperty(data,"key"))) != null ? helper : container.hooks.helperMissing),(typeof helper === "function" ? helper.call(alias3,{"name":"key","hash":{},"data":data,"loc":{"start":{"line":8,"column":10},"end":{"line":8,"column":18}}}) : helper)))
-    + "\n          <div style=\"font-size: 12px;white-space:nowrap;overflow:hidden; !important;width:280px !important;\" class=\"d-block text-muted\">"
+    + "\" target=\"_blank\" class=\"list-group-item d-flex align-items-center gap-3 list-group-item-action\">\n      <span style=\"width:36px\"><img src=\""
+    + ((stack1 = lookupProperty(helpers,"if").call(alias3,(depth0 != null ? lookupProperty(depth0,"icon") : depth0),{"name":"if","hash":{},"fn":container.program(2, data, 0),"inverse":container.program(4, data, 0),"data":data,"loc":{"start":{"line":5,"column":41},"end":{"line":5,"column":161}}})) != null ? stack1 : "")
+    + "\" style=\"max-width:32px;max-height:32px;\" /></span>\n      <span>\n        "
+    + alias2(((helper = (helper = lookupProperty(helpers,"key") || (data && lookupProperty(data,"key"))) != null ? helper : container.hooks.helperMissing),(typeof helper === "function" ? helper.call(alias3,{"name":"key","hash":{},"data":data,"loc":{"start":{"line":7,"column":8},"end":{"line":7,"column":16}}}) : helper)))
+    + "\n        <div style=\"font-size: 12px;white-space:nowrap;overflow:hidden; !important;width:280px !important;\" class=\"d-block text-muted\">"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"description") : depth0), depth0))
-    + "</div>\n        </span>\n      </a>\n    ";
-},"3":function(container,depth0,helpers,partials,data) {
+    + "</div>\n      </span>\n    </a>\n";
+},"2":function(container,depth0,helpers,partials,data) {
     var lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
           return parent[propertyName];
@@ -141,7 +127,7 @@ this["JST"]["views/partials/bookmarks.hbs"] = Handlebars.template({"1":function(
 
   return "/user-icons/"
     + container.escapeExpression(container.lambda((depth0 != null ? lookupProperty(depth0,"icon") : depth0), depth0));
-},"5":function(container,depth0,helpers,partials,data) {
+},"4":function(container,depth0,helpers,partials,data) {
     var stack1, alias1=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
           return parent[propertyName];
@@ -151,11 +137,7 @@ this["JST"]["views/partials/bookmarks.hbs"] = Handlebars.template({"1":function(
 
   return alias1(container.lambda(((stack1 = (data && lookupProperty(data,"root"))) && lookupProperty(stack1,"API_BASE")), depth0))
     + "/bookmarks/icon?host="
-    + alias1((lookupProperty(helpers,"domainonly")||(depth0 && lookupProperty(depth0,"domainonly"))||container.hooks.helperMissing).call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"href") : depth0),{"name":"domainonly","hash":{},"data":data,"loc":{"start":{"line":6,"column":132},"end":{"line":6,"column":156}}}));
-},"7":function(container,depth0,helpers,partials,data) {
-    return "";
-},"9":function(container,depth0,helpers,partials,data) {
-    return "\n      <div class=\"list-group-item list-divider\"></div>\n";
+    + alias1((lookupProperty(helpers,"domainonly")||(depth0 && lookupProperty(depth0,"domainonly"))||container.hooks.helperMissing).call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"href") : depth0),{"name":"domainonly","hash":{},"data":data,"loc":{"start":{"line":5,"column":130},"end":{"line":5,"column":154}}}));
 },"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
@@ -164,8 +146,8 @@ this["JST"]["views/partials/bookmarks.hbs"] = Handlebars.template({"1":function(
         return undefined
     };
 
-  return "<div class=\"list-group\">\n"
-    + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),depth0,{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":2,"column":2},"end":{"line":15,"column":11}}})) != null ? stack1 : "")
+  return "<div class=\"list-group\">\n  <div class=\"list-group-item list-group-item-primary\">Bookmarks</div>\n"
+    + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),depth0,{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":3,"column":2},"end":{"line":11,"column":11}}})) != null ? stack1 : "")
     + "</div>\n";
 },"useData":true});
 

@@ -1,9 +1,9 @@
 const filebookmarks = require("./bookmarks-file.js");
 
 function loadBookmarks() {
-var store = filebookmarks.loadBookmarks();
+  var store = filebookmarks.loadBookmarks();
 
-return store;
+  return store;
 }
 
 module.exports = {
