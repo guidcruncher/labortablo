@@ -68,7 +68,7 @@ function reloadSystem() {
   var url = apiBase() + "system";
   $.getJSON(url, function(data, status, jqXHR) {
     var html = Handlebars.templates["system.hbs"](response.data);
-    $("#tabsystem").html(html);
+    $("#system0").html(html);
     setTimeout(reloadSystem, 15000);
   });
 }
@@ -77,7 +77,7 @@ function reloadIconList() {
   var url = apiBase() + "containers";
   $.getJSON(url, function(data, status, jqXHR) {
     var html = Handlebars.templates["iconlist.hbs"](response.data);
-    $("#tabservices").html(html);
+    $("#services0").html(html);
     containerStats();
     setTimeout(reloadIconList, 15000);
   });
@@ -87,7 +87,7 @@ function reloadBookmarks() {
   var url = apiBase() + "bookmarks";
   $.getJSON(url, function(data, status, jqXHR) {
     var html = Handlebars.templates["bookmarks.hbs"](response.data);
-    $("#tabbookmarks").html(html);
+    $("#bookmarks0").html(html);
     setTimeout(reloadBookmarks, 60000);
   });
 }
@@ -137,7 +137,7 @@ function loadFeeds() {
 
   url = apiBase() + "rss/feeds/feeds";
   $.getJSON(url, function(data, status, jqXHR) {
-    renderFeeds("#tabfeeds", data.feeds, "feeds.hbs");
+    renderFeeds("#feeds0", data.feeds, "feeds.hbs");
   });
 
   setTimeout(loadFeeds, 60000);

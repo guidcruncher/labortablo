@@ -23,7 +23,7 @@ function load() {
 
         fulfilled.forEach((f) => {
           var i = result.services.items.findIndex((a) => {
-            return a.container.toLowerCase() == f.value.container;
+            return a.container.toLowerCase().trim() == f.value.container.toLowerCase().trim();
           });
           if (i >= 0) {
             result.services.items[i].state = f.value.health == "" ? f.value.status : f.value.health;
@@ -85,7 +85,7 @@ function __getContainer(id) {
         reject(err);
         return;
       }
-      data.container = container.id;
+      data.container = container.id.toLowerCase().trim();
       resolve(data);
     });
   });
@@ -144,7 +144,7 @@ function updateState(containers) {
     var p = new Promise((resolve, reject) => {
       __getContainer(c.container).then((data) => {
         var result = {
-          container: data.container,
+          container: data.container.toLowerCase().trim(),
           id: data.Id,
           status: (data.State ? data.State.Status : ""),
           health: (data.State ? (data.State.Health ? data.State.Health.Status : "") : "")
@@ -196,7 +196,7 @@ function ensureDiscovery() {
 
           fulfilled.forEach((f) => {
             var i = data.services.items.findIndex((a) => {
-              return a.container.toLowerCase() == f.value.container;
+              return a.container.toLowerCase().trim() == f.value.container.toLowerCase().trim();
             });
             if (i >= 0) {
               data.services.items[i].id = f.value.id;
