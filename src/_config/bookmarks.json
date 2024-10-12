@@ -1,5 +1,4 @@
 {
-  "Web": {
     "Labortablo": {
       "description": "A cool dashboard and homepage",
       "icon": "labortablo.svg",
@@ -26,5 +25,4 @@
       "tags": [],
       "href": "https://www.google.com"
     }
-  }
 }

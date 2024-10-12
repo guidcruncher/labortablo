@@ -204,7 +204,9 @@ function ensureDiscovery() {
               data.services.items[i].state = f.value.health == "" ? f.value.status : f.value.health;
             }
           });
-          cache.save(data);
+
+          cache.merge(data);
+          // cache.save(data);
           resolve(data);
         });
       });

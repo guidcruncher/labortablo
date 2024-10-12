@@ -14,7 +14,7 @@ router.get("/", function handler(request, reply) {
       results.items = data.services.items.filter((a) => a.visible).sort((a, b) => {
         return a.name.localeCompare(b.name);
       });
-      results.groups = Array.from(new Set(data.services.items.map((item) => item.group))).sort();
+      results.groups = Array.from(new Set(results.items.map((item) => item.group))).sort();
 
       reply.send(results);
     })

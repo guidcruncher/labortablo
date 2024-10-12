@@ -1,7 +1,7 @@
 const logger = require("../logger.js");
 const express = require("express");
 const router = express.Router();
-const bookmarks = require("../services/bookmarks-file.js");
+const bookmarks = require("../services/bookmarks.js");
 const iconResolver = require("../services/iconresolver.js");
 
 router.get("/", function(req, reply) {
