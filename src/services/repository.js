@@ -169,8 +169,15 @@ function query(image) {
     if (repository.authorization != "") {
       var userEnvPrefix =
         repository.name.replace(/\./g, "_").toLowerCase();
-      var username = config.get("repositories." + userEnvPrefix + ".username");
-      var password = config.get("repositories." + userEnvPrefix + ".password");
+      var username = "";
+      var password = "";
+      if (config.has("repositories." + userEnvPrefix + ".username")) {
+        username = config.get("repositories." + userEnvPrefix + ".username");
+      }
+
+      if (config.has("repositories." + userEnvPrefix + ".password")) {
+        password = config.get("repositories." + userEnvPrefix + ".password");
+      }
 
       logger.log("Looking for credentials for " + repository.name + " via repositories." + userEnvPrefix);
 
@@ -202,9 +209,17 @@ function summary(image) {
       return;
     }
     var userEnvPrefix = repository.name.replace(/\./g, "_").toLowerCase();
-    var username = config.get("repositories." + userEnvPrefix + ".username");
-    var password = config.get("repositories." + userEnvPrefix + ".password");
-    logger.log("Looking for credentials for " + repository.name + " via repositories." + userEnvPrefix);
+    var username = "";
+    var password = "";
+    if (config.has("repositories." + userEnvPrefix + ".username")) {
+      username = config.get("repositories." + userEnvPrefix + ".username");
+    }
+
+    if (config.has("repositories." + userEnvPrefix + ".password")) {
+      password = config.get("repositories." + userEnvPrefix + ".password");
+    }
+
+    logger.log("Looking for credientials for " + repository.name + " via repositories." + userEnvPrefix);
 
     login(
         repository,
