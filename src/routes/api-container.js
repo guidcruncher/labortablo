@@ -2,7 +2,7 @@ const logger = require("../logger.js");
 const express = require("express");
 const router = express.Router();
 const docker = require("../services/docker.js");
-const dockerdiscovery = require("../services/dockerdiscovery.js");
+const dockerdiscovery = require("../services/services-docker.js");
 
 router.get("/", function handler(request, reply) {
   dockerdiscovery.load()
