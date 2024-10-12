@@ -13,9 +13,6 @@ module.exports = function(grunt) {
             './public/scripts/handlebars.min.js',
             './public/scripts/helpers.js',
             './public/scripts/templates.js',
-            './public/scripts/materialstyle.min.js',
-            './public/scripts/mdc.ripple.min.js',
-            './public/scripts/popper.min.js',
             './public/scripts/main.js'
           ]
         }
