@@ -7,7 +7,16 @@ const dockerdiscovery = require("../services/dockerdiscovery.js");
 router.get("/", function handler(request, reply) {
   dockerdiscovery.load()
     .then((data) => {
-      reply.send(data.services);
+      var results = {
+        groups: [],
+        items: []
+      };
+      results.items = data.services.items.filter((a) => a.visible).sort((a, b) => {
+        return a.name.localeCompare(b.name);
+      });
+      results.groups = Array.from(new Set(data.services.items.map((item) => item.group))).sort();
+
+      reply.send(results);
     })
     .catch((err) => {
       logger.error("Error in list containers", err);
