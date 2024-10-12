@@ -101,6 +101,11 @@ function getRepositorySettings(image) {
 
 function login(repository, username, password, target) {
   return new Promise((resolve, reject) => {
+    if (repository.loginUrl == "") {
+      logger.log("Login not needed for " + repository.name);
+      resolve("");
+      return
+    }
     if (username == null || username == undefined) {
       logger.log("No credentials supplied for repository " + repository.name);
       reject("No credentials");
