@@ -1,0 +1,24 @@
+SELECT a.id, a.url, a.title, a.website_title, a.website_description, a.favicon_file,
+group_concat(c.name) AS tags
+FROM bookmarks_bookmark AS a
+INNER JOIN bookmarks_bookmark_tags AS b ON a.id = b.bookmark_id
+INNER JOIN bookmarks_tag AS c ON b.tag_id = c.id
+WHERE a.is_archived = 0
+GROUP BY a.id, a.url, a.title, a.website_title, a.website_description, a.favicon_file
+LIMIT 5;
+
+SELECT a.name, COUNT(c.id) AS total 
+FROM bookmarks_tag AS a
+INNER JOIN bookmarks_bookmark_tags AS b ON a.id = b.tag_id
+INNER JOIN bookmarks_bookmark AS c ON b.bookmark_id = c.id
+WHERE c.is_archived = 0
+GROUP BY a.name
+ORDER BY total DESC;
+
+SELECT a.name
+FROM bookmarks_tag AS a
+INNER JOIN bookmarks_bookmark_tags AS b ON a.id= b.tag_id
+INNER JOIN bookmarks_bookmark AS c ON b.bookmark_id = c.id
+WHERE c.is_archived = 0
+
+SELECT id, bookmark_id, tag_id  from bookmarks_bookmark_tags;
