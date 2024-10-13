@@ -8,7 +8,7 @@ function apiBase() {
   return url;
 }
 
-function applyTheme(name, s, e, useSystemSettings) {
+function applyTheme(name, s, e) {
   var curr = new Date();
   var start = new Date();
   var end = new Date();
@@ -29,7 +29,7 @@ function applyTheme(name, s, e, useSystemSettings) {
     end.setHours(e);
   }
 
-  if (useSystemSettings) {
+  if (name == "auto") {
     const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
     result = "light";
     if (darkThemeMq.matches) {
@@ -51,7 +51,7 @@ function applyTheme(name, s, e, useSystemSettings) {
     return;
   }
 
-  if (result == "auto") {
+  if (result == "scheduled") {
     result = "light";
 
     if ((curr >= start) && (curr < end)) {

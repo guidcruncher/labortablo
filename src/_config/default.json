@@ -4,8 +4,7 @@
   },
   "theme": {
      "name": "auto",
-     "darkModeHours": {"start": 19, "end": 7},
-     "useSystemSettings": true
+     "darkModeHours": {"start": 19, "end": 7}
   },
   "baseUrl": "",
   "useSystemInfoHostHelper": {

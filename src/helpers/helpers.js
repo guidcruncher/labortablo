@@ -8,7 +8,7 @@ module.exports = {
       result = config.get("theme.name");
     }
 
-    if (result == "auto") {
+    if (result == "schedule") {
       var s = config.get("theme.darkModeHours.start");
       var e = config.get("theme.darkModeHours.end");
       var curr = new Date();

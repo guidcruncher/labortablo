@@ -85,7 +85,7 @@ function __getContainer(id) {
         reject(err);
         return;
       }
-      data.container = container.id.toLowerCase().trim();
+      data.container = data.Name.substring(1).trim();
       resolve(data);
     });
   });
