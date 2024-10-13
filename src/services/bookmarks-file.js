@@ -3,27 +3,18 @@ const path = require("path");
 
 function loadBookmarks() {
   return new Promise((resolve) => {
-    var filename = path.join(process.env.NODE_CONFIG_DIR, "bookmarks.json");
+        var filename = path.join(process.env.NODE_CONFIG_DIR, "bookmarks.json");
 
-    if (fs.existsSync(filename)) {
-      resolve(JSON.parse(fs.readFileSync(filename)));
-    }
+        if (fs.existsSync(filename)) {
+          var converted = Object.entries(JSON.parse(fs.readFileSync(filename))).map(([k, v]) => {
+            var r = Object.assign(v, {
+              name: k
+            });
+            resolve(r);
+          });
+        }
 
-    return {};
-  });
-}
 
-function saveBookmarks(store) {
-  var filename = path.join(process.env.NODE_CONFIG_DIR, "bookmarks.json");
-
-  if (fs.existsSync(filename)) {
-    fs.copyFileSync(filename, filename + ".bak");
-  }
-
-  fs.writeFileSync(filename, JSON.stringify(store, null, 2));
-}
-
-module.exports = {
-  loadBookmarks,
-  saveBookmarks,
-};
+        module.exports = {
+          loadBookmarks,
+        };

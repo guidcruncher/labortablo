@@ -2,6 +2,9 @@
   "logging": {
      "level": "debug"
   },
+  "bookmarks": {
+    "linkding": ""
+  },
   "theme": {
      "name": "auto",
      "darkModeHours": {"start": 19, "end": 7}
