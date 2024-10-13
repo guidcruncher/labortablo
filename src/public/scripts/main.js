@@ -8,7 +8,7 @@ function apiBase() {
   return url;
 }
 
-function applyTheme(name, s, e, useSystemSettings) {
+function applyTheme(name, s, e) {
   var curr = new Date();
   var start = new Date();
   var end = new Date();
@@ -29,14 +29,14 @@ function applyTheme(name, s, e, useSystemSettings) {
     end.setHours(e);
   }
 
-  if (useSystemSettings) {
+  if (name == "auto") {
     const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
     result = "light";
     if (darkThemeMq.matches) {
       result = "dark";
     }
     var html = document.getElementsByTagName("html")[0];
-    html.setAttribute("data-bs-theme", result);
+    html.setAttribute("data-mdb-theme", result);
 
     darkThemeMq.addListener(e => {
       var theme = "light";
@@ -46,12 +46,12 @@ function applyTheme(name, s, e, useSystemSettings) {
         theme = "light";
       }
       var html = document.getElementsByTagName("html")[0];
-      html.setAttribute("data-bs-theme", theme);
+      html.setAttribute("data-mdb-theme", theme);
     });
     return;
   }
 
-  if (result == "auto") {
+  if (result == "scheduled") {
     result = "light";
 
     if ((curr >= start) && (curr < end)) {
@@ -60,7 +60,7 @@ function applyTheme(name, s, e, useSystemSettings) {
   }
 
   var html = document.getElementsByTagName("html")[0];
-  html.setAttribute("data-bs-theme", result);
+  html.setAttribute("data-mdb-theme", result);
 }
 
 
@@ -68,7 +68,7 @@ function reloadSystem() {
   var url = apiBase() + "system";
   $.getJSON(url, function(data, status, jqXHR) {
     var html = Handlebars.templates["system.hbs"](response.data);
-    $("#tabsystem").html(html);
+    $("#system0").html(html);
     setTimeout(reloadSystem, 15000);
   });
 }
@@ -77,7 +77,7 @@ function reloadIconList() {
   var url = apiBase() + "containers";
   $.getJSON(url, function(data, status, jqXHR) {
     var html = Handlebars.templates["iconlist.hbs"](response.data);
-    $("#tabservices").html(html);
+    $("#services0").html(html);
     containerStats();
     setTimeout(reloadIconList, 15000);
   });
@@ -87,7 +87,7 @@ function reloadBookmarks() {
   var url = apiBase() + "bookmarks";
   $.getJSON(url, function(data, status, jqXHR) {
     var html = Handlebars.templates["bookmarks.hbs"](response.data);
-    $("#tabbookmarks").html(html);
+    $("#bookmarks0").html(html);
     setTimeout(reloadBookmarks, 60000);
   });
 }
@@ -137,7 +137,7 @@ function loadFeeds() {
 
   url = apiBase() + "rss/feeds/feeds";
   $.getJSON(url, function(data, status, jqXHR) {
-    renderFeeds("#tabfeeds", data.feeds, "feeds.hbs");
+    renderFeeds("#feeds0", data.feeds, "feeds.hbs");
   });
 
   setTimeout(loadFeeds, 60000);
