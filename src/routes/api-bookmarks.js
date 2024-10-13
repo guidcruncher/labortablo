@@ -5,6 +5,7 @@ const bookmarks = require("../services/bookmarks.js");
 const iconResolver = require("../services/iconresolver.js");
 
 router.get("/", function(req, reply) {
+  logger.log("oi");
   bookmarks.loadBookmarks().then((a) => reply.send(a))
     .catch((err) => {
       logger.error("Error in getbookmarks", err);

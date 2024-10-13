@@ -10,6 +10,8 @@ function loadBookmarks() {
 
     Promise.allSettled(promises).then((results) => {
       results.forEach((a) => {
+        logger.debug("Promise state ", a.status);
+
         if (a.status == "fulfilled") {
           var converted = Object.entries(a.value).map(([k, v]) => {
             var r = Object.assign(v, {
@@ -22,12 +24,9 @@ function loadBookmarks() {
           logger.error("Error in loadbookmarks", a);
         }
 
-
-        resolve(bookmarks.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)));
       });
+      resolve(bookmarks.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)));
     });
-
-    resolve(bookmarks);
   });
 }
 
