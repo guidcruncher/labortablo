@@ -5,7 +5,11 @@ const bookmarks = require("../services/bookmarks.js");
 const iconResolver = require("../services/iconresolver.js");
 
 router.get("/", function(req, reply) {
-  reply.send(bookmarks.loadBookmarks());
+  bookmarks.loadBookmarks().then((a) => reply.send(a))
+    .catch((err) => {
+      logger.error("Error in getbookmarks", err);
+      reply.status(500).send(err);
+    });
 });
 
 router.get("/icon", function(req, reply) {
