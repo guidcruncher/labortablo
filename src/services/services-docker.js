@@ -173,6 +173,7 @@ function ensureDiscovery() {
       }
 
       containers.forEach((c) => {
+        logger.debug(c.Id);
         promises.push(getContainer(c.Id));
       });
 

@@ -28,7 +28,7 @@ function checkUrlExists(url) {
     var options = {
       method: "HEAD",
       host: parsedurl.hostname,
-      port: 443,
+      port: (url.includes("https://") ? 443 : 80),
       path: parsedurl.pathname,
     };
     var req = httpConnection(url).request(options, function(r) {
@@ -42,35 +42,54 @@ function checkUrlExists(url) {
   });
 }
 
-function downloadUrl(url, filename) {
+function downloadUrl(url, name, nodownload) {
   return new Promise((resolve, reject) => {
-    var file = fs.createWriteStream(filename);
+    try {
+      var filename = name;
 
-    logger.log("Downloading => " + url + " => " + filename);
+      logger.log("Downloading => " + url + " => " + filename);
 
-    httpConnection(url)
-      .get(url, function(response) {
-        if (response.statusCode != 200) {
+      httpConnection(url)
+        .get(url, function(response) {
+          if (response.statusCode != 200) {
+            if (fs.existsSync(filename)) {
+              fs.unlinkSync(filename);
+            }
+            reject("Http errorcode " + response.statusCode);
+            return;
+          }
+
+          var contentType = response.headers['content-type'].toLowerCase();
+
+          if (contentType == "image/png") {
+            filename = filename.replace(".ico", ".png");
+          } else {
+            contentType = "image/x-icon";
+          }
+
+          var file = fs.createWriteStream(filename);
+          response.pipe(file);
+          file.on("finish", function() {
+            file.close();
+            var result = {
+              mimeType: contentType,
+              extn: path.extname(filename),
+              content: nodownload ? null : fs.readFileSync(filename)
+            };
+            resolve(result);
+          });
+        })
+        .on("error", function(err) {
+          // Handle errors
           if (fs.existsSync(filename)) {
             fs.unlinkSync(filename);
           }
-          reject("Http errorcode " + response.statusCode);
-          return;
-        }
-
-        response.pipe(file);
-        file.on("finish", function() {
-          file.close();
-          resolve();
+          reject(err);
         });
-      })
-      .on("error", function(err) {
-        // Handle errors
-        if (fs.existsSync(filename)) {
-          fs.unlinkSync(filename);
-        }
-        reject(err);
-      });
+    } catch (e) {
+      logger.error("Error downloading " + url, e);
+      reject(e);
+    }
   });
 }
 
@@ -98,24 +117,29 @@ function downloadFile(url, name) {
 
 function checkIconUrl(url, format, name) {
   return new Promise((resolve, reject) => {
-    var parsedurl = urlparser.parse(url + name + format);
-    var options = {
-      method: "HEAD",
-      host: parsedurl.hostname,
-      port: 443,
-      path: parsedurl.pathname,
-    };
-    var req = httpConnection(url).request(options, function(r) {
-      if (r.statusCode == 200) {
-        resolve({
-          url: url + name + format,
-          format: format
-        });
-      } else {
-        reject();
-      }
-    });
-    req.end();
+    try {
+      var parsedurl = urlparser.parse(url + name + format);
+      var options = {
+        method: "HEAD",
+        host: parsedurl.hostname,
+        port: 443,
+        path: parsedurl.pathname,
+      };
+      var req = httpConnection(url).request(options, function(r) {
+        if (r.statusCode == 200) {
+          resolve({
+            url: url + name + format,
+            format: format
+          });
+        } else {
+          reject();
+        }
+      });
+      req.end();
+    } catch (e) {
+      logger.error("Error in checkurl", e);
+      reject();
+    }
   });
 }
 
@@ -185,7 +209,7 @@ function determineIconUrl(icon) {
   });
 }
 
-function getWebsiteIcon(hostname) {
+function getWebsiteIcon(hostname, nodownload) {
   return new Promise((resolve, reject) => {
     var parts = hostname.split(".");
     var cacheFolder = getIconCacheFolder();
@@ -197,7 +221,30 @@ function getWebsiteIcon(hostname) {
     }
 
     if (fs.existsSync(filename)) {
-      resolve(fs.readFileSync(filename));
+      var result = {
+        mimeType: "image/x-icon",
+        extn: path.extname(filename),
+        content: nodownload ? null : fs.readFileSync(filename)
+      };
+      if (result.extn == ".png") {
+        result.mimeType = "image/png";
+      }
+      resolve(result);
+      return;
+    }
+
+    filename = path.join(cacheFolder, "bookmarks", hostname) + ".png";
+
+    if (fs.existsSync(filename)) {
+      var result1 = {
+        mimeType: "image/x-icon",
+        extn: path.extname(filename),
+        content: nodownload ? null : fs.readFileSync(filename)
+      };
+      if (result1.extn == ".png") {
+        result1.mimeType = "image/png";
+      }
+      resolve(result1);
       return;
     }
 
@@ -260,9 +307,9 @@ function getWebsiteIcon(hostname) {
       .then((uri) => {
         var filename =
           path.join(getIconCacheFolder(), "bookmarks", hostname) + ".ico";
-        downloadUrl(uri, filename)
-          .then(() => {
-            resolve(fs.readFileSync(filename));
+        downloadUrl(uri, filename, nodownload)
+          .then((result) => {
+            resolve(result);
           })
           .catch(() => {
             if (fs.existsSync(filename)) {

@@ -100,50 +100,62 @@ function isCacheStale(name) {
 
 function getFeedAsJson(url) {
   return new Promise((resolve, reject) => {
-    var req = httpConnection(url).get(url, function(res) {
-      var body = "";
-      logger.log("Requesting Feed " + url);
+    try {
+      var req = httpConnection(url).get(url, function(res) {
+        var body = "";
+        logger.log("Requesting Feed " + url);
 
-      res.on("data", function(chunk) {
-        body = body + chunk;
-      });
+        res.on("data", function(chunk) {
+          body = body + chunk;
+        });
 
-      res.on("end", function() {
-        if (res.statusCode !== 200) {
-          logger.log("Feed request failed  with HTTP " + res.StatusCode);
-          reject(res.statusCode, "Failed");
-        } else {
-          var result = convert.xml2json(body, {
-            compact: false,
-            spaces: 2
-          });
-          result.href = url;
-          resolve(result);
-        }
+        res.on("end", function() {
+          if (res.statusCode !== 200) {
+            logger.log("Feed request failed  with HTTP " + res.StatusCode);
+            reject(res.statusCode, "Failed");
+          } else {
+            var result = convert.xml2json(body, {
+              compact: false,
+              spaces: 2
+            });
+            result.href = url;
+            resolve(result);
+          }
+        });
       });
-    });
-    req.on("error", function(e) {
-      reject(500, e.messagee);
-    });
-    req.end();
+      req.on("error", function(e) {
+        logger.error("Error in getrss", e);
+        reject(500, e.messagee);
+      });
+      req.end();
+    } catch (e) {
+      logger.error("Error in getrss", e);
+      reject(500, e);
+    }
   });
 }
 
 function getFeed(url) {
   return new Promise((resolve, reject) => {
-    logger.log("Getting feed " + url);
-    var parser = new Parser();
-    parser
-      .parseURL(url)
-      .then((feed) => {
-        feed.href = url;
-        resolve(feed);
-      })
-      .catch((err) => {
-        logger.log("Error on getting feed: " + url);
-        logger.log(err);
-        reject(500, err);
-      });
+    try {
+      logger.log("Getting feed " + url);
+      var parser = new Parser();
+      parser
+        .parseURL(url)
+        .then((feed) => {
+          feed.href = url;
+          resolve(feed);
+        })
+        .catch((err) => {
+          logger.log("Error on getting feed: " + url);
+          logger.log(err);
+          reject(500, err);
+        });
+
+    } catch (e) {
+      logger.error("Error in getFeed", e);
+      reject(500, e);
+    }
   });
 }
 

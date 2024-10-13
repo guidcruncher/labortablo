@@ -104,7 +104,7 @@ function merge(source) {
       target.services.items[i] = service;
       target.services.items[i].visible = visible;
     } else {
-      target.services.items.push(service);
+      //   target.services.items.push(service);
     }
   });
 

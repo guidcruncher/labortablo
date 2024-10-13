@@ -5,7 +5,6 @@ const bookmarks = require("../services/bookmarks.js");
 const iconResolver = require("../services/iconresolver.js");
 
 router.get("/", function(req, reply) {
-  logger.log("oi");
   bookmarks.loadBookmarks().then((a) => reply.send(a))
     .catch((err) => {
       logger.error("Error in getbookmarks", err);
@@ -18,12 +17,12 @@ router.get("/icon", function(req, reply) {
     .getWebsiteIcon(req.query.host)
     .then((content) =>
       reply
-      .header("content-type", "image/x-icon")
+      .header("content-type", content.mimeType)
       .header(
         "content-disposition",
-        "inline; filename=" + req.query.host + ".ico",
+        "inline; filename=" + req.query.host + content.extn,
       )
-      .end(content, "binary"),
+      .end(content.content, "binary"),
     )
     .catch((err) => {
       logger.error("Error in icon get", err);
