@@ -1,12 +1,11 @@
-const fs = require("fs");
+const logger = require("../logger.js");
 const Parser = require("rss-parser");
-const path = require("path");
-const bookmark = require("./bookmarks.js");
+const bookmarks = require("./bookmarks.js");
 
 function loadBookmarks(url) {
   var results = [];
 
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     var parser = new Parser();
     parser
       .parseURL(url)
@@ -17,8 +16,8 @@ function loadBookmarks(url) {
 
           r.name = a.title;
           r.href = a.link;
-          r.description = a.description + ;
-          r.tags = item.category
+          r.description = a.description;
+          r.tags = a.category
           return r;
         });
         resolve(results);
