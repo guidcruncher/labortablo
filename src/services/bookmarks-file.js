@@ -10,7 +10,7 @@ function loadBookmarks() {
         var r = Object.assign(v, {
           name: k
         });
-	return r;
+        return r;
       });
       resolve(converted);
     }

@@ -1,7 +1,7 @@
 const config = require("config");
 const logger = require("../logger.js");
 const filebookmarks = require("./bookmarks-file.js");
-const rssbookmarks = require("bookmarks-rssread");
+const rssbookmarks = require("./bookmarks-rssread.js");
 
 function loadBookmarks() {
   return new Promise((resolve) => {
