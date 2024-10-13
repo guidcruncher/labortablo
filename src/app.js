@@ -24,7 +24,6 @@
       app.locals.THEME_END = -1;
     }
     app.locals.THEME_NAME = config.get("theme.name");
-
     app.locals.API_INTERNAL_URL = process.env.API_INTERNAL_URL;
 
     const hbs = handlebars.create({
