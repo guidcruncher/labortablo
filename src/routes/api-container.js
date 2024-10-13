@@ -2,12 +2,21 @@ const logger = require("../logger.js");
 const express = require("express");
 const router = express.Router();
 const docker = require("../services/docker.js");
-const dockerdiscovery = require("../services/dockerdiscovery.js");
+const dockerdiscovery = require("../services/services-docker.js");
 
 router.get("/", function handler(request, reply) {
   dockerdiscovery.load()
     .then((data) => {
-      reply.send(data.services);
+      var results = {
+        groups: [],
+        items: []
+      };
+      results.items = data.services.items.filter((a) => a.visible).sort((a, b) => {
+        return a.name.localeCompare(b.name);
+      });
+      results.groups = Array.from(new Set(results.items.map((item) => item.group))).sort();
+
+      reply.send(results);
     })
     .catch((err) => {
       logger.error("Error in list containers", err);

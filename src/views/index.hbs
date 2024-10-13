@@ -1,65 +1,65 @@
-<ul class="icon-left nav nav-tabs nav-justified" role="tablist">
+<ul class="nav nav-tabs mb-3" id="myTab0" role="tablist">
   <li class="nav-item" role="presentation">
-    <button class="nav-link active" data-bs-toggle="tab" role="tab" data-bs-target="#tabservices">
-      <i class="bi bi-server m-1"></i> Services
+    <button data-mdb-tab-init class="nav-link active" id="services-tab0" data-mdb-target="#services0" type="button" role="tab" aria-controls="services" aria-selected="true">
+      Services
     </button>
   </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#tabbookmarks">
-      <i class="bi bi-pc-display-horizontal m-1"></i> Bookmarks
+    <button data-mdb-tab-init class="nav-link" id="bookmarks-tab0" data-mdb-target="#bookmarks0" type="button" role="tab" aria-controls="bookmarks" aria-selected="false">
+      Bookmarks
     </button>
   </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#tabfeeds">
-      <i class="bi bi-rss m-1"></i> Feeds
+    <button data-mdb-tab-init class="nav-link" id="feeds-tab0" data-mdb-target="#feeds0" type="button" role="tab" aria-controls="feeds" aria-selected="false">
+      Feeds
     </button>
   </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#tabsystem">
-      <i class="bi bi-clipboard-data m-1"></i> System
+    <button data-mdb-tab-init class="nav-link" id="system-tab0" data-mdb-target="#system0" type="button" role="tab" aria-controls="system" aria-selected="false">
+      System
     </button>
   </li>
 </ul>
-<div class="tab-content ">
-  <div class="tab-pane container-fluid active " role="tabpanel" id="tabservices">
+<div class="tab-content" id="myTabContent0">
+  <div class="tab-pane fade show active" id="services0" role="tabpanel" aria-labelledby="services-tab0">
     {{> iconlist containers }}
   </div>
-  <div class="tab-pane container-fluid fade " role="tabpanel" id="tabbookmarks">
+  <div class="tab-pane fade" id="bookmarks0" role="tabpanel" aria-labelledby="bookmarks-tab0">
     {{> bookmarks bookmarks }}
   </div>
-  <div class="tab-pane container-fluid fade " role="tabpanel" id="tabfeeds">
+  <div class="tab-pane fade" id="feeds0" role="tabpanel" aria-labelledby="feeds-tab0">
     {{> feeds this.newsfeeds }}
   </div>
-  <div class="tab-pane container-fluid fade " role="tabpanel" id="tabsystem">
+  <div class="tab-pane fade" id="system0" role="tabpanel" aria-labelledby="system-tab0">
     {{> system this.systeminfo }}
   </div>
 </div>
+
 <script type="text/javascript">
   $(function () {
-    $('*[data-bs-toggle="tab"]').click(function (e) {
+    $('*[role="tab"]').click(function (e) {
       window.API_BASE = '{{API_BASE}}';
-      var target = $(this).attr("data-bs-target");
+      var target = $(this).attr("aria-controls");
       switch (target) {
-      case "#tabservices":
+      case "services":
         reloadIconList();
+        containerStats();
         break;
-      case "#tabbookmarks":
+      case "bookmarks":
         reloadBookmarks();
         break;
-      case "#tabfeeds":
+      case "feeds":
         loadFeeds();
         break;
-      case "#tabsystem":
+      case "system":
         reloadSystem();
         break;
       }
       return false;
     });
+
     window.API_BASE = '{{API_BASE}}';
-    $('.nav-tabs').materialtab();
     setTimeout(reloadIconList, 60000);
-    setTimeout(reloadBookmarks, 120000);
-    setTimeout(loadFeeds, 60000);
     setTimeout(reloadSystem, 15000);
     containerStats();
   });

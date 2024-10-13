@@ -3,24 +3,71 @@ const config = require("config");
 const Client = require("node-rest-client").Client;
 
 const repositories = [{
-  name: "docker.io",
-  api: "https://hub.docker.com/v2",
-  loginUrl: "https://hub.docker.com/v2/users/login/",
-  authorization: "JWT",
-  queryEndpoint: "/repositories/[image]",
-}, {
-  name: "ghcr.io",
-  api: "https://ghcr.io/api/v2",
-  loginUrl: "",
-  authorization: "Bearer",
-  queryEndpoint: "/[image]/manifests/latest",
-}, {
-  name: "quay.io",
-  api: "https://quay.io/api/v1",
-  loginUrl: "",
-  authorization: null,
-  queryEndpoint: "/repository/[image]",
-}, ];
+    name: "docker.io",
+    api: "https://hub.docker.com/v2",
+    loginUrl: "https://hub.docker.com/v2/users/login/",
+    authorization: "JWT",
+    queryEndpoint: "/repositories/[image]",
+    login: function(username, password) {
+      return new Promise((resolve, reject) => {
+        var url = this.loginUrl;
+        var payload = {
+          username: username,
+          password: password
+        };
+        var client = new Client();
+        var args = {
+          data: payload,
+          headers: {
+            "Content-Type": "application/json"
+          },
+        };
+
+        client.post(url, args, function(data) {
+          if (data.token) {
+            logger.log("Logged in successfully to server");
+            resolve(data.token);
+            return;
+          }
+          logger.log("Credentials were rejected by server.");
+          reject("Invalid Credentials");
+        });
+      });
+    }
+  },
+  {
+    name: "ghcr.io",
+    api: "https://ghcr.io/api/v2",
+    loginUrl: "https://ghcr.io/token?scope=repository",
+    authorization: "Bearer",
+    queryEndpoint: "/[image]/manifests/latest",
+    login: function(username, password, target) {
+      return new Promise((resolve, reject) => {
+        var url = this.loginUrl + ":" + target + ":pull";
+        var client = new Client();
+
+        client.get(url, function(data) {
+          if (data.token) {
+            logger.log("Logged in successfully to server");
+            resolve(data.token);
+            return;
+          }
+          logger.log("Credentials were rejected by server.");
+          reject("Invalid Credentials");
+        });
+      });
+    },
+  },
+  {
+    name: "quay.io",
+    api: "https://quay.io/api/v1",
+    loginUrl: "",
+    authorization: "",
+    queryEndpoint: "/repository/[image]",
+    login: null
+  },
+];
+
 
 function getImageUrl(image) {
   var imageParts = image.split(":");
@@ -52,37 +99,23 @@ function getRepositorySettings(image) {
   return repositories.find((repository) => repository.name == imageRepository);
 }
 
-function login(repository, username, password) {
+function login(repository, username, password, target) {
   return new Promise((resolve, reject) => {
+    if (repository.loginUrl == "") {
+      logger.log("Login not needed for " + repository.name);
+      resolve("");
+      return
+    }
     if (username == null || username == undefined) {
       logger.log("No credentials supplied for repository " + repository.name);
       reject("No credentials");
       return;
     }
 
-    var url = repository.loginUrl;
-    var payload = {
-      username: username,
-      password: password
-    };
-    var client = new Client();
-    var args = {
-      data: payload,
-      headers: {
-        "Content-Type": "application/json"
-      },
-    };
+    repository.login(username, password, target)
+      .then((token) => resolve(token))
+      .catch((err) => reject(err));
 
-    client.post(url, args, function(data) {
-      if (data.token) {
-        logger.log("Logged in successfully to server");
-        resolve(data.token);
-        return;
-      }
-
-      logger.log("Credentials were rejected by server.");
-      reject("Invalid Credentials");
-    });
   });
 }
 
@@ -133,18 +166,26 @@ function query(image) {
     }
 
 
-    if (repository.authorization) {
+    if (repository.authorization != "") {
       var userEnvPrefix =
         repository.name.replace(/\./g, "_").toLowerCase();
-      var username = config.get("repositories." + userEnvPrefix + ".username");
-      var password = config.get("repositories." + userEnvPrefix + ".password");
+      var username = "";
+      var password = "";
+      if (config.has("repositories." + userEnvPrefix + ".username")) {
+        username = config.get("repositories." + userEnvPrefix + ".username");
+      }
+
+      if (config.has("repositories." + userEnvPrefix + ".password")) {
+        password = config.get("repositories." + userEnvPrefix + ".password");
+      }
 
       logger.log("Looking for credentials for " + repository.name + " via repositories." + userEnvPrefix);
 
       login(
           repository,
           username,
-          password
+          password,
+          imageUrl
         )
         .then((token) => {
           _query(token);
@@ -168,14 +209,23 @@ function summary(image) {
       return;
     }
     var userEnvPrefix = repository.name.replace(/\./g, "_").toLowerCase();
-    var username = config.get("repositories." + userEnvPrefix + ".username");
-    var password = config.get("repositories." + userEnvPrefix + ".password");
-    logger.log("Looking for credentials for " + repository.name + " via repositories." + userEnvPrefix);
+    var username = "";
+    var password = "";
+    if (config.has("repositories." + userEnvPrefix + ".username")) {
+      username = config.get("repositories." + userEnvPrefix + ".username");
+    }
+
+    if (config.has("repositories." + userEnvPrefix + ".password")) {
+      password = config.get("repositories." + userEnvPrefix + ".password");
+    }
+
+    logger.log("Looking for credientials for " + repository.name + " via repositories." + userEnvPrefix);
 
     login(
         repository,
         username,
-        password
+        password,
+        imageUrl
       )
       .then((token) => {
         var client = new Client();

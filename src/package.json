@@ -1,7 +1,7 @@
 {
   "name": "labortablo",
   "description": "Labortablo Web UI",
-  "version": "0.0.1",
+  "version": "0.0.43-0",
   "private": true,
   "scripts": {
     "start": "node ./index.js",
@@ -15,6 +15,7 @@
     "config": "^3.3.12",
     "cookie": "^1.0.0",
     "cookie-parser": "~1.4.4",
+    "d3-cloud": "^1.2.7",
     "debug": "^4.3.7",
     "dockerode": "^4.0.2",
     "express": "^4.21.0",
@@ -30,6 +31,7 @@
     "node-cron": "^3.0.3",
     "node-rest-client": "^3.1.1",
     "rss-parser": "^3.13.0",
+    "sqlite3": "^5.1.7",
     "systeminformation": "^5.23.5",
     "xml-js": "^1.6.11"
   },

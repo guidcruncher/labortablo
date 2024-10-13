@@ -1,7 +1,7 @@
 const logger = require("../logger.js");
 const cron = require("node-cron");
 const rssproxy = require("./rssproxy");
-const dockerDiscovery = require("./dockerdiscovery.js");
+const dockerDiscovery = require("./services-docker.js");
 const iconresolver = require("./iconresolver.js");
 
 function initialise() {

@@ -1,27 +1,44 @@
-const fs = require("fs");
-const path = require("path");
+const config = require("config");
+const logger = require("../logger.js");
+const filebookmarks = require("./bookmarks-file.js");
+const rssbookmarks = require("./bookmarks-rssread.js");
 
 function loadBookmarks() {
-  var filename = path.join(process.env.NODE_CONFIG_DIR, "bookmarks.json");
+  return new Promise((resolve) => {
+    var promises = [];
+    var bookmarks = [];
 
-  if (fs.existsSync(filename)) {
-    return JSON.parse(fs.readFileSync(filename));
-  }
+    promises.push(filebookmarks.loadBookmarks());
+    promises.push(rssbookmarks.loadBookmarks(config.get("bookmarks.linkding")));
 
-  return {};
+    Promise.allSettled(promises).then((results) => {
+      results.forEach((a) => {
+        logger.debug("Promise state ", a.status);
+
+        if (a.status == "fulfilled") {
+          bookmarks = bookmarks.concat(a.value);
+        } else {
+          logger.error("Error in loadbookmarks", a);
+        }
+
+      });
+      resolve(bookmarks.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)));
+    });
+  });
 }
 
-function saveBookmarks(store) {
-  var filename = path.join(process.env.NODE_CONFIG_DIR, "bookmarks.json");
-
-  if (fs.existsSync(filename)) {
-    fs.copyFileSync(filename, filename + ".bak");
-  }
-
-  fs.writeFileSync(filename, JSON.stringify(store, null, 2));
+function createRecord() {
+  return {
+    "name": "",
+    "description": "",
+    "icon": "",
+    "tags": [],
+    "href": ""
+  };
 }
+
 
 module.exports = {
   loadBookmarks,
-  saveBookmarks,
-};
+  createRecord,
+}
