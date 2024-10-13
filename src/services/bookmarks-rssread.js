@@ -1,6 +1,15 @@
 const logger = require("../logger.js");
 const Parser = require("rss-parser");
-const bookmarks = require("./bookmarks.js");
+
+function createRecord() {
+return {
+"name": "",
+"description": "",
+"icon": "",
+"tags": [],
+"href": ""
+};
+}
 
 function loadBookmarks(url) {
   var results = [];
@@ -11,8 +20,7 @@ function loadBookmarks(url) {
       .parseURL(url)
       .then((feed) => {
         results = feed.items.map((a) => {
-          ;
-          var r = bookmarks.createRecord();
+          var r = createRecord();
 
           r.name = a.title;
           r.href = a.link;

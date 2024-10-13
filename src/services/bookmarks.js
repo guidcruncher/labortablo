@@ -26,7 +26,7 @@ function loadBookmarks() {
     });
   });
 }
-
+	
 function createRecord() {
   return {
     "name": "",
