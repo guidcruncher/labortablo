@@ -153,7 +153,7 @@ function determineIconUrl(icon) {
 
     if (icon != "") {
 
-      imagename = icon.split(".")[0].toLowerCase();
+      imagename = icon.split(".")[0].toLowerCase().replace(" ", "");
       filename = iconCacheFolder + "/services/" + imagename + ".png";
 
       if (fs.existsSync(filename)) {

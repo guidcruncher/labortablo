@@ -46,7 +46,7 @@ function resolveExtendedData(container) {
       promises.push(iconresolver.determineIconUrl(container.icon));
     } else {
       if (container.icon != "") {
-        promises.push(iconresolver.determineIconUrl(container.name));
+        promises.push(iconresolver.determineIconUrl(container.name.replaceAll(" ", "")));
       } else {
         promises.push(iconresolver.determineIconUrl(container.imageName));
       }
@@ -127,7 +127,7 @@ function getContainer(id) {
       }
 
       if (record.icon == "") {
-        record.icon = record.name ? record.name.split(" ")[0].toLowerCase() : "";
+        record.icon = record.name ? record.name.replaceAll(" ", "-").toLowerCase() : "";
       }
 
       resolveExtendedData(record)
