@@ -2,7 +2,6 @@ const config = require("config");
 const logger = require("../logger.js");
 const filebookmarks = require("./bookmarks-file.js");
 const rssbookmarks = require("./bookmarks-rssread.js")
-const iconresolver = require("./iconresolver.js");
 
 function getcategories() {
   return new Promise((resolve) => {
@@ -36,15 +35,15 @@ function loadBookmarks() {
 
       });
 
-/*      var iconpromises = [];
-      bookmarks.forEach((b) => {
-        var u = new URL(b.href);
-        iconpromises.push(iconresolver.getWebsiteIcon(u.hostname, true));
-      });
+      /*      var iconpromises = [];
+            bookmarks.forEach((b) => {
+              var u = new URL(b.href);
+              iconpromises.push(iconresolver.getWebsiteIcon(u.hostname, true));
+            });
 
-      Promise.allSettled(iconpromises).then(() => {
-      */ 
- resolve(bookmarks);
+            Promise.allSettled(iconpromises).then(() => {
+            */
+      resolve(bookmarks);
       // });
     });
   });
