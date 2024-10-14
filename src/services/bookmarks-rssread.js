@@ -26,8 +26,8 @@ function loadBookmarks(url) {
             r.name = a.title;
             r.href = a.link;
             r.description = a.description;
-            r.tags = a.category
-            return r;
+            r.tags = a.categories ? a.categories : [];
+             return r;
           });
           resolve(results);
         })

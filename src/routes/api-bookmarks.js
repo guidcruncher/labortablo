@@ -12,6 +12,21 @@ router.get("/", function(req, reply) {
     });
 });
 
+router.get("/tags:extn", function(req, reply) {
+  bookmarks.getcategories().then((a) => {
+      if (req.params.extn.toLowerCase() == ".txt") {
+        reply.set('Content-Type', 'text/plain');
+        reply.end(a.join(" ").trim());
+      } else {
+        reply.send(a);
+      }
+    })
+    .catch((err) => {
+      logger.error("Error in getcategories", err);
+      reply.status(500).send(err);
+    });
+});
+
 router.get("/icon", function(req, reply) {
   iconResolver
     .getWebsiteIcon(req.query.host)

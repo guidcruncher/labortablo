@@ -4,6 +4,18 @@ const filebookmarks = require("./bookmarks-file.js");
 const rssbookmarks = require("./bookmarks-rssread.js")
 const iconresolver = require("./iconresolver.js");
 
+function getcategories() {
+  return new Promise((resolve) => {
+    loadBookmarks().then((bookmarks) => {
+      var words = [];
+      bookmarks.forEach((b) => {
+        words = words.concat(b.tags);
+      });
+      resolve(words.sort());
+    });
+  });
+}
+
 function loadBookmarks() {
   return new Promise((resolve) => {
     var promises = [];
@@ -24,15 +36,16 @@ function loadBookmarks() {
 
       });
 
-      var iconpromises = [];
+/*      var iconpromises = [];
       bookmarks.forEach((b) => {
         var u = new URL(b.href);
         iconpromises.push(iconresolver.getWebsiteIcon(u.hostname, true));
       });
 
       Promise.allSettled(iconpromises).then(() => {
-        resolve(bookmarks.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)));
-      });
+      */ 
+ resolve(bookmarks);
+      // });
     });
   });
 }
@@ -51,4 +64,5 @@ function createRecord() {
 module.exports = {
   loadBookmarks,
   createRecord,
+  getcategories,
 }
