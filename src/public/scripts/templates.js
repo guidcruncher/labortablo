@@ -158,7 +158,7 @@ this["JST"]["views/partials/feeds.hbs"] = Handlebars.template({"1":function(cont
 
   return "    <li class=\"list-group-item list-group-item-primary\">\n      <div onclick=\"window.open('"
     + alias4(((helper = (helper = lookupProperty(helpers,"link") || (depth0 != null ? lookupProperty(depth0,"link") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"link","hash":{},"data":data,"loc":{"start":{"line":4,"column":33},"end":{"line":4,"column":41}}}) : helper)))
-    + "'); return false;\" class=\"container primary\">\n        <div class=\"row\">\n          <div class=\"col-2 mobile-hide\"><img style=\"max-height:80px;\" src=\""
+    + "'); return false;\" class=\"container primary\">\n        <div class=\"row\">\n          <div class=\"col-2 mobile-hide\" style=\"overflow:hidden;height:80px\"><img style=\"width:auto;height:auto;max-height:100%;max-width:100%;\" src=\""
     + alias4(alias5(((stack1 = (depth0 != null ? lookupProperty(depth0,"image") : depth0)) != null ? lookupProperty(stack1,"url") : stack1), depth0))
     + "\" alt=\""
     + alias4(alias5(((stack1 = (depth0 != null ? lookupProperty(depth0,"image") : depth0)) != null ? lookupProperty(stack1,"title") : stack1), depth0))
@@ -554,7 +554,7 @@ this["JST"]["views/partials/ticker.hbs"] = Handlebars.template({"1":function(con
 },"useData":true});
 
 this["JST"]["views/partials/wordcloud.hbs"] = Handlebars.template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
-    return " <div id=\"word-cloud\" style=\"height: 100vh;width: 100vw;margin: 0 auto\">\n\n </div>\n\n <script type=\"text/javascript\">\n   renderWordCloud(\"word-cloud\");\n\n </script>\n";
+    return "\n";
 },"useData":true});
 
 this["JST"]["views/setup.hbs"] = Handlebars.template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
