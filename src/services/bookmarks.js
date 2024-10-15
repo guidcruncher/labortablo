@@ -9,7 +9,7 @@ function getcategories() {
       var words = [];
       bookmarks.forEach((b) => {
         if (b.tags.length == 0) {
-          words.push("?");
+          words.push("Unknown");
         } else {
           words = words.concat(b.tags);
         }
