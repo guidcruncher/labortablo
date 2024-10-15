@@ -322,8 +322,8 @@ this["JST"]["views/partials/iconlist.hbs"] = Handlebars.template({"1":function(c
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"description") : depth0), depth0))
     + "</div>\n            </div>\n          </div>\n          <div class=\"col\">\n            <div class=\"containerstats mobile-hide\" container-id=\""
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"container") : depth0), depth0))
-    + "\">CPU: -</div>\n          </div>\n          <div class=\"col col-md-auto\">\n            <span class=\"state "
-    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"state") : depth0), depth0))
+    + "\">CPU: -</div>\n          </div>\n          <div class=\"col col-md-auto\">\n            <span class=\""
+    + alias2((lookupProperty(helpers,"statecss")||(depth0 && lookupProperty(depth0,"statecss"))||container.hooks.helperMissing).call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"state") : depth0),{"name":"statecss","hash":{},"data":data,"loc":{"start":{"line":21,"column":25},"end":{"line":21,"column":48}}}))
     + "\">"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"state") : depth0), depth0))
     + "</span>\n          </div>\n        </div>\n      </div>\n</div>\n";
