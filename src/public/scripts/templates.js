@@ -504,7 +504,13 @@ this["JST"]["views/partials/system.hbs"] = Handlebars.template({"1":function(con
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"mem") : depth0)) != null ? lookupProperty(stack1,"strswapfree") : stack1), depth0))
     + "</td>\n              </tr>\n            </tbody>\n          </table>\n          </p>\n        </div>\n      </div>\n    </div>\n    <div class=\"col\">\n      <div class=\"card m-3 border border-primary\" style=\"max-width:400px\">\n        <div class=\"card-body\">\n          <h4 class=\"card-title text-primary\">Storage</h4>\n          <p class=\"card-text\">\n          <table class=\"table table-hover\">\n            <tbody>\n"
     + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"fsSize") : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":101,"column":14},"end":{"line":123,"column":33}}})) != null ? stack1 : "")
-    + "\n            </tbody>\n          </table>\n          </p>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n";
+    + "\n            </tbody>\n          </table>\n          </p>\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class=\"row\">\n    <div class=\"col\">\n      <div class=\"card m-3 border border-primary\" style=\"max-width:400px\">\n        <div class=\"card-body\">\n          <h4 class=\"card-title text-primary\">"
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"software") : depth0)) != null ? lookupProperty(stack1,"apptitle") : stack1), depth0))
+    + "</h4>\n          <p class=\"card-text\">\n          <table class=\"table table-hover\">\n            <tbody>\n              <tr>\n                <th scope=\"row\">Version</th>\n                <td>"
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"software") : depth0)) != null ? lookupProperty(stack1,"version") : stack1), depth0))
+    + "</td>\n              </tr>\n              <tr>\n                <th scope=\"row\">Build date</th>\n                <td>"
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"software") : depth0)) != null ? lookupProperty(stack1,"builddate") : stack1), depth0))
+    + "</td>\n              </tr>\n            </tbody>\n          </table>\n          </p>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n";
 },"useData":true});
 
 this["JST"]["views/partials/ticker.hbs"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
