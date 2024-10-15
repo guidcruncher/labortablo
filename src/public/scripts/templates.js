@@ -552,6 +552,10 @@ this["JST"]["views/partials/ticker.hbs"] = Handlebars.template({"1":function(con
     + "s\")\n  });\n\n</script>\n";
 },"useData":true});
 
+this["JST"]["views/partials/wordcloud.hbs"] = Handlebars.template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
+    return "<div id=\"word-cloud\">\n\n</div>\n";
+},"useData":true});
+
 this["JST"]["views/setup.hbs"] = Handlebars.template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
     return "Hello\n";
 },"useData":true});

@@ -27,6 +27,33 @@ router.get("/tags:extn", function(req, reply) {
     });
 });
 
+router.get("/tags/frequency", function(req, reply) {
+  bookmarks.getcategories().then((arr) => {
+      const counts = {};
+
+      arr.forEach((s) => {
+        var el = (s == "" ? "?" : s.trim());
+        counts[el] = counts[el] ? (counts[el] + 1) : 1;
+      });
+
+      var converted = Object.entries(counts).map(([k, v]) => {
+        return {
+          word: k,
+          freq: v
+        };
+      });
+
+      reply.send(converted.sort(function(a, b) {
+        return -1 * (a.freq - b.freq);
+      }));
+
+    })
+    .catch((err) => {
+      logger.error("Error in getcategories", err);
+      reply.status(500).send(err);
+    });
+});
+
 router.get("/icon", function(req, reply) {
   iconResolver
     .getWebsiteIcon(req.query.host)

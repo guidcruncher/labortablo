@@ -70,7 +70,7 @@ module.exports = function(grunt) {
       cssprettify: {
         command: 'find . -type f -name "*.css" -not -path "**/node_modules/*" -exec npx js-beautify -r -s 2 -n -w 0 --type css {} +'
       },
-      preeebuild: {
+      prebuild: {
         command: 'npm version prepatch'
       },
       build: {
@@ -98,7 +98,7 @@ module.exports = function(grunt) {
       deploy: {
         command: [
           'docker compose -p "labortablo" --env-file "$SRC"/stack.env -f "$SRC"/compose.yaml --project-directory "$SRC" rm -f',
-	  'docker compose -p "labortablo" --env-file "$SRC"/stack.env -f "$SRC"/compose.yaml --project-directory "$SRC" pull',
+          'docker compose -p "labortablo" --env-file "$SRC"/stack.env -f "$SRC"/compose.yaml --project-directory "$SRC" pull',
           'docker compose -p "labortablo" --env-file "$SRC"/stack.env -f "$SRC"/compose.yaml --project-directory "$SRC" up -d'
         ].join(' & ')
       }

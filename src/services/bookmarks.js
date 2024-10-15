@@ -8,7 +8,11 @@ function getcategories() {
     loadBookmarks().then((bookmarks) => {
       var words = [];
       bookmarks.forEach((b) => {
-        words = words.concat(b.tags);
+        if (b.tags.length == 0) {
+          words.push("?");
+        } else {
+          words = words.concat(b.tags);
+        }
       });
       resolve(words.sort());
     });
