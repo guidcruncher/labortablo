@@ -34,6 +34,12 @@ module.exports = {
 
     return new Handlebars.SafeString(result);
   },
+  nbsp: function(text) {
+    if (text.trim() == "") {
+      return new Handlebars.SafeString("&nbsp;");
+    }
+    return new Handlebars.SafeString(text);
+  },
   statecss: function(state) {
     var css = "state ";
 

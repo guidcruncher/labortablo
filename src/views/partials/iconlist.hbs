@@ -1,6 +1,6 @@
 <div class="list-group">
   {{#each this.groups}}
-    <div class="list-group-item list-group-item-primary">{{this}}</div>
+    <div class="list-group-item list-group-item-primary">{{nbsp this}}</div>
     {{#eachwhen ../this.items "group" this }}
       <div class="list-group-item d-flex align-items-center gap-3 list-group-item-action" onclick="window.open('{{this.href}}','_blank');return false;">
         <div class="container">

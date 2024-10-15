@@ -31,7 +31,7 @@ function checkUrlExists(url) {
       port: (url.includes("https://") ? 443 : 80),
       path: parsedurl.pathname,
     };
-    var req = httpConnection(url).request(options, function(r) {
+    var req = httpConnection.create(url).request(options, function(r) {
       if (r.statusCode == 200) {
         resolve(url);
       } else {
@@ -48,7 +48,7 @@ function downloadUrl(url, name) {
 
     logger.log("Downloading => " + url + " => " + filename);
 
-    httpConnection(url).downloadFile(url, filename)
+    httpConnection.downloadFile(httpConnection.create(url), url, filename)
       .then((state) => {
         resolve(state);
       })
@@ -90,7 +90,7 @@ function checkIconUrl(url, format, name) {
         port: 443,
         path: parsedurl.pathname,
       };
-      var req = httpConnection(url).request(options, function(r) {
+      var req = httpConnection.create(url).request(options, function(r) {
         if (r.statusCode == 200) {
           resolve({
             url: url + name + format,
@@ -375,7 +375,7 @@ function cacheSimpleIconData() {
     const file = fs.createWriteStream(filename);
     logger.debug("Retrieving Simple Icon cache");
 
-    httpConnection(url)
+    httpConnection.create(url)
       .get(url, function(response) {
         if (response.statusCode != 200) {
           reject(response.statusCode);

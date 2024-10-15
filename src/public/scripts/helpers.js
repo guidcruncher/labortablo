@@ -1,3 +1,41 @@
+Handlebars.registerHelper("nbsp", function(text) {
+  if (text.trim() == "") {
+    return new Handlebars.SafeString("&nbsp;");
+  }
+  return new Handlebars.SafeString(text);
+});
+
+Handlebars.registerHelper("statecss", function(state) {
+  var css = "state ";
+  switch (state) {
+    case "healthy":
+      css += " text-success";
+      break
+    case "running":
+      css += " text-success";
+      break
+    case "unhealthy":
+      css += " text-danger";
+      break
+    case "created":
+      css += " text-info";
+      break
+    case "restarting":
+      css += " text-warning";
+      break
+    case "paused":
+      css += " text-secondary";
+      break
+    case "exited":
+      css += " text-secondary";
+      break
+    case "dead":
+      css += " text-black-50";
+      break
+  }
+  return new Handlebars.SafeString(css);
+});
+
 Handlebars.registerHelper("eachwhen", function(list, k, v, opts) {
   var i,
     result = "";

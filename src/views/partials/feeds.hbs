@@ -23,11 +23,11 @@
         </div>
       </div>
     </li>
-    {{#each this.items}}
+    {{#each this.entries}}
       <li class="list-group-item" onclick="window.open('{{link}}'); return false;">
         <h2>{{title}}</h2>
         <small class="d-block text-muted">{{pubDate}}</small>
-        <img src="{{enclosure.url}}" style="float:left; max-width:100px;margin-right: 10px;" /> {{content}}
+        <img src="{{enclosure.url}}" style="float:left; max-width:100px;margin-right: 10px;" /> {{description}}
       </li>
       <li class="list-group-item list-divider"></li>
     {{/each}}
