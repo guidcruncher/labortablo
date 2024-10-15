@@ -42,54 +42,19 @@ function checkUrlExists(url) {
   });
 }
 
-function downloadUrl(url, name, nodownload) {
+function downloadUrl(url, name) {
   return new Promise((resolve, reject) => {
-    try {
-      var filename = name;
+    var filename = name;
 
-      logger.log("Downloading => " + url + " => " + filename);
+    logger.log("Downloading => " + url + " => " + filename);
 
-      httpConnection(url)
-        .get(url, function(response) {
-          if (response.statusCode != 200) {
-            if (fs.existsSync(filename)) {
-              fs.unlinkSync(filename);
-            }
-            reject("Http errorcode " + response.statusCode);
-            return;
-          }
-
-          var contentType = response.headers['content-type'].toLowerCase();
-
-          if (contentType == "image/png") {
-            filename = filename.replace(".ico", ".png");
-          } else {
-            contentType = "image/x-icon";
-          }
-
-          var file = fs.createWriteStream(filename);
-          response.pipe(file);
-          file.on("finish", function() {
-            file.close();
-            var result = {
-              mimeType: contentType,
-              extn: path.extname(filename),
-              content: nodownload ? null : fs.readFileSync(filename)
-            };
-            resolve(result);
-          });
-        })
-        .on("error", function(err) {
-          // Handle errors
-          if (fs.existsSync(filename)) {
-            fs.unlinkSync(filename);
-          }
-          reject(err);
-        });
-    } catch (e) {
-      logger.error("Error downloading " + url, e);
-      reject(e);
-    }
+    httpConnection(url).downloadFile(url, filename)
+      .then((state) => {
+        resolve(state);
+      })
+      .catch((err) => {
+        reject(err);
+      });
   });
 }
 
@@ -105,7 +70,7 @@ function downloadFile(url, name) {
     }
 
     downloadUrl(url, filename)
-      .then(() => resolve())
+      .then((result) => resolve(result))
       .catch((err) => {
         if (fs.existsSync(filename)) {
           fs.unlinkSync(filename);
@@ -181,10 +146,10 @@ function determineIconUrl(icon) {
       Promise.any(requests)
         .then((validUrl) => {
           downloadFile(validUrl.url, imagename + validUrl.format)
-            .then(() => {
+            .then((result) => {
               resolve({
                 type: "icon",
-                value: "/api/icons/" + imagename + validUrl.format
+                value: "/api/icons/" + result.name
               });
             })
             .catch(() => {

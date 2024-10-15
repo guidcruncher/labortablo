@@ -53,14 +53,15 @@ module.exports = {
       case "restarting":
         css += " text-warning";
         break
-      case "paused": css += " text-secondary";
-      break
+      case "paused":
+        css += " text-secondary";
+        break
       case "exited":
-      css += " text-secondary";
-      break
+        css += " text-secondary";
+        break
       case "dead":
-      css += " text-black-50";
-      break
+        css += " text-black-50";
+        break
     }
     return new Handlebars.SafeString(css);
   },

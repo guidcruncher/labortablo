@@ -100,38 +100,18 @@ function isCacheStale(name) {
 
 function getFeedAsJson(url) {
   return new Promise((resolve, reject) => {
-    try {
-      var req = httpConnection(url).get(url, function(res) {
-        var body = "";
-        logger.log("Requesting Feed " + url);
-
-        res.on("data", function(chunk) {
-          body = body + chunk;
+    httpConnection(url).downloadToMemory(url)
+      .then((data) => {
+        var result = convert.xml2json(data.body, {
+          compact: false,
+          spaces: 2
         });
-
-        res.on("end", function() {
-          if (res.statusCode !== 200) {
-            logger.log("Feed request failed  with HTTP " + res.StatusCode);
-            reject(res.statusCode, "Failed");
-          } else {
-            var result = convert.xml2json(body, {
-              compact: false,
-              spaces: 2
-            });
-            result.href = url;
-            resolve(result);
-          }
-        });
+        result.href = url;
+        resolve(result);
+      }).catch((err) => {
+        logger.error("Error in getrss", err);
+        reject(500, err);
       });
-      req.on("error", function(e) {
-        logger.error("Error in getrss", e);
-        reject(500, e.messagee);
-      });
-      req.end();
-    } catch (e) {
-      logger.error("Error in getrss", e);
-      reject(500, e);
-    }
   });
 }
 

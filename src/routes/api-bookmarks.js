@@ -67,7 +67,6 @@ router.get("/icon", function(req, reply) {
       .end(content.content, "binary"),
     )
     .catch((err) => {
-      logger.error("Error in icon get", err);
       reply.status(404).send(err);
     });
 });
