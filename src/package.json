@@ -1,7 +1,7 @@
 {
   "name": "labortablo",
   "description": "Labortablo Web UI",
-  "version": "0.0.98",
+  "version": "0.0.101",
   "private": true,
   "scripts": {
     "start": "node ./index.js",

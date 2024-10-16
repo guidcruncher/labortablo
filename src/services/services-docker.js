@@ -61,7 +61,9 @@ function resolveExtendedData(container) {
               container.iconhref = result.value.value.trim();
               break;
             case "repositorydata":
-              container.description = result.value.description.trim().split(".")[0];
+              if (container.description == "") {
+                container.description = result.value.description.trim().split(".")[0];
+              }
               if (container.name == "") {
                 container.name = result.value.name;
               }
@@ -104,13 +106,14 @@ function getContainer(id) {
       var record = cache.createRecord({
         id: data.Id ? data.Id : "",
         shortid: data.Id.substring(0, 12),
-        group: data.Config.Labels["homepage.group"] ? data.Config.Labels["homepage.group"] : "",
-        name: data.Config.Labels["homepage.name"] ? data.Config.Labels["homepage.name"] : "",
-        href: data.Config.Labels["homepage.href"] ? data.Config.Labels["homepage.href"] : "",
-        icon: data.Config.Labels["homepage.icon"] ? data.Config.Labels["homepage.icon"].toLowerCase() : "",
-        description: data.Config.Labels["Homepage.description"] ? data.Config.Labels["homepage.description"] : "",
+        group: data.Config.Labels["homepage.group"] ? data.Config.Labels["homepage.group"].trim() : "",
+        name: data.Config.Labels["homepage.name"] ? data.Config.Labels["homepage.name"].trim() : "",
+        href: data.Config.Labels["homepage.href"] ? data.Config.Labels["homepage.href"].trim() : "",
+        icon: data.Config.Labels["homepage.icon"] ? data.Config.Labels["homepage.icon"].trim().toLowerCase() : "",
+        description: data.Config.Labels["Homepage.description"] ? data.Config.Labels["homepage.description"].trim() : data.Config.Labels["org.opencontainers.image.description"] ? data.Config.Labels["org.opencontainers.image.description"].trim() : "",
         container: data.Name.substring(1)
       });
+
 
       var image = data.Config.Image.split(":");
       var imageParts = data.Config.Image.split("/");

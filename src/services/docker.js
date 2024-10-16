@@ -152,7 +152,12 @@ function listContainers(preload) {
                   state: container.State.Status,
                   description: container.Config.Labels["homepage.description"],
                   health: container.State.Health ? container.State.Health.Status : "",
+                };
+
+                if (record.description == "") {
+                  record.description = container.Config.Labels["org.opencontainers.image.title"];
                 }
+
                 var image = container.Config.Image.split(":");
 
                 if (container.Config.Image.split("/").length <= 2) {

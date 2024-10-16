@@ -23,7 +23,7 @@ function createRecord(args) {
     visible: true,
     created: moment().format("yyyy-MM-DD HH:mm:ss")
   };
-  Object.seal(record);
+
   if (args) {
     return Object.assign(record, args);
   }
