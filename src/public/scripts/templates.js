@@ -181,7 +181,7 @@ this["JST"]["views/partials/feeds.hbs"] = Handlebars.template({"1":function(cont
     + "'); return false;\">\n        <h2>"
     + alias4(((helper = (helper = lookupProperty(helpers,"title") || (depth0 != null ? lookupProperty(depth0,"title") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data,"loc":{"start":{"line":28,"column":12},"end":{"line":28,"column":21}}}) : helper)))
     + "</h2>\n        <small class=\"d-block text-muted\">"
-    + alias4(((helper = (helper = lookupProperty(helpers,"pubDate") || (depth0 != null ? lookupProperty(depth0,"pubDate") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"pubDate","hash":{},"data":data,"loc":{"start":{"line":29,"column":42},"end":{"line":29,"column":53}}}) : helper)))
+    + alias4(((helper = (helper = lookupProperty(helpers,"publishDate") || (depth0 != null ? lookupProperty(depth0,"publishDate") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"publishDate","hash":{},"data":data,"loc":{"start":{"line":29,"column":42},"end":{"line":29,"column":57}}}) : helper)))
     + "</small>\n        <img src=\""
     + alias4(container.lambda(((stack1 = (depth0 != null ? lookupProperty(depth0,"enclosure") : depth0)) != null ? lookupProperty(stack1,"url") : stack1), depth0))
     + "\" style=\"float:left; max-width:100px;margin-right: 10px;\" /> "
