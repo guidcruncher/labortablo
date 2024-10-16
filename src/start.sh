@@ -3,6 +3,8 @@
 cp /app/public/images/labortablo.svg /cache/
 cp /app/public/images/labortablo.svg /app/public/icons/
 
+cp /usr/share/zoneinfo/"$TZ" /etc/localtime
+
 mkdir -p "$NODE_CONFIG_DIR"
 
 if [ ! -f  "$NODE_CONFIG_DIR/default.json" ]; then
