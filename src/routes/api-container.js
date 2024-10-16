@@ -49,8 +49,12 @@ router.get("/:id/stats", function handler(request, reply) {
       reply.send(data);
     })
     .catch((err) => {
-      logger.log("Error in containerstats", err);
-      reply.status(err.statusCode).send(err.reason);
+      if (err.statusCode == 404) {
+        reply.status(404).send();
+      } else {
+        logger.log("Error in containerstats", err);
+        reply.status(500).send(err.reason);
+      }
     });
 });
 

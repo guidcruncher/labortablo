@@ -13,6 +13,7 @@ module.exports = function(grunt) {
             './public/scripts/handlebars.min.js',
             './public/scripts/helpers.js',
             './public/scripts/templates.js',
+            './public/scripts/word-cloud.js',
             './public/scripts/main.js'
           ]
         }
@@ -55,9 +56,15 @@ module.exports = function(grunt) {
         API_INTERNAL_URL: 'http://thecrockers.localcert.net:9080/api',
         PERSISTENCE_STORE: '/home/jcrocker/src/dev/labortablo/cache',
         NODE_CONFIG_DIR: '/home/jcrocker/src/dev/labortablo/config'
+      },
+      deploy: {
+        SRC: '/home/jcrocker/docker/stacks/labortablo'
       }
     },
     shell: {
+      tagbuild: {
+        command: 'date -u >./build'
+      },
       prettify: {
         command: 'find . -type f -name "*.hbs" -exec npx js-beautify -r --templating handlebars -s 2 -n -w 0 --type html -j {} +'
       },
@@ -76,9 +83,11 @@ module.exports = function(grunt) {
           'docker buildx create --name labortablo-builder --node labortablo-builder --platform linux/arm64 --use --bootstrap',
           'docker buildx prune --builder labortablo-builder -f',
           'docker buildx build --pull --no-cache --load --platform linux/arm64 --builder labortablo-builder -t "guidcruncher/labortablo:development" .',
-          'docker push "guidcruncher/labortablo:development"',
           'docker buildx rm labortablo-builder -f'
         ].join(' && ')
+      },
+      push: {
+        command: 'docker push "guidcruncher/labortablo:development"'
       },
       publish: {
         command: [
@@ -92,10 +101,10 @@ module.exports = function(grunt) {
       },
       deploy: {
         command: [
-          'docker stop labortablo',
-          'docker pull guidcruncher/labortablo:development',
-          'docker start labortablo'
-        ].join(' && ')
+          'docker compose -p "labortablo" --env-file "$SRC"/stack.env -f "$SRC"/compose.yaml --project-directory "$SRC" rm -f',
+          'docker compose -p "labortablo" --env-file "$SRC"/stack.env -f "$SRC"/compose.yaml --project-directory "$SRC" pull',
+          'docker compose -p "labortablo" --env-file "$SRC"/stack.env -f "$SRC"/compose.yaml --project-directory "$SRC" up -d'
+        ].join(' & ')
       }
     }
   });
@@ -111,10 +120,10 @@ module.exports = function(grunt) {
 
 
   // Default task(s).
-  grunt.registerTask('default', ['package', 'shell:prebuild', 'npm-command:dev']);
+  grunt.registerTask('default', ['package', 'shell:tagbuild', 'shell:prebuild', 'npm-command:dev']);
   grunt.registerTask('package', ['env:dev', 'shell:cssprettify', 'shell:jsprettify', 'shell:prettify', 'handlebars', 'eslint', 'uglify']);
-  grunt.registerTask('build', ['shell:build']);
-  grunt.registerTask('build-deploy', ['build', 'deploy']);
-  grunt.registerTask('deploy', ['shell:deploy']);
+  grunt.registerTask('build', ['shell:tagbuild', 'shell:build']);
+  grunt.registerTask('build-deploy', ['build', 'shell:push', 'deploy']);
+  grunt.registerTask('deploy', ['env:deploy', 'shell:deploy']);
   grunt.registerTask('publish', ['shell:publish']);
 };

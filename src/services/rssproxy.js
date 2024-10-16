@@ -1,10 +1,9 @@
 const logger = require("../logger.js");
-const httpConnection = require("./httpconnectionfactory.js");
-const convert = require("xml-js");
-const Parser = require("rss-parser");
+//const Parser = require("rss-parser");
 const fs = require("fs");
 const path = require("path");
 const moment = require("moment");
+const rss = require("@extractus/feed-extractor");
 
 function ensurePath() {
   var dir = path.join(process.env.PERSISTENCE_STORE, "feeds");
@@ -98,49 +97,23 @@ function isCacheStale(name) {
   return false;
 }
 
-function getFeedAsJson(url) {
-  return new Promise((resolve, reject) => {
-    var req = httpConnection(url).get(url, function(res) {
-      var body = "";
-      logger.log("Requesting Feed " + url);
-
-      res.on("data", function(chunk) {
-        body = body + chunk;
-      });
-
-      res.on("end", function() {
-        if (res.statusCode !== 200) {
-          logger.log("Feed request failed  with HTTP " + res.StatusCode);
-          reject(res.statusCode, "Failed");
-        } else {
-          var result = convert.xml2json(body, {
-            compact: false,
-            spaces: 2
-          });
-          result.href = url;
-          resolve(result);
-        }
-      });
-    });
-    req.on("error", function(e) {
-      reject(500, e.messagee);
-    });
-    req.end();
-  });
-}
-
 function getFeed(url) {
   return new Promise((resolve, reject) => {
-    logger.log("Getting feed " + url);
-    var parser = new Parser();
-    parser
-      .parseURL(url)
-      .then((feed) => {
-        feed.href = url;
-        resolve(feed);
+    logger.log("Getting feed", url);
+    rss.extract(url, {
+        getExtraFeedFields: (feedData) => {
+          return {
+            image: feedData.image || ''
+          }
+        }
+      })
+      .then((result) => {
+        logger.log("Parsing feed", url);
+        result.href = url;
+        resolve(result);
       })
       .catch((err) => {
-        logger.log("Error on getting feed: " + url);
+        logger.log("Error on getFeed parsing: " + url);
         logger.log(err);
         reject(500, err);
       });
@@ -166,9 +139,9 @@ function getFeeds(name) {
               .then(function(feed) {
                 logger.log(feed.title);
                 result.feeds.push(feed);
-                result.itemCount += feed.items.length + 1;
+                result.itemCount += feed.entries.length + 1;
                 feed.lastBuildDate = moment(
-                  new Date(feed.lastBuildDate),
+                  new Date(feed.published),
                 ).format("LLLL");
                 resolve(feed);
               })
@@ -184,7 +157,7 @@ function getFeeds(name) {
           for (var i = 0; i < results.length; i++) {
             if (results[i].status == "fulfilled") {
               result.feeds.push(results[i].value);
-              result.itemCount += results[i].value.items.length + 1;
+              result.itemCount += results[i].value.entries.length + 1;
             }
           }
 
@@ -198,11 +171,9 @@ function getFeeds(name) {
             (value, index, self) =>
             index === self.findIndex((t) => t.title === value.title),
           );
-          result.itemCount = result.feeds
-            .map((i) => i.items.length + 1)
-            .reduce((a, b) => {
-              return a + b;
-            });
+          var totals = result.feeds.map((i) => i.entries.length + 1)
+            .reduce((a, b) => a + b, 0);
+          result.itemCount = totals;
           saveToCache(result, name);
           resolve(result);
         })
@@ -244,7 +215,6 @@ function checkFeedCache(name) {
 }
 
 module.exports = {
-  getFeedAsJson,
   getFeed,
   getFeeds,
   loadFeeds,

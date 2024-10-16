@@ -1,6 +1,7 @@
 FROM node:22.9.0-alpine3.20
 
 RUN apk add --no-cache nano bash curl sqlite
+RUN apk add --no-cache  cairo-dev cairo cairo-tools libpng pango libpng-dev jpeg-dev libjpeg-turbo-dev librsvg
 
 RUN npm i --global handlebars
 

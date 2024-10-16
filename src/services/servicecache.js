@@ -23,7 +23,7 @@ function createRecord(args) {
     visible: true,
     created: moment().format("yyyy-MM-DD HH:mm:ss")
   };
-  Object.seal(record);
+
   if (args) {
     return Object.assign(record, args);
   }
@@ -96,11 +96,11 @@ function merge(source) {
 
   source.services.items.forEach((service) => {
     var i = target.services.items.findIndex((t) => {
-      return t.container == service.container;
+      return t.container.toLowerCase() == service.container.toLowerCase();
     });
 
-    if (i > 0) {
-      var visible = target.services.items[i].visible;
+    if (i >= 0) {
+      var visible = (target.services.items[i].visible ? target.services.items[i].visible : true);
       target.services.items[i] = service;
       target.services.items[i].visible = visible;
     } else {

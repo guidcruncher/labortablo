@@ -3,7 +3,7 @@
     <li class="list-group-item list-group-item-primary">
       <div onclick="window.open('{{link}}'); return false;" class="container primary">
         <div class="row">
-          <div class="col-2 mobile-hide"><img style="max-height:80px;" src="{{image.url}}" alt="{{image.title}}" /></div>
+          <div class="col-2 mobile-hide" style="overflow:hidden;height:80px"><img style="width:auto;height:auto;max-height:100%;max-width:100%;" src="{{image.url}}" alt="{{image.title}}" /></div>
           <div class="col-10 d-flex align-items-center">
             <div class="container">
               <div class="row">
@@ -23,11 +23,11 @@
         </div>
       </div>
     </li>
-    {{#each this.items}}
+    {{#each this.entries}}
       <li class="list-group-item" onclick="window.open('{{link}}'); return false;">
         <h2>{{title}}</h2>
         <small class="d-block text-muted">{{pubDate}}</small>
-        <img src="{{enclosure.url}}" style="float:left; max-width:100px;margin-right: 10px;" /> {{content}}
+        <img src="{{enclosure.url}}" style="float:left; max-width:100px;margin-right: 10px;" /> {{description}}
       </li>
       <li class="list-group-item list-divider"></li>
     {{/each}}

@@ -5,9 +5,9 @@
         <a href="{{this.image.link}}" target="_blank"><img src="{{this.image.url}}" style="max-height:30px" /></a>
         &nbsp;{{this.lastBuildDate}}
       </div>
-      {{#each this.items}}
+      {{#each this.entries}}
         <div class="ticker__item">
-          <a class="text-white" style="text-decoration: none;" href="{{this.link}}" target="_blank">{{this.title}}</a>
+          <a class="text-muted" style="text-decoration: none;" href="{{this.link}}" target="_blank">{{this.title}}</a>
         </div>
       {{/each}}
     {{/each}}

@@ -10,6 +10,9 @@ function loadBookmarks() {
         var r = Object.assign(v, {
           name: k
         });
+        if (!r.tags) {
+          r.tags = [];
+        }
         return r;
       });
       resolve(converted);

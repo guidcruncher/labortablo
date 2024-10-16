@@ -71,8 +71,8 @@ function getContainerStats(id) {
       stream: false
     }, function(err, data) {
       if (err) {
-        logger.error("Error in getcontainerstats", err);
-        reject(err);
+        logger.error("Error in getcontainerstats", err.reason);
+        reject(err.statusCode, err.reason);
       } else {
         data.cpuPercent = 0.0;
         data.cpuCorePercent = 0.0;
@@ -152,7 +152,12 @@ function listContainers(preload) {
                   state: container.State.Status,
                   description: container.Config.Labels["homepage.description"],
                   health: container.State.Health ? container.State.Health.Status : "",
+                };
+
+                if (record.description == "") {
+                  record.description = container.Config.Labels["org.opencontainers.image.title"];
                 }
+
                 var image = container.Config.Image.split(":");
 
                 if (container.Config.Image.split("/").length <= 2) {

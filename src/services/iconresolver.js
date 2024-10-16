@@ -28,10 +28,10 @@ function checkUrlExists(url) {
     var options = {
       method: "HEAD",
       host: parsedurl.hostname,
-      port: 443,
+      port: (url.includes("https://") ? 443 : 80),
       path: parsedurl.pathname,
     };
-    var req = httpConnection(url).request(options, function(r) {
+    var req = httpConnection.create(url).request(options, function(r) {
       if (r.statusCode == 200) {
         resolve(url);
       } else {
@@ -42,33 +42,17 @@ function checkUrlExists(url) {
   });
 }
 
-function downloadUrl(url, filename) {
+function downloadUrl(url, name) {
   return new Promise((resolve, reject) => {
-    var file = fs.createWriteStream(filename);
+    var filename = name;
 
     logger.log("Downloading => " + url + " => " + filename);
 
-    httpConnection(url)
-      .get(url, function(response) {
-        if (response.statusCode != 200) {
-          if (fs.existsSync(filename)) {
-            fs.unlinkSync(filename);
-          }
-          reject("Http errorcode " + response.statusCode);
-          return;
-        }
-
-        response.pipe(file);
-        file.on("finish", function() {
-          file.close();
-          resolve();
-        });
+    httpConnection.downloadFile(httpConnection.create(url), url, filename)
+      .then((state) => {
+        resolve(state);
       })
-      .on("error", function(err) {
-        // Handle errors
-        if (fs.existsSync(filename)) {
-          fs.unlinkSync(filename);
-        }
+      .catch((err) => {
         reject(err);
       });
   });
@@ -86,7 +70,7 @@ function downloadFile(url, name) {
     }
 
     downloadUrl(url, filename)
-      .then(() => resolve())
+      .then((result) => resolve(result))
       .catch((err) => {
         if (fs.existsSync(filename)) {
           fs.unlinkSync(filename);
@@ -98,24 +82,29 @@ function downloadFile(url, name) {
 
 function checkIconUrl(url, format, name) {
   return new Promise((resolve, reject) => {
-    var parsedurl = urlparser.parse(url + name + format);
-    var options = {
-      method: "HEAD",
-      host: parsedurl.hostname,
-      port: 443,
-      path: parsedurl.pathname,
-    };
-    var req = httpConnection(url).request(options, function(r) {
-      if (r.statusCode == 200) {
-        resolve({
-          url: url + name + format,
-          format: format
-        });
-      } else {
-        reject();
-      }
-    });
-    req.end();
+    try {
+      var parsedurl = urlparser.parse(url + name + format);
+      var options = {
+        method: "HEAD",
+        host: parsedurl.hostname,
+        port: 443,
+        path: parsedurl.pathname,
+      };
+      var req = httpConnection.create(url).request(options, function(r) {
+        if (r.statusCode == 200) {
+          resolve({
+            url: url + name + format,
+            format: format
+          });
+        } else {
+          reject();
+        }
+      });
+      req.end();
+    } catch (e) {
+      logger.error("Error in checkurl", e);
+      reject();
+    }
   });
 }
 
@@ -129,7 +118,7 @@ function determineIconUrl(icon) {
 
     if (icon != "") {
 
-      imagename = icon.split(".")[0].toLowerCase();
+      imagename = icon.split(".")[0].toLowerCase().replace(" ", "");
       filename = iconCacheFolder + "/services/" + imagename + ".png";
 
       if (fs.existsSync(filename)) {
@@ -157,10 +146,10 @@ function determineIconUrl(icon) {
       Promise.any(requests)
         .then((validUrl) => {
           downloadFile(validUrl.url, imagename + validUrl.format)
-            .then(() => {
+            .then((result) => {
               resolve({
                 type: "icon",
-                value: "/api/icons/" + imagename + validUrl.format
+                value: "/api/icons/" + result.name
               });
             })
             .catch(() => {
@@ -185,7 +174,7 @@ function determineIconUrl(icon) {
   });
 }
 
-function getWebsiteIcon(hostname) {
+function getWebsiteIcon(hostname, nodownload) {
   return new Promise((resolve, reject) => {
     var parts = hostname.split(".");
     var cacheFolder = getIconCacheFolder();
@@ -197,7 +186,30 @@ function getWebsiteIcon(hostname) {
     }
 
     if (fs.existsSync(filename)) {
-      resolve(fs.readFileSync(filename));
+      var result = {
+        mimeType: "image/x-icon",
+        extn: path.extname(filename),
+        content: nodownload ? null : fs.readFileSync(filename)
+      };
+      if (result.extn == ".png") {
+        result.mimeType = "image/png";
+      }
+      resolve(result);
+      return;
+    }
+
+    filename = path.join(cacheFolder, "bookmarks", hostname) + ".png";
+
+    if (fs.existsSync(filename)) {
+      var result1 = {
+        mimeType: "image/x-icon",
+        extn: path.extname(filename),
+        content: nodownload ? null : fs.readFileSync(filename)
+      };
+      if (result1.extn == ".png") {
+        result1.mimeType = "image/png";
+      }
+      resolve(result1);
       return;
     }
 
@@ -260,9 +272,9 @@ function getWebsiteIcon(hostname) {
       .then((uri) => {
         var filename =
           path.join(getIconCacheFolder(), "bookmarks", hostname) + ".ico";
-        downloadUrl(uri, filename)
-          .then(() => {
-            resolve(fs.readFileSync(filename));
+        downloadUrl(uri, filename, nodownload)
+          .then((result) => {
+            resolve(result);
           })
           .catch(() => {
             if (fs.existsSync(filename)) {
@@ -363,7 +375,7 @@ function cacheSimpleIconData() {
     const file = fs.createWriteStream(filename);
     logger.debug("Retrieving Simple Icon cache");
 
-    httpConnection(url)
+    httpConnection.create(url)
       .get(url, function(response) {
         if (response.statusCode != 200) {
           reject(response.statusCode);

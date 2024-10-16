@@ -1,6 +1,7 @@
     const config = require("config");
     const express = require("express");
     const path = require("path");
+    const fs = require("fs");
     const cookieParser = require("cookie-parser");
     const helpers = require("./helpers/helpers.js");
     const handlebars = require("express-handlebars");
@@ -13,6 +14,19 @@
     const app = express();
 
     logger.register(app);
+
+    if (fs.existsSync(path.join(__dirname, "package.json"))) {
+      var package = JSON.parse(fs.readFileSync(path.join(__dirname, "package.json")));
+      app.locals.version = package.version;
+    } else {
+      app.locals.version = "0.0.0";
+    }
+
+    if (fs.existsSync(path.join(__dirname, "build"))) {
+      app.locals.builddate = fs.readFileSync(path.join(__dirname, "build"), "utf8");
+    } else {
+      app.locals.builddate = "-";
+    }
 
     app.locals.appTitle = "Labortablo";
     app.locals.API_BASE = config.get("baseUrl") + "/api";
