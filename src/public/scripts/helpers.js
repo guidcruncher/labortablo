@@ -6,7 +6,7 @@ Handlebars.registerHelper("nbsp", function(text) {
 });
 
 Handlebars.registerHelper('i18n',
-  function(str){
+  function(str) {
     return new Handlebars.SafeString((typeof(i18n) !== "undefined" ? i18n.apply(null, arguments) : str));
   }
 );

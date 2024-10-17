@@ -1,7 +1,6 @@
 const logger = require("../logger.js");
 const dockerFactory = require("./dockerfactory.js");
 const iconresolver = require("./iconresolver.js");
-const repository = require("./repository.js");
 
 const serviceFilename = "services-docker.json";
 const cache = require("./servicecache.js")(serviceFilename);
@@ -52,7 +51,6 @@ function resolveExtendedData(container) {
       }
     }
 
-    promises.push(repository.summary(container.image));
     Promise.allSettled(promises).then((results) => {
       results.forEach((result) => {
         if (result.status == "fulfilled") {

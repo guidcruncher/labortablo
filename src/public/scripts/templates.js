@@ -49,7 +49,7 @@ this["JST"]["views/layouts/material-layout.hbs"] = Handlebars.template({"compile
         return undefined
     };
 
-  return "!DOCTYPE html>\n<html data-mdb-theme=\""
+  return "<!DOCTYPE html>\n<html data-mdb-theme=\""
     + alias4(((helper = (helper = lookupProperty(helpers,"theme") || (depth0 != null ? lookupProperty(depth0,"theme") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"theme","hash":{},"data":data,"loc":{"start":{"line":2,"column":22},"end":{"line":2,"column":31}}}) : helper)))
     + "\">\n\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n  <script type=\"text/javascript\" src=\"/scripts/main.min.js\"></script>\n  <script type=\"text/javascript\">\n    window.API_BASE = '"
     + alias4(((helper = (helper = lookupProperty(helpers,"API_BASE") || (depth0 != null ? lookupProperty(depth0,"API_BASE") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"API_BASE","hash":{},"data":data,"loc":{"start":{"line":9,"column":23},"end":{"line":9,"column":35}}}) : helper)))

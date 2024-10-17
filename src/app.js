@@ -26,7 +26,7 @@ app.use(i18n.init);
 if (fs.existsSync(path.join(__dirname, "package.json"))) {
   var package = JSON.parse(fs.readFileSync(path.join(__dirname, "package.json")));
   app.locals.version = package.version;
-} else { 
+} else {
   app.locals.version = "0.0.0";
 }
 
@@ -78,22 +78,22 @@ if (oidcEnabled == true) {
   logger.log("Initialising OIDC");
 
   var authConfig = {
-authorizationParams: {
-  response_type: "code",
-  audience: "",
-  scope: "openid profile email offline_access groups",
-},
-authRequired: false,
-auth0Logout: false,
-session: {
-  cookie: {
-domain: new URL(config.get("baseUrl")).host,
-  },
-},
-clientID: config.get("oidc.clientId"),
-clientSecret: config.get("oidc.clientSecret"),
-secret: config.get("oidc.secret"),
-issuerBaseURL: config.get("oidc.issuerBaseUrl"),
+    authorizationParams: {
+      response_type: "code",
+      audience: "",
+      scope: "openid profile email offline_access groups",
+    },
+    authRequired: false,
+    auth0Logout: false,
+    session: {
+      cookie: {
+        domain: new URL(config.get("baseUrl")).host,
+      },
+    },
+    clientID: config.get("oidc.clientId"),
+    clientSecret: config.get("oidc.clientSecret"),
+    secret: config.get("oidc.secret"),
+    issuerBaseURL: config.get("oidc.issuerBaseUrl"),
   };
 
   authConfig.authorizationParams.audience = config.get("baseUrl");
