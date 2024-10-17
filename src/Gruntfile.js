@@ -64,7 +64,7 @@ module.exports = function(grunt) {
     },
     shell: {
       tagbuild: {
-        command: 'date -u >./build'
+        command: 'date -u >./.build'
       },
       prettify: {
         command: 'find . -type f -name "*.hbs" -exec npx js-beautify -r --templating handlebars -s 2 -n -w 0 --type html -j {} +'

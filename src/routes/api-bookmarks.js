@@ -67,8 +67,7 @@ router.get("/icon", function(req, reply) {
       )
       .end(content.content, "binary"),
     )
-    .catch((err) => {
-      logger.error("Error in geticon", err);
+    .catch(() => {
       reply.status(404).sendFile(path.resolve(path.join(__dirname, "../public/images/unknown.png")));
     });
 });

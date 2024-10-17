@@ -140,7 +140,6 @@ function getFeeds(name) {
                 feed.entries.forEach((f) => {
                   f.publishDate = moment(f.published).format("LLLL");
                 });
-                logger.log(feed.title);
                 result.feeds.push(feed);
                 result.itemCount += feed.entries.length + 1;
                 feed.lastBuildDate = moment(feed.published).format("LLLL");

@@ -5,6 +5,12 @@ Handlebars.registerHelper("nbsp", function(text) {
   return new Handlebars.SafeString(text);
 });
 
+Handlebars.registerHelper('i18n',
+  function(str){
+    return new Handlebars.SafeString((typeof(i18n) !== "undefined" ? i18n.apply(null, arguments) : str));
+  }
+);
+
 Handlebars.registerHelper("statecss", function(state) {
   var css = "state ";
   switch (state) {

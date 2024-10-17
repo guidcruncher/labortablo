@@ -22,7 +22,7 @@ RUN mkdir -p /cache/feeds
 
 WORKDIR /app/
 
-
+COPY ./.build /app/.build
 COPY ./.minify.json /app/.minify.json
 COPY ./_config/* /config.default/
 COPY ./start.sh /app/start.sh
