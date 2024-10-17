@@ -521,7 +521,7 @@ this["JST"]["views/partials/ticker.hbs"] = Handlebars.template({"1":function(con
         return undefined
     };
 
-  return "      <div class=\"ticker__item\">\n        <a href=\""
+  return "      <div>\n        <a href=\""
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"image") : depth0)) != null ? lookupProperty(stack1,"link") : stack1), depth0))
     + "\" target=\"_blank\"><img src=\""
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"image") : depth0)) != null ? lookupProperty(stack1,"url") : stack1), depth0))
@@ -537,13 +537,13 @@ this["JST"]["views/partials/ticker.hbs"] = Handlebars.template({"1":function(con
         return undefined
     };
 
-  return "        <div class=\"ticker__item\">\n          <a class=\"text-muted\" style=\"text-decoration: none;\" href=\""
+  return "        <div>\n          <a class=\"text-muted\" style=\"text-decoration: none;\" href=\""
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"link") : depth0), depth0))
     + "\" target=\"_blank\">"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"title") : depth0), depth0))
     + "</a>\n        </div>\n";
 },"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
-    var stack1, alias1=container.lambda, alias2=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
+    var stack1, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
           return parent[propertyName];
         }
@@ -552,11 +552,7 @@ this["JST"]["views/partials/ticker.hbs"] = Handlebars.template({"1":function(con
 
   return "<div class=\"ticker-wrap\">\n  <div class=\"ticker\" id=\"ticker\">\n"
     + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"feeds") : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":3,"column":4},"end":{"line":13,"column":13}}})) != null ? stack1 : "")
-    + "  </div>\n</div>\n<script type=\"text/javascript\">\n  $(document).ready(function () {\n    $(\".ticker\").css(\"-webkit-animation-duration\", \""
-    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"tickerDelay") : depth0), depth0))
-    + "s\")\n    $(\".ticker\").css(\"animation-duration\", \""
-    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"tickerDelay") : depth0), depth0))
-    + "s\")\n  });\n\n</script>\n";
+    + "  </div>\n</div>\n<script type=\"text/javascript\">\n  $(document).ready(function () {\n    $('.ticker').marquee({\n      duration: 5000\n    });\n\n  });\n\n</script>\n";
 },"useData":true});
 
 this["JST"]["views/partials/wordcloud.hbs"] = Handlebars.template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {

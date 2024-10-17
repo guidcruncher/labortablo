@@ -10,6 +10,7 @@ module.exports = function(grunt) {
       build: {
         files: {
           './public/scripts/main.min.js': ['./public/scripts/jquery.min.js',
+            './public/scripts/jquery.marquee.min.js',
             './public/scripts/handlebars.min.js',
             './public/scripts/helpers.js',
             './public/scripts/templates.js',
