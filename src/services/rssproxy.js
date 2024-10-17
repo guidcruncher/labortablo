@@ -83,9 +83,7 @@ function isCacheStale(name) {
   var created = new Date(data.created);
   var now = new Date();
   var duration = moment(now).diff(created, "minutes");
-  logger.log(
-    "Cache created : " + moment(created).format("yyyy-MM-DD hh:mm:ss"),
-  );
+  logger.log("Cache created : " + moment(created).format("yyyy-MM-DD hh:mm:ss"));
   logger.log("Now           : " + moment(now).format("yyyy-MM-DD hh:mm:ss"));
   logger.log("Age (minutes) : " + duration);
 

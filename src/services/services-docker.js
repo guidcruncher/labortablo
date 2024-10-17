@@ -1,19 +1,33 @@
 const logger = require("../logger.js");
 const dockerFactory = require("./dockerfactory.js");
 const iconresolver = require("./iconresolver.js");
-
+const moment = require("moment");
 const serviceFilename = "services-docker.json";
 const cache = require("./servicecache.js")(serviceFilename);
 
 function load() {
   return new Promise((resolve, reject) => {
     var result = cache.load();
+    var created = new Date(result.created);
+    var now = new Date();
+    var duration = moment(now).diff(created, "minutes");
+
     if (result.services.items.length <= 0) {
       logger.debug("Refreshing discovery data");
       ensureDiscovery()
         .then((data) => resolve(data))
         .catch((err) => reject(err));
     } else {
+      logger.log("Cache created : " + moment(created).format("yyyy-MM-DD hh:mm:ss"));
+      logger.log("Now           : " + moment(now).format("yyyy-MM-DD hh:mm:ss"));
+      logger.log("Age (minutes) : " + duration);
+      if (duration < 0 || duration > 60) {
+        logger.debug("Discovery data is too old, Refreshing discovery data");
+        ensureDiscovery()
+          .then((data) => resolve(data))
+          .catch((err) => reject(err));
+        return;
+      }
 
       Promise.allSettled(updateState(result.services.items)).then((results) => {
         var fulfilled = results.filter((result) => {
@@ -208,7 +222,7 @@ function ensureDiscovery() {
           });
 
           cache.merge(data);
-          // cache.save(data);
+          cache.save(data);
           resolve(data);
         });
       });
