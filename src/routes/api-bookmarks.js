@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const bookmarks = require("../services/bookmarks.js");
 const iconResolver = require("../services/iconresolver.js");
+const path = require("path");
 
 router.get("/", function(req, reply) {
   bookmarks.loadBookmarks().then((a) => reply.send(a))
@@ -67,7 +68,8 @@ router.get("/icon", function(req, reply) {
       .end(content.content, "binary"),
     )
     .catch((err) => {
-      reply.status(404).send(err);
+      logger.error("Error in geticon", err);
+      reply.status(404).sendFile(path.resolve(path.join(__dirname, "../public/images/unknown.png")));
     });
 });
 
