@@ -1,22 +1,22 @@
-  <div class="ticker" style="paddimg-bottom:40px !important"  id="ticker">
+  <div class="ticker" style="paddimg-bottom:40px !important" id="ticker">
     {{#each this.feeds}}
       <span>
         <a href="{{this.image.link}}" target="_blank"><img src="{{this.image.url}}" style="max-height:30px" /></a>
         &nbsp;{{this.lastBuildDate}}
       </span>
       {{#each this.entries}}
-        <span style="margin-left:50px" >
+        <span style="margin-left:50px">
           <a class="text-white" style="text-decoration: none;" href="{{this.link}}" target="_blank">{{this.title}}</a>
         </span>
       {{/each}}
     {{/each}}
   </div>
-<script type="text/javascript">
-  $(document).ready(function () {
-    $('.ticker').marquee({
-      speed:80
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('.ticker').marquee({
+        speed: 80
+      });
+
     });
 
-  });
-
-</script>
+  </script>

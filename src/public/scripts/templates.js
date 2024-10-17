@@ -49,7 +49,7 @@ this["JST"]["views/layouts/material-layout.hbs"] = Handlebars.template({"compile
         return undefined
     };
 
-  return "<!DOCTYPE html>\n<html data-mdb-theme=\""
+  return "!DOCTYPE html>\n<html data-mdb-theme=\""
     + alias4(((helper = (helper = lookupProperty(helpers,"theme") || (depth0 != null ? lookupProperty(depth0,"theme") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"theme","hash":{},"data":data,"loc":{"start":{"line":2,"column":22},"end":{"line":2,"column":31}}}) : helper)))
     + "\">\n\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n  <script type=\"text/javascript\" src=\"/scripts/main.min.js\"></script>\n  <script type=\"text/javascript\">\n    window.API_BASE = '"
     + alias4(((helper = (helper = lookupProperty(helpers,"API_BASE") || (depth0 != null ? lookupProperty(depth0,"API_BASE") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"API_BASE","hash":{},"data":data,"loc":{"start":{"line":9,"column":23},"end":{"line":9,"column":35}}}) : helper)))
@@ -57,11 +57,11 @@ this["JST"]["views/layouts/material-layout.hbs"] = Handlebars.template({"compile
     + alias4(((helper = (helper = lookupProperty(helpers,"appTitle") || (depth0 != null ? lookupProperty(depth0,"appTitle") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"appTitle","hash":{},"data":data,"loc":{"start":{"line":30,"column":9},"end":{"line":30,"column":21}}}) : helper)))
     + " - "
     + alias4(((helper = (helper = lookupProperty(helpers,"title") || (depth0 != null ? lookupProperty(depth0,"title") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data,"loc":{"start":{"line":30,"column":24},"end":{"line":30,"column":33}}}) : helper)))
-    + "</title>\n</head>\n\n<body class=\"roboto-flex-main\">\n  <nav class=\"navbar navbar-expand-sm bg-primary navbar-dark fixed-top\">\n    <div class=\"container-fluid\">\n      <a class=\"navbar-brand d-flex align-items-center\" href=\"javascript:\">\n        <i><img style=\"height:30px;\" src=\"/images/logo.svg\" /></i>&nbsp;"
+    + "</title>\n</head>\n\n<body class=\"roboto-flex-main\">\n  <nav class=\"navbar navbar-expand-sm bg-primary bg-gradient navbar-dark fixed-top\">\n    <div class=\"container-fluid\">\n      <a class=\"navbar-brand d-flex align-items-center\" href=\"javascript:\">\n        <i><img style=\"height:30px;\" src=\"/images/logo.svg\" /></i>&nbsp;"
     + alias4(((helper = (helper = lookupProperty(helpers,"appTitle") || (depth0 != null ? lookupProperty(depth0,"appTitle") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"appTitle","hash":{},"data":data,"loc":{"start":{"line":37,"column":72},"end":{"line":37,"column":84}}}) : helper)))
     + "\n      </a>\n      <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n        <span class=\"navbar-toggler-icon\"></span>\n      </button>\n      <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\n        <ul class=\"navbar-nav me-auto mb-2 mb-lg-0\">\n          <li class=\"nav-item\">\n            <a class=\"nav-link active\" aria-current=\"page\" href=\"/\">Home</a>\n          </li>\n        </ul>\n      </div>\n    </div>\n    </div>\n  </nav>\n  <div style=\"margin-top: 70px;\"></div>\n  <div class=\"container\">\n    "
     + ((stack1 = ((helper = (helper = lookupProperty(helpers,"body") || (depth0 != null ? lookupProperty(depth0,"body") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"body","hash":{},"data":data,"loc":{"start":{"line":54,"column":4},"end":{"line":54,"column":14}}}) : helper))) != null ? stack1 : "")
-    + "\n  </div>\n  <div style=\"margin-top: 70px;\"></div>\n  <footer class=\"p-3 bg-secondary text-muted fixed-bottom\" style=\"background-color: rgba(0, 0, 0, 0.05);\">\n"
+    + "\n  </div>\n  <div style=\"margin-top: 70px;\"></div>\n  <footer style=\"height:50px;\" class=\"p-3 bg-secondary bg-gradient text-white fixed-bottom\">\n"
     + ((stack1 = container.invokePartial(lookupProperty(partials,"ticker"),depth0,{"name":"ticker","data":data,"indent":"    ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
     + "  </footer>\n  <script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.0.0/mdb.umd.min.js\"></script>\n\n  <script type=\"text/javascript\">\n    applyTheme('"
     + alias4(((helper = (helper = lookupProperty(helpers,"THEME_NAME") || (depth0 != null ? lookupProperty(depth0,"THEME_NAME") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"THEME_NAME","hash":{},"data":data,"loc":{"start":{"line":63,"column":16},"end":{"line":63,"column":30}}}) : helper)))
@@ -521,14 +521,14 @@ this["JST"]["views/partials/ticker.hbs"] = Handlebars.template({"1":function(con
         return undefined
     };
 
-  return "      <div>\n        <a href=\""
+  return "      <span>\n        <a href=\""
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"image") : depth0)) != null ? lookupProperty(stack1,"link") : stack1), depth0))
     + "\" target=\"_blank\"><img src=\""
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"image") : depth0)) != null ? lookupProperty(stack1,"url") : stack1), depth0))
     + "\" style=\"max-height:30px\" /></a>\n        &nbsp;"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"lastBuildDate") : depth0), depth0))
-    + "\n      </div>\n"
-    + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"entries") : depth0),{"name":"each","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":8,"column":6},"end":{"line":12,"column":15}}})) != null ? stack1 : "");
+    + "\n      </span>\n"
+    + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"entries") : depth0),{"name":"each","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":7,"column":6},"end":{"line":11,"column":15}}})) != null ? stack1 : "");
 },"2":function(container,depth0,helpers,partials,data) {
     var alias1=container.lambda, alias2=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
@@ -537,11 +537,11 @@ this["JST"]["views/partials/ticker.hbs"] = Handlebars.template({"1":function(con
         return undefined
     };
 
-  return "        <div>\n          <a class=\"text-muted\" style=\"text-decoration: none;\" href=\""
+  return "        <span style=\"margin-left:50px\">\n          <a class=\"text-white\" style=\"text-decoration: none;\" href=\""
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"link") : depth0), depth0))
     + "\" target=\"_blank\">"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"title") : depth0), depth0))
-    + "</a>\n        </div>\n";
+    + "</a>\n        </span>\n";
 },"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
@@ -550,9 +550,9 @@ this["JST"]["views/partials/ticker.hbs"] = Handlebars.template({"1":function(con
         return undefined
     };
 
-  return "<div class=\"ticker-wrap\">\n  <div class=\"ticker\" id=\"ticker\">\n"
-    + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"feeds") : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":3,"column":4},"end":{"line":13,"column":13}}})) != null ? stack1 : "")
-    + "  </div>\n</div>\n<script type=\"text/javascript\">\n  $(document).ready(function () {\n    $('.ticker').marquee({\n      duration: 5000\n    });\n\n  });\n\n</script>\n";
+  return "  <div class=\"ticker\" style=\"paddimg-bottom:40px !important\" id=\"ticker\">\n"
+    + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"feeds") : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":2,"column":4},"end":{"line":12,"column":13}}})) != null ? stack1 : "")
+    + "  </div>\n  <script type=\"text/javascript\">\n    $(document).ready(function () {\n      $('.ticker').marquee({\n        speed: 80\n      });\n\n    });\n\n  </script>\n";
 },"useData":true});
 
 this["JST"]["views/partials/wordcloud.hbs"] = Handlebars.template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
