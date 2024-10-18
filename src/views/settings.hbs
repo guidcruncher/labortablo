@@ -26,14 +26,79 @@
         <label for="drptheme" class="form-label">Theme:</label>
         <div class="form-floating">
           <select class="form-select" data-bind="theme.name">
-              <option value="auto">Automatic (Based on Operating System)</option>
-              <option value="light">Light</option>
-              <option value="dark">Dark</option>
-              <option value="scheduled">Scheduled</option>
+            <option value="auto">Automatic (Based on Operating System)</option>
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="scheduled">Scheduled</option>
           </select>
+          </divv>
         </div>
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+
+        <div class="mb-3">
+          <label for="drpStart" class="form-label">Dark mode starts at:</label>
+          <div class="form-floating">
+            <select id="drpStart" class="form-select" data-bind="theme.darkModeHours.start">
+              <option value="0">00:00</option>
+              <option value="1">01:00</option>
+              <option value="2">02:00</option>
+              <option value="3">03:00</option>
+              <option value="4">04:00</option>
+              <option value="5">05:00</option>
+              <option value="6">06:00</option>
+              <option value="7">07:00</option>
+              <option value="8">8:00</option>
+              <option value="9">9:00</option>
+              <option value="10">10:00</option>
+              <option value="11">11:00</option>
+              <option value="12">12:00</option>
+              <option value="13">13:00</option>
+              <option value="14">14:00</option>
+              <option value="15">15:00</option>
+              <option value="16">16:00</option>
+              <option value="17">17:00</option>
+              <option value="18">18:00</option>
+              <option value="19">19:00</option>
+              <option value="20">20:00</option>
+              <option value="21">21:00</option>
+              <option value="22">22:00</option>
+              <option value="23">23:00</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="drpEnd class=" form-label">Dark mode finishes at:</label>
+          <div class="form-floatimg">
+            <select id-"drpEnd" class="form-select" data-bind="theme.darkModeHours.end">
+              <option value="0">00:00</option>
+              <option value="1">01:00</option>
+              <option value="2">02:00</option>
+              <option value="3">03:00</option>
+              <option value="4">04:00</option>
+              <option value="5">05:00</option>
+              <option value="6">06:00</option>
+              <option value="7">07:00</option>
+              <option value="8">8:00</option>
+              <option value="9">9:00</option>
+              <option value="10">10:00</option>
+              <option value="11">11:00</option>
+              <option value="12">12:00</option>
+              <option value="13">13:00</option>
+              <option value="14">14:00</option>
+              <option value="15">15:00</option>
+              <option value="16">16:00</option>
+              <option value="17">17:00</option>
+              <option value="18">18:00</option>
+              <option value="19">19:00</option>
+              <option value="20">20:00</option>
+              <option value="21">21:00</option>
+              <option value="22">22:00</option>
+              <option value="23">23:00</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
   </div>
@@ -46,19 +111,27 @@
 </div>
 
 <script type="text/javascript">
-  $(function () {
-        window.API_BASE = '{{API_BASE}}';
-        $('.form-select').selectfield();
+  function datavalue(path, obj) {
+    return path.split('.').reduce(function (prev, curr) {
+      return prev ? prev[curr] : null
+    }, obj || self)
+  }
 
-          var url = apiBase() + "settings";
-          $.getJSON(url, function (settings, status, jqXHR) {
-            $.each($('[data-bind]'), function (index, ctl) {
-              var tag = $(ctl)[0].tagName.toLowerCase();
-              var type = $(ctl).prop("type");
-              var field = $(ctl).prop("data-bind");
-              var value = settings[field];
-              $(ctl).val(value);
-            });
-          });
-});
+  $(function () {
+    window.API_BASE = '{{API_BASE}}';
+    $('.form-select').selectfield();
+
+    var url = apiBase() + "settings";
+    $.getJSON(url, function (settings, status, jqXHR) {
+      $.each($('[data-bind]'), function (index, ctl) {
+        var tag = $(ctl)[0].tagName.toLowerCase();
+        var type = $(ctl).attr("type");
+        var field = $(ctl).attr("data-bind");
+        var value = datavalue(field, settings);
+        $(ctl).val(value);
+        $(ctl)[0].dispatchEvent(new Event('change'))
+      });
+    });
+  });
+
 </script>
