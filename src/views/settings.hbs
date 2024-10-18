@@ -26,7 +26,7 @@
         <label for="drptheme" class="form-label">Theme:</label>
         <div class="form-floating">
           <select class="form-select" id="drptheme">
-            <option selected value="auto">Automatic</option>
+            <option selected value="auto">Automatic (Based on Operating System)</option>
             <option value="light">Light</option>
             <option value="dark">Dark</option>
             <option value="scheduled">Scheduled</option>
@@ -47,10 +47,8 @@
 
 <script type="text/javascript">
   $(function () {
-  window.API_BASE = '{{API_BASE}}';
-  // $('.form-select').selectfield();
-  alert('blL');
-  })
+    window.API_BASE = '{{API_BASE}}';
+    $('.form-select').selectfield();
   });
 
 </script>
