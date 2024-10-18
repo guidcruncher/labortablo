@@ -24,12 +24,14 @@
     <form>
       <div class="mb-3">
         <label for="drptheme" class="form-label">Theme:</label>
-        <select class="form-select" id="drptheme">
-          <option selected value="auto">Automatic</option>
-          <option value="light">Light</option>
-          <option value="dark">Dark</option>
-          <option value="scheduled">Scheduled</option>
-        </select>
+        <div class="form-floating">
+          <select class="form-select" id="drptheme">
+            <option selected value="auto">Automatic</option>
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="scheduled">Scheduled</option>
+          </select>
+        </div>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
@@ -46,8 +48,8 @@
 <script type="text/javascript">
   $(function () {
   window.API_BASE = '{{API_BASE}}';
-  // Initialize
-  $('.form-select').selectfield();
+  // $('.form-select').selectfield();
+  alert('blL');
   })
   });
 

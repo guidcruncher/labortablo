@@ -33,7 +33,17 @@ module.exports = function(grunt) {
     handlebars: {
       all: {
         files: {
-          "public/scripts/templates.js": ["views/**/*.hbs"]
+          "public/scripts/templates.js": ["views/partials/**/*.hbs"]
+        },
+        options: {
+          processName: function(filePath) {
+            var pieces = filePath.split('/');
+            return pieces[pieces.length - 1];
+          },
+          processPartialName: function(filePath) {
+            var pieces = filePath.split('/');
+            return pieces[pieces.length - 1];
+          }
         }
       }
     },
