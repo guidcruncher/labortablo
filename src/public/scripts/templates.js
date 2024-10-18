@@ -1,103 +1,6 @@
 this["JST"] = this["JST"] || {};
 
-this["JST"]["views/error.hbs"] = Handlebars.template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
-    var stack1, helper, alias1=container.escapeExpression, alias2=container.lambda, lookupProperty = container.lookupProperty || function(parent, propertyName) {
-        if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
-          return parent[propertyName];
-        }
-        return undefined
-    };
-
-  return "<h1>"
-    + alias1(((helper = (helper = lookupProperty(helpers,"message") || (depth0 != null ? lookupProperty(depth0,"message") : depth0)) != null ? helper : container.hooks.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"message","hash":{},"data":data,"loc":{"start":{"line":1,"column":4},"end":{"line":1,"column":15}}}) : helper)))
-    + "</h1>\n<h2>"
-    + alias1(alias2(((stack1 = (depth0 != null ? lookupProperty(depth0,"error") : depth0)) != null ? lookupProperty(stack1,"status") : stack1), depth0))
-    + "</h2>\n<pre>"
-    + alias1(alias2(((stack1 = (depth0 != null ? lookupProperty(depth0,"error") : depth0)) != null ? lookupProperty(stack1,"stack") : stack1), depth0))
-    + "</pre>\n";
-},"useData":true});
-
-this["JST"]["views/index.hbs"] = Handlebars.template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
-    var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=container.hooks.helperMissing, alias3="function", alias4=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
-        if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
-          return parent[propertyName];
-        }
-        return undefined
-    };
-
-  return "<ul class=\"nav nav-tabs mb-3\" id=\"myTab0\" role=\"tablist\">\n  <li class=\"nav-item\" role=\"presentation\">\n    <button data-mdb-tab-init class=\"nav-link active\" id=\"services-tab0\" data-mdb-target=\"#services0\" type=\"button\" role=\"tab\" aria-controls=\"services\" aria-selected=\"true\">\n      Services\n    </button>\n  </li>\n  <li class=\"nav-item\" role=\"presentation\">\n    <button data-mdb-tab-init class=\"nav-link\" id=\"bookmarks-tab0\" data-mdb-target=\"#bookmarks0\" type=\"button\" role=\"tab\" aria-controls=\"bookmarks\" aria-selected=\"false\">\n      Bookmarks\n    </button>\n  </li>\n  <li class=\"nav-item\" role=\"presentation\">\n    <button data-mdb-tab-init class=\"nav-link\" id=\"feeds-tab0\" data-mdb-target=\"#feeds0\" type=\"button\" role=\"tab\" aria-controls=\"feeds\" aria-selected=\"false\">\n      Feeds\n    </button>\n  </li>\n  <li class=\"nav-item\" role=\"presentation\">\n    <button data-mdb-tab-init class=\"nav-link\" id=\"system-tab0\" data-mdb-target=\"#system0\" type=\"button\" role=\"tab\" aria-controls=\"system\" aria-selected=\"false\">\n      System\n    </button>\n  </li>\n</ul>\n<div class=\"tab-content\" id=\"myTabContent0\">\n  <div class=\"tab-pane fade show active\" id=\"services0\" role=\"tabpanel\" aria-labelledby=\"services-tab0\">\n"
-    + ((stack1 = container.invokePartial(lookupProperty(partials,"iconlist"),(depth0 != null ? lookupProperty(depth0,"containers") : depth0),{"name":"iconlist","data":data,"indent":"    ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
-    + "  </div>\n  <div class=\"tab-pane fade\" id=\"bookmarks0\" role=\"tabpanel\" aria-labelledby=\"bookmarks-tab0\">\n"
-    + ((stack1 = container.invokePartial(lookupProperty(partials,"wordcloud"),depth0,{"name":"wordcloud","data":data,"indent":"    ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
-    + ((stack1 = container.invokePartial(lookupProperty(partials,"bookmarks"),(depth0 != null ? lookupProperty(depth0,"bookmarks") : depth0),{"name":"bookmarks","data":data,"indent":"    ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
-    + "  </div>\n  <div class=\"tab-pane fade\" id=\"feeds0\" role=\"tabpanel\" aria-labelledby=\"feeds-tab0\">\n"
-    + ((stack1 = container.invokePartial(lookupProperty(partials,"feeds"),(depth0 != null ? lookupProperty(depth0,"newsfeeds") : depth0),{"name":"feeds","data":data,"indent":"    ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
-    + "  </div>\n  <div class=\"tab-pane fade\" id=\"system0\" role=\"tabpanel\" aria-labelledby=\"system-tab0\">\n"
-    + ((stack1 = container.invokePartial(lookupProperty(partials,"system"),(depth0 != null ? lookupProperty(depth0,"systeminfo") : depth0),{"name":"system","data":data,"indent":"    ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
-    + "  </div>\n</div>\n\n<script type=\"text/javascript\">\n  $(function () {\n    $('*[role=\"tab\"]').click(function (e) {\n      window.API_BASE = '"
-    + alias4(((helper = (helper = lookupProperty(helpers,"API_BASE") || (depth0 != null ? lookupProperty(depth0,"API_BASE") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"API_BASE","hash":{},"data":data,"loc":{"start":{"line":42,"column":25},"end":{"line":42,"column":37}}}) : helper)))
-    + "';\n      var target = $(this).attr(\"aria-controls\");\n      switch (target) {\n      case \"services\":\n        reloadIconList();\n        containerStats();\n        break;\n      case \"bookmarks\":\n        reloadBookmarks();\n        break;\n      case \"feeds\":\n        loadFeeds();\n        break;\n      case \"system\":\n        reloadSystem();\n        break;\n      }\n      return false;\n    });\n\n    window.API_BASE = '"
-    + alias4(((helper = (helper = lookupProperty(helpers,"API_BASE") || (depth0 != null ? lookupProperty(depth0,"API_BASE") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"API_BASE","hash":{},"data":data,"loc":{"start":{"line":62,"column":23},"end":{"line":62,"column":35}}}) : helper)))
-    + "';\n    setTimeout(reloadIconList, 60000);\n    setTimeout(reloadSystem, 15000);\n    containerStats();\n  });\n\n</script>\n";
-},"usePartial":true,"useData":true});
-
-this["JST"]["views/layouts/material-layout.hbs"] = Handlebars.template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
-    var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=container.hooks.helperMissing, alias3="function", alias4=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
-        if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
-          return parent[propertyName];
-        }
-        return undefined
-    };
-
-  return "<!DOCTYPE html>\n<html data-mdb-theme=\""
-    + alias4(((helper = (helper = lookupProperty(helpers,"theme") || (depth0 != null ? lookupProperty(depth0,"theme") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"theme","hash":{},"data":data,"loc":{"start":{"line":2,"column":22},"end":{"line":2,"column":31}}}) : helper)))
-    + "\">\n\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n  <script type=\"text/javascript\" src=\"/scripts/main.min.js\"></script>\n  <script type=\"text/javascript\">\n    window.API_BASE = '"
-    + alias4(((helper = (helper = lookupProperty(helpers,"API_BASE") || (depth0 != null ? lookupProperty(depth0,"API_BASE") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"API_BASE","hash":{},"data":data,"loc":{"start":{"line":9,"column":23},"end":{"line":9,"column":35}}}) : helper)))
-    + "';\n\n  </script>\n\n  <link href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css\" rel=\"stylesheet\" />\n  <link href=\"https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap\" rel=\"stylesheet\" />\n  <link href=\"https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.0.0/mdb.min.css\" rel=\"stylesheet\" />\n\n  <link rel=\"stylesheet\" href=\"/stylesheets/style.css\">\n  <link rel=\"shortcut icon\" href=\"/favicon.ico\" type=\"image/x-icon\" />\n  <link rel=\"icon\" href=\"/images/labortablo.svg\" type=\"image/svg+xml\" />\n  <link rel=\"icon\" href=\"/images/apple-touch-icon.png\" type=\"image/png\" />\n  <link rel=\"apple-touch-icon\" href=\"/images/apple-touch-icon.png\" />\n  <link rel=\"apple-touch-icon\" sizes=\"57x57\" href=\"/images/apple-touch-icon-57x57.png\" />\n  <link rel=\"apple-touch-icon\" sizes=\"72x72\" href=\"/images/apple-touch-icon-72x72.png\" />\n  <link rel=\"apple-touch-icon\" sizes=\"76x76\" href=\"/images/apple-touch-icon-76x76.png\" />\n  <link rel=\"apple-touch-icon\" sizes=\"114x114\" href=\"/images/apple-touch-icon-114x114.png\" />\n  <link rel=\"apple-touch-icon\" sizes=\"120x120\" href=\"/images/apple-touch-icon-120x120.png\" />\n  <link rel=\"apple-touch-icon\" sizes=\"144x144\" href=\"/images/apple-touch-icon-144x144.png\" />\n  <link rel=\"apple-touch-icon\" sizes=\"152x152\" href=\"/images/apple-touch-icon-152x152.png\" />\n  <link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"/images/apple-touch-icon-180x180.png\" />\n  <title>"
-    + alias4(((helper = (helper = lookupProperty(helpers,"appTitle") || (depth0 != null ? lookupProperty(depth0,"appTitle") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"appTitle","hash":{},"data":data,"loc":{"start":{"line":30,"column":9},"end":{"line":30,"column":21}}}) : helper)))
-    + " - "
-    + alias4(((helper = (helper = lookupProperty(helpers,"title") || (depth0 != null ? lookupProperty(depth0,"title") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data,"loc":{"start":{"line":30,"column":24},"end":{"line":30,"column":33}}}) : helper)))
-    + "</title>\n</head>\n\n<body class=\"roboto-flex-main\">\n  <nav class=\"navbar navbar-expand-sm bg-primary navbar-dark fixed-top\">\n    <div class=\"container-fluid\">\n      <a class=\"navbar-brand d-flex align-items-center\" href=\"javascript:\">\n        <i><img style=\"height:30px;\" src=\"/images/logo.svg\" /></i>&nbsp;"
-    + alias4(((helper = (helper = lookupProperty(helpers,"appTitle") || (depth0 != null ? lookupProperty(depth0,"appTitle") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"appTitle","hash":{},"data":data,"loc":{"start":{"line":37,"column":72},"end":{"line":37,"column":84}}}) : helper)))
-    + "\n      </a>\n      <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n        <span class=\"navbar-toggler-icon\"></span>\n      </button>\n      <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\n        <ul class=\"navbar-nav me-auto mb-2 mb-lg-0\">\n          <li class=\"nav-item\">\n            <a class=\"nav-link active\" aria-current=\"page\" href=\"/\">Home</a>\n          </li>\n        </ul>\n      </div>\n    </div>\n    </div>\n  </nav>\n  <div style=\"margin-top: 70px;\"></div>\n  <div class=\"container\">\n    "
-    + ((stack1 = ((helper = (helper = lookupProperty(helpers,"body") || (depth0 != null ? lookupProperty(depth0,"body") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"body","hash":{},"data":data,"loc":{"start":{"line":54,"column":4},"end":{"line":54,"column":14}}}) : helper))) != null ? stack1 : "")
-    + "\n  </div>\n  <div style=\"margin-top: 70px;\"></div>\n  <footer class=\"p-3 bg-secondary text-muted fixed-bottom\" style=\"background-color: rgba(0, 0, 0, 0.05);\">\n"
-    + ((stack1 = container.invokePartial(lookupProperty(partials,"ticker"),depth0,{"name":"ticker","data":data,"indent":"    ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
-    + "  </footer>\n  <script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.0.0/mdb.umd.min.js\"></script>\n\n  <script type=\"text/javascript\">\n    applyTheme('"
-    + alias4(((helper = (helper = lookupProperty(helpers,"THEME_NAME") || (depth0 != null ? lookupProperty(depth0,"THEME_NAME") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"THEME_NAME","hash":{},"data":data,"loc":{"start":{"line":63,"column":16},"end":{"line":63,"column":30}}}) : helper)))
-    + "', "
-    + alias4(((helper = (helper = lookupProperty(helpers,"THEME_START") || (depth0 != null ? lookupProperty(depth0,"THEME_START") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"THEME_START","hash":{},"data":data,"loc":{"start":{"line":63,"column":33},"end":{"line":63,"column":48}}}) : helper)))
-    + ", "
-    + alias4(((helper = (helper = lookupProperty(helpers,"THEME_END") || (depth0 != null ? lookupProperty(depth0,"THEME_END") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"THEME_END","hash":{},"data":data,"loc":{"start":{"line":63,"column":50},"end":{"line":63,"column":63}}}) : helper)))
-    + ");\n\n  </script>\n</body>\n\n</html>\n";
-},"usePartial":true,"useData":true});
-
-this["JST"]["views/layouts/material-setup.hbs"] = Handlebars.template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
-    var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=container.hooks.helperMissing, alias3="function", alias4=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
-        if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
-          return parent[propertyName];
-        }
-        return undefined
-    };
-
-  return "<!DOCTYPE html>\n<html data-mdb-theme=\""
-    + alias4(((helper = (helper = lookupProperty(helpers,"theme") || (depth0 != null ? lookupProperty(depth0,"theme") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"theme","hash":{},"data":data,"loc":{"start":{"line":2,"column":22},"end":{"line":2,"column":31}}}) : helper)))
-    + "\">\n\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n  <script src=\"https://cdn.jsdelivr.net/npm/mdb-ui-kit@8.0.0/js/mdb.umd.min.js\"></script>\n  <script type=\"text/javascript\" src=\"/scripts/main.min.js\"></script>\n  <script type=\"text/javascript\">\n    window.API_BASE = '"
-    + alias4(((helper = (helper = lookupProperty(helpers,"API_BASE") || (depth0 != null ? lookupProperty(depth0,"API_BASE") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"API_BASE","hash":{},"data":data,"loc":{"start":{"line":10,"column":23},"end":{"line":10,"column":35}}}) : helper)))
-    + "';\n\n  </script>\n\n  <link href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css\" rel=\"stylesheet\" />\n  <link href=\"https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap\" rel=\"stylesheet\" />\n  <link href=\"https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.0.0/mdb.min.css\" rel=\"stylesheet\" />\n\n  <link rel=\"stylesheet\" href=\"/stylesheets/style.css\">\n  <link rel=\"shortcut icon\" href=\"/favicon.ico\" type=\"image/x-icon\" />\n  <link rel=\"icon\" href=\"/images/labortablo.svg\" type=\"image/svg+xml\" />\n  <link rel=\"icon\" href=\"/images/apple-touch-icon.png\" type=\"image/png\" />\n  <link rel=\"apple-touch-icon\" href=\"/images/apple-touch-icon.png\" />\n  <link rel=\"apple-touch-icon\" sizes=\"57x57\" href=\"/images/apple-touch-icon-57x57.png\" />\n  <link rel=\"apple-touch-icon\" sizes=\"72x72\" href=\"/images/apple-touch-icon-72x72.png\" />\n  <link rel=\"apple-touch-icon\" sizes=\"76x76\" href=\"/images/apple-touch-icon-76x76.png\" />\n  <link rel=\"apple-touch-icon\" sizes=\"114x114\" href=\"/images/apple-touch-icon-114x114.png\" />\n  <link rel=\"apple-touch-icon\" sizes=\"120x120\" href=\"/images/apple-touch-icon-120x120.png\" />\n  <link rel=\"apple-touch-icon\" sizes=\"144x144\" href=\"/images/apple-touch-icon-144x144.png\" />\n  <link rel=\"apple-touch-icon\" sizes=\"152x152\" href=\"/images/apple-touch-icon-152x152.png\" />\n  <link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"/images/apple-touch-icon-180x180.png\" />\n  <title>"
-    + alias4(((helper = (helper = lookupProperty(helpers,"title") || (depth0 != null ? lookupProperty(depth0,"title") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data,"loc":{"start":{"line":31,"column":9},"end":{"line":31,"column":18}}}) : helper)))
-    + "</title>\n</head>\n\n<body class=\"roboto-flex-main\">\n  <div class=\"container\">\n    "
-    + ((stack1 = ((helper = (helper = lookupProperty(helpers,"body") || (depth0 != null ? lookupProperty(depth0,"body") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"body","hash":{},"data":data,"loc":{"start":{"line":36,"column":4},"end":{"line":36,"column":14}}}) : helper))) != null ? stack1 : "")
-    + "\n  </div>\n\n  <script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.0.0/mdb.umd.min.js\"></script>\n\n  <script type=\"text/javascript\">\n    applyTheme('"
-    + alias4(((helper = (helper = lookupProperty(helpers,"THEME_NAME") || (depth0 != null ? lookupProperty(depth0,"THEME_NAME") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"THEME_NAME","hash":{},"data":data,"loc":{"start":{"line":42,"column":16},"end":{"line":42,"column":30}}}) : helper)))
-    + "', "
-    + alias4(((helper = (helper = lookupProperty(helpers,"THEME_START") || (depth0 != null ? lookupProperty(depth0,"THEME_START") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"THEME_START","hash":{},"data":data,"loc":{"start":{"line":42,"column":33},"end":{"line":42,"column":48}}}) : helper)))
-    + ", "
-    + alias4(((helper = (helper = lookupProperty(helpers,"THEME_END") || (depth0 != null ? lookupProperty(depth0,"THEME_END") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"THEME_END","hash":{},"data":data,"loc":{"start":{"line":42,"column":50},"end":{"line":42,"column":63}}}) : helper)))
-    + "\n    });\n\n  </script>\n</body>\n\n</html>\n";
-},"useData":true});
-
-this["JST"]["views/partials/bookmarks.hbs"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
+this["JST"]["bookmarks.hbs"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=container.lambda, alias2=container.escapeExpression, alias3=depth0 != null ? depth0 : (container.nullContext || {}), lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
           return parent[propertyName];
@@ -108,7 +11,7 @@ this["JST"]["views/partials/bookmarks.hbs"] = Handlebars.template({"1":function(
   return "    <a href=\""
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"href") : depth0), depth0))
     + "\" target=\"_blank\" class=\"list-group-item d-flex align-items-center gap-3 list-group-item-action\">\n      <span style=\"width:36px\"><img src=\""
-    + ((stack1 = lookupProperty(helpers,"if").call(alias3,(depth0 != null ? lookupProperty(depth0,"icon") : depth0),{"name":"if","hash":{},"fn":container.program(2, data, 0),"inverse":container.program(4, data, 0),"data":data,"loc":{"start":{"line":5,"column":41},"end":{"line":5,"column":161}}})) != null ? stack1 : "")
+    + ((stack1 = lookupProperty(helpers,"if").call(alias3,(depth0 != null ? lookupProperty(depth0,"icon") : depth0),{"name":"if","hash":{},"fn":container.program(2, data, 0),"inverse":container.program(4, data, 0),"data":data,"loc":{"start":{"line":5,"column":41},"end":{"line":5,"column":147}}})) != null ? stack1 : "")
     + "\" style=\"max-width:32px;max-height:32px;\" /></span>\n      <span>\n        "
     + alias2(((helper = (helper = lookupProperty(helpers,"name") || (depth0 != null ? lookupProperty(depth0,"name") : depth0)) != null ? helper : container.hooks.helperMissing),(typeof helper === "function" ? helper.call(alias3,{"name":"name","hash":{},"data":data,"loc":{"start":{"line":7,"column":8},"end":{"line":7,"column":16}}}) : helper)))
     + "\n        <div style=\"font-size: 12px;white-space:nowrap;overflow:hidden; !important;width:280px !important;\" class=\"d-block text-muted\">"
@@ -125,16 +28,15 @@ this["JST"]["views/partials/bookmarks.hbs"] = Handlebars.template({"1":function(
   return "/user-icons/"
     + container.escapeExpression(container.lambda((depth0 != null ? lookupProperty(depth0,"icon") : depth0), depth0));
 },"4":function(container,depth0,helpers,partials,data) {
-    var stack1, alias1=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
+    var lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
           return parent[propertyName];
         }
         return undefined
     };
 
-  return alias1(container.lambda(((stack1 = (data && lookupProperty(data,"root"))) && lookupProperty(stack1,"API_BASE")), depth0))
-    + "/bookmarks/icon?host="
-    + alias1((lookupProperty(helpers,"domainonly")||(depth0 && lookupProperty(depth0,"domainonly"))||container.hooks.helperMissing).call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"href") : depth0),{"name":"domainonly","hash":{},"data":data,"loc":{"start":{"line":5,"column":130},"end":{"line":5,"column":154}}}));
+  return "/api/bookmarks/icon?host="
+    + container.escapeExpression((lookupProperty(helpers,"domainonly")||(depth0 && lookupProperty(depth0,"domainonly"))||container.hooks.helperMissing).call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"href") : depth0),{"name":"domainonly","hash":{},"data":data,"loc":{"start":{"line":5,"column":116},"end":{"line":5,"column":140}}}));
 },"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
@@ -148,7 +50,7 @@ this["JST"]["views/partials/bookmarks.hbs"] = Handlebars.template({"1":function(
     + "</div>\n";
 },"useData":true});
 
-this["JST"]["views/partials/feeds.hbs"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
+this["JST"]["feeds.hbs"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=container.hooks.helperMissing, alias3="function", alias4=container.escapeExpression, alias5=container.lambda, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
           return parent[propertyName];
@@ -181,7 +83,7 @@ this["JST"]["views/partials/feeds.hbs"] = Handlebars.template({"1":function(cont
     + "'); return false;\">\n        <h2>"
     + alias4(((helper = (helper = lookupProperty(helpers,"title") || (depth0 != null ? lookupProperty(depth0,"title") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data,"loc":{"start":{"line":28,"column":12},"end":{"line":28,"column":21}}}) : helper)))
     + "</h2>\n        <small class=\"d-block text-muted\">"
-    + alias4(((helper = (helper = lookupProperty(helpers,"pubDate") || (depth0 != null ? lookupProperty(depth0,"pubDate") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"pubDate","hash":{},"data":data,"loc":{"start":{"line":29,"column":42},"end":{"line":29,"column":53}}}) : helper)))
+    + alias4(((helper = (helper = lookupProperty(helpers,"publishDate") || (depth0 != null ? lookupProperty(depth0,"publishDate") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"publishDate","hash":{},"data":data,"loc":{"start":{"line":29,"column":42},"end":{"line":29,"column":57}}}) : helper)))
     + "</small>\n        <img src=\""
     + alias4(container.lambda(((stack1 = (depth0 != null ? lookupProperty(depth0,"enclosure") : depth0)) != null ? lookupProperty(stack1,"url") : stack1), depth0))
     + "\" style=\"float:left; max-width:100px;margin-right: 10px;\" /> "
@@ -200,7 +102,7 @@ this["JST"]["views/partials/feeds.hbs"] = Handlebars.template({"1":function(cont
     + "</ul>\n";
 },"useData":true});
 
-this["JST"]["views/partials/iconbutton.hbs"] = Handlebars.template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
+this["JST"]["iconbutton.hbs"] = Handlebars.template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
     var alias1=container.escapeExpression, alias2=container.lambda, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
           return parent[propertyName];
@@ -219,7 +121,7 @@ this["JST"]["views/partials/iconbutton.hbs"] = Handlebars.template({"compiler":[
     + "</div>\n</button>\n";
 },"useData":true});
 
-this["JST"]["views/partials/iconcards.hbs"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data,blockParams,depths) {
+this["JST"]["iconcards.hbs"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data,blockParams,depths) {
     var stack1, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
           return parent[propertyName];
@@ -289,7 +191,7 @@ this["JST"]["views/partials/iconcards.hbs"] = Handlebars.template({"1":function(
     + "\n";
 },"usePartial":true,"useData":true,"useDepths":true});
 
-this["JST"]["views/partials/iconlist.hbs"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data,blockParams,depths) {
+this["JST"]["iconlist.hbs"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data,blockParams,depths) {
     var stack1, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=container.hooks.helperMissing, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
           return parent[propertyName];
@@ -344,7 +246,7 @@ this["JST"]["views/partials/iconlist.hbs"] = Handlebars.template({"1":function(c
     + "\n</div>\n";
 },"useData":true,"useDepths":true});
 
-this["JST"]["views/partials/icontabs.hbs"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data,blockParams,depths) {
+this["JST"]["icontabs.hbs"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data,blockParams,depths) {
     var stack1, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
           return parent[propertyName];
@@ -435,7 +337,7 @@ this["JST"]["views/partials/icontabs.hbs"] = Handlebars.template({"1":function(c
   return ((stack1 = lookupProperty(helpers,"if").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"isBootstrap") : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0, blockParams, depths),"inverse":container.program(5, data, 0, blockParams, depths),"data":data,"loc":{"start":{"line":1,"column":0},"end":{"line":24,"column":7}}})) != null ? stack1 : "");
 },"usePartial":true,"useData":true,"useDepths":true});
 
-this["JST"]["views/partials/system.hbs"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
+this["JST"]["system.hbs"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
     var stack1, alias1=container.lambda, alias2=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
           return parent[propertyName];
@@ -513,7 +415,7 @@ this["JST"]["views/partials/system.hbs"] = Handlebars.template({"1":function(con
     + "</td>\n              </tr>\n            </tbody>\n          </table>\n          </p>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n";
 },"useData":true});
 
-this["JST"]["views/partials/ticker.hbs"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
+this["JST"]["ticker.hbs"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
     var stack1, alias1=container.lambda, alias2=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
           return parent[propertyName];
@@ -521,14 +423,15 @@ this["JST"]["views/partials/ticker.hbs"] = Handlebars.template({"1":function(con
         return undefined
     };
 
-  return "      <div class=\"ticker__item\">\n        <a href=\""
+  return "      <span style=\"margin-top:0px!important\">\n        <a href=\""
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"image") : depth0)) != null ? lookupProperty(stack1,"link") : stack1), depth0))
     + "\" target=\"_blank\"><img src=\""
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"image") : depth0)) != null ? lookupProperty(stack1,"url") : stack1), depth0))
     + "\" style=\"max-height:30px\" /></a>\n        &nbsp;"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"lastBuildDate") : depth0), depth0))
-    + "\n      </div>\n"
-    + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"entries") : depth0),{"name":"each","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":8,"column":6},"end":{"line":12,"column":15}}})) != null ? stack1 : "");
+    + "\n      </span>\n"
+    + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"entries") : depth0),{"name":"each","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":7,"column":6},"end":{"line":11,"column":15}}})) != null ? stack1 : "")
+    + "      <span style=\"margin-left:70px\">&nbsp;</span>\n";
 },"2":function(container,depth0,helpers,partials,data) {
     var alias1=container.lambda, alias2=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
@@ -537,32 +440,24 @@ this["JST"]["views/partials/ticker.hbs"] = Handlebars.template({"1":function(con
         return undefined
     };
 
-  return "        <div class=\"ticker__item\">\n          <a class=\"text-muted\" style=\"text-decoration: none;\" href=\""
+  return "        <span style=\"margin-left:50px\">\n          <a class=\"text-white\" style=\"text-decoration: none;\" href=\""
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"link") : depth0), depth0))
     + "\" target=\"_blank\">"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"title") : depth0), depth0))
-    + "</a>\n        </div>\n";
+    + "</a>\n        </span>\n";
 },"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
-    var stack1, alias1=container.lambda, alias2=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
+    var stack1, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
           return parent[propertyName];
         }
         return undefined
     };
 
-  return "<div class=\"ticker-wrap\">\n  <div class=\"ticker\" id=\"ticker\">\n"
-    + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"feeds") : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":3,"column":4},"end":{"line":13,"column":13}}})) != null ? stack1 : "")
-    + "  </div>\n</div>\n<script type=\"text/javascript\">\n  $(document).ready(function () {\n    $(\".ticker\").css(\"-webkit-animation-duration\", \""
-    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"tickerDelay") : depth0), depth0))
-    + "s\")\n    $(\".ticker\").css(\"animation-duration\", \""
-    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"tickerDelay") : depth0), depth0))
-    + "s\")\n  });\n\n</script>\n";
+  return "  <div class=\"ticker\" id=\"ticker\">\n"
+    + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"feeds") : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":2,"column":4},"end":{"line":13,"column":13}}})) != null ? stack1 : "")
+    + "  </div>\n  <script type=\"text/javascript\">\n    $(document).ready(function () {\n      $('.ticker').marquee({\n        speed: 80\n      });\n\n    });\n\n  </script>\n";
 },"useData":true});
 
-this["JST"]["views/partials/wordcloud.hbs"] = Handlebars.template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
+this["JST"]["wordcloud.hbs"] = Handlebars.template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
     return "\n";
-},"useData":true});
-
-this["JST"]["views/setup.hbs"] = Handlebars.template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "Hello\n";
 },"useData":true});

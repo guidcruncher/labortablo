@@ -36,7 +36,7 @@ function applyTheme(name, s, e) {
       result = "dark";
     }
     var html = document.getElementsByTagName("html")[0];
-    html.setAttribute("data-mdb-theme", result);
+    html.setAttribute("data-bs-theme", result);
 
     darkThemeMq.addListener(e => {
       var theme = "light";
@@ -46,7 +46,7 @@ function applyTheme(name, s, e) {
         theme = "light";
       }
       var html = document.getElementsByTagName("html")[0];
-      html.setAttribute("data-mdb-theme", theme);
+      html.setAttribute("data-bs-theme", theme);
     });
     return;
   }
@@ -60,14 +60,14 @@ function applyTheme(name, s, e) {
   }
 
   var html = document.getElementsByTagName("html")[0];
-  html.setAttribute("data-mdb-theme", result);
+  html.setAttribute("data-bs-theme", result);
 }
 
 
 function reloadSystem() {
   var url = apiBase() + "system";
   $.getJSON(url, function(data, status, jqXHR) {
-    var html = Handlebars.templates["system.hbs"](response.data);
+    var html = JST["system.hbs"](data);
     $("#system0").html(html);
     setTimeout(reloadSystem, 15000);
   });
@@ -76,7 +76,7 @@ function reloadSystem() {
 function reloadIconList() {
   var url = apiBase() + "containers";
   $.getJSON(url, function(data, status, jqXHR) {
-    var html = Handlebars.templates["iconlist.hbs"](response.data);
+    var html = JST["iconlist.hbs"](data);
     $("#services0").html(html);
     containerStats();
     setTimeout(reloadIconList, 15000);
@@ -86,9 +86,8 @@ function reloadIconList() {
 function reloadBookmarks() {
   var url = apiBase() + "bookmarks";
   $.getJSON(url, function(data, status, jqXHR) {
-    var html = Handlebars.templates["bookmarks.hbs"](response.data);
+    var html = JST["bookmarks.hbs"](data);
     $("#bookmarks0").html(html);
-    setTimeout(reloadBookmarks, 60000);
   });
 }
 
@@ -117,7 +116,7 @@ function containerStats() {
 function renderFeeds(target, data, template) {
   var itemCount = data.map((a) => a.items.length + 1).reduce((a, b) => a + b);
   var tickerDelay = itemCount * 5;
-  var html = Handlebars.templates[template]({
+  var html = JST[template]({
     feeds: data,
     feedCount: itemCount,
     tickerDelay: tickerDelay,

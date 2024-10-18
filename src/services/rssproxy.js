@@ -83,9 +83,7 @@ function isCacheStale(name) {
   var created = new Date(data.created);
   var now = new Date();
   var duration = moment(now).diff(created, "minutes");
-  logger.log(
-    "Cache created : " + moment(created).format("yyyy-MM-DD hh:mm:ss"),
-  );
+  logger.log("Cache created : " + moment(created).format("yyyy-MM-DD hh:mm:ss"));
   logger.log("Now           : " + moment(now).format("yyyy-MM-DD hh:mm:ss"));
   logger.log("Age (minutes) : " + duration);
 
@@ -108,8 +106,14 @@ function getFeed(url) {
         }
       })
       .then((result) => {
-        logger.log("Parsing feed", url);
+        logger.log("Parsed feed", url);
         result.href = url;
+        result.entries = result.entries.sort((a, b) => {
+          if ((a.published) && (b.published)) {
+            return (moment(b.published).unix() - moment(a.published).unix());
+          }
+          return 0;
+        });
         resolve(result);
       })
       .catch((err) => {
@@ -137,12 +141,12 @@ function getFeeds(name) {
           new Promise((resolve, reject) => {
             getFeed(feedurls[i])
               .then(function(feed) {
-                logger.log(feed.title);
+                feed.entries.forEach((f) => {
+                  f.publishDate = moment(f.published).format("LLLL");
+                });
                 result.feeds.push(feed);
                 result.itemCount += feed.entries.length + 1;
-                feed.lastBuildDate = moment(
-                  new Date(feed.published),
-                ).format("LLLL");
+                feed.lastBuildDate = moment(feed.published).format("LLLL");
                 resolve(feed);
               })
               .catch((status, err) => {

@@ -1,22 +1,23 @@
-<div class="ticker-wrap">
   <div class="ticker" id="ticker">
     {{#each this.feeds}}
-      <div class="ticker__item">
+      <span style="margin-top:0px!important">
         <a href="{{this.image.link}}" target="_blank"><img src="{{this.image.url}}" style="max-height:30px" /></a>
         &nbsp;{{this.lastBuildDate}}
-      </div>
+      </span>
       {{#each this.entries}}
-        <div class="ticker__item">
-          <a class="text-muted" style="text-decoration: none;" href="{{this.link}}" target="_blank">{{this.title}}</a>
-        </div>
+        <span style="margin-left:50px">
+          <a class="text-white" style="text-decoration: none;" href="{{this.link}}" target="_blank">{{this.title}}</a>
+        </span>
       {{/each}}
+      <span style="margin-left:70px">&nbsp;</span>
     {{/each}}
   </div>
-</div>
-<script type="text/javascript">
-  $(document).ready(function () {
-    $(".ticker").css("-webkit-animation-duration", "{{this.tickerDelay}}s")
-    $(".ticker").css("animation-duration", "{{this.tickerDelay}}s")
-  });
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('.ticker').marquee({
+        speed: 80
+      });
 
-</script>
+    });
+
+  </script>

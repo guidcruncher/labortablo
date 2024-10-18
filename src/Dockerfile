@@ -1,13 +1,14 @@
 FROM node:22.9.0-alpine3.20
 
-RUN apk add --no-cache nano bash curl sqlite
-RUN apk add --no-cache  cairo-dev cairo cairo-tools libpng pango libpng-dev jpeg-dev libjpeg-turbo-dev librsvg
+RUN apk add --no-cache nano bash curl sqlite tzdata
 
 RUN npm i --global handlebars
 
 ENV API_INTERNAL_URL="http://127.0.0.1:9080/api"
 ENV NODE_CONFIG_DIR="/config"
 ENV PERSISTENCE_STORE="/cache"
+ENV TZ=UTC
+
 RUN mkdir -p "$NODE_CONFIG_DIR"
 RUN mkdir -p "$PERSISTENCE_STORE"
 
@@ -21,7 +22,7 @@ RUN mkdir -p /cache/feeds
 
 WORKDIR /app/
 
-
+COPY ./.build /app/.build
 COPY ./.minify.json /app/.minify.json
 COPY ./_config/* /config.default/
 COPY ./start.sh /app/start.sh

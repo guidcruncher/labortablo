@@ -1,7 +1,7 @@
 {
   "name": "labortablo",
   "description": "Labortablo Web UI",
-  "version": "0.0.101",
+  "version": "0.0.127",
   "private": true,
   "scripts": {
     "start": "node ./index.js",
@@ -24,6 +24,7 @@
     "express-request-id": "^3.0.0",
     "handlebars": "^4.7.8",
     "http-errors": "^2.0.0",
+    "i18n": "^0.15.1",
     "log4js": "^6.9.1",
     "mime-types": "^2.1.35",
     "mocha": "^10.7.3",

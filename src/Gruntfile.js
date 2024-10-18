@@ -10,6 +10,10 @@ module.exports = function(grunt) {
       build: {
         files: {
           './public/scripts/main.min.js': ['./public/scripts/jquery.min.js',
+            './public/scripts/popper.min.js',
+            './public/scripts/mdc.ripple.min.js',
+            './public/scripts/materialstyle.min.js',
+            './public/scripts/jquery.marquee.min.js',
             './public/scripts/handlebars.min.js',
             './public/scripts/helpers.js',
             './public/scripts/templates.js',
@@ -29,7 +33,17 @@ module.exports = function(grunt) {
     handlebars: {
       all: {
         files: {
-          "public/scripts/templates.js": ["views/**/*.hbs"]
+          "public/scripts/templates.js": ["views/partials/**/*.hbs"]
+        },
+        options: {
+          processName: function(filePath) {
+            var pieces = filePath.split('/');
+            return pieces[pieces.length - 1];
+          },
+          processPartialName: function(filePath) {
+            var pieces = filePath.split('/');
+            return pieces[pieces.length - 1];
+          }
         }
       }
     },
@@ -63,7 +77,7 @@ module.exports = function(grunt) {
     },
     shell: {
       tagbuild: {
-        command: 'date -u >./build'
+        command: 'date -u >./.build'
       },
       prettify: {
         command: 'find . -type f -name "*.hbs" -exec npx js-beautify -r --templating handlebars -s 2 -n -w 0 --type html -j {} +'
@@ -123,7 +137,6 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['package', 'shell:tagbuild', 'shell:prebuild', 'npm-command:dev']);
   grunt.registerTask('package', ['env:dev', 'shell:cssprettify', 'shell:jsprettify', 'shell:prettify', 'handlebars', 'eslint', 'uglify']);
   grunt.registerTask('build', ['shell:tagbuild', 'shell:build']);
-  grunt.registerTask('build-deploy', ['build', 'shell:push', 'deploy']);
-  grunt.registerTask('deploy', ['env:deploy', 'shell:deploy']);
+  grunt.registerTask('deploy', ['env:deploy', 'shell:push', 'shell:deploy']);
   grunt.registerTask('publish', ['shell:publish']);
 };

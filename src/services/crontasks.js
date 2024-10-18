@@ -23,6 +23,7 @@ function register() {
     var promises = [];
     promises.push(rssproxy.checkFeedCache("feeds"));
     promises.push(rssproxy.checkFeedCache("ticker"));
+    promises.push(dockerDiscovery.load());
     Promise.allSettled(promises).then(() => {
       logger.log("Feed refresh finished.");
     });
