@@ -1,26 +1,39 @@
 <ul class="nav nav-tabs mb-3" id="myTab0" role="tablist">
   <li class="nav-item" role="presentation">
     <button data-mdb-tab-init class="nav-link active" id="system-tab0" data-mdb-target="#system0" type="button" role="tab" aria-controls="system" aria-selected="true">
-      <i class="fa-solid fa-gear"></i>
+      <i class="fa-solid fa-gear"></i>&nbsp;
       System
     </button>
   </li>
   <li class="nav-item" role="presentation">
     <button data-mdb-tab-init class="nav-link" id="feeds-tab0" data-mdb-target="#feeds0" type="button" role="tab" aria-controls="feeds" aria-selected="false">
-      <i class="fa-solid fa-rss"></i>
+      <i class="fa-solid fa-rss"></i>&nbsp;
       Feeds
     </button>
   </li>
   <li class="nav-item" role="presentation">
     <button data-mdb-tab-init class="nav-link" id="ticker-tab0" data-mdb-target="#ticker0" type="button" role="tab" aria-controls="ticker" aria-selected="false">
-      <i class="fa-solid fa-ticket-simple"></i>
+      <i class="fa-solid fa-ticket-simple"></i>&nbsp;
       Ticker
     </button>
   </li>
 </ul>
 <div class="tab-content" id="myTabContent0">
   <div class="tab-pane fade show active" id="system0" role="tabpanel" aria-labelledby="system-tab0">
-    main
+
+    <form>
+      <div class="mb-3">
+        <label for="drptheme" class="form-label">Theme:</label>
+        <select class="form-select" id="drptheme">
+          <option selected value="auto">Automatic</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+          <option value="scheduled">Scheduled</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
   </div>
   <div class="tab-pane fade" id="feeds0" role="tabpanel" aria-labelledby="feeds-tab0">
     feeds
@@ -32,7 +45,10 @@
 
 <script type="text/javascript">
   $(function () {
-    window.API_BASE = '{{API_BASE}}';
+  window.API_BASE = '{{API_BASE}}';
+  // Initialize
+  $('.form-select').selectfield();
+  })
   });
 
 </script>

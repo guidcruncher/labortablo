@@ -36,7 +36,7 @@ function applyTheme(name, s, e) {
       result = "dark";
     }
     var html = document.getElementsByTagName("html")[0];
-    html.setAttribute("data-mdb-theme", result);
+    html.setAttribute("data-bs-theme", result);
 
     darkThemeMq.addListener(e => {
       var theme = "light";
@@ -46,7 +46,7 @@ function applyTheme(name, s, e) {
         theme = "light";
       }
       var html = document.getElementsByTagName("html")[0];
-      html.setAttribute("data-mdb-theme", theme);
+      html.setAttribute("data-bs-theme", theme);
     });
     return;
   }
@@ -60,7 +60,7 @@ function applyTheme(name, s, e) {
   }
 
   var html = document.getElementsByTagName("html")[0];
-  html.setAttribute("data-mdb-theme", result);
+  html.setAttribute("data-bs-theme", result);
 }
 
 
