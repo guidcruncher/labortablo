@@ -430,7 +430,8 @@ this["JST"]["ticker.hbs"] = Handlebars.template({"1":function(container,depth0,h
     + "\" style=\"max-height:30px\" /></a>\n        &nbsp;"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"lastBuildDate") : depth0), depth0))
     + "\n      </span>\n"
-    + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"entries") : depth0),{"name":"each","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":7,"column":6},"end":{"line":11,"column":15}}})) != null ? stack1 : "");
+    + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"entries") : depth0),{"name":"each","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":7,"column":6},"end":{"line":11,"column":15}}})) != null ? stack1 : "")
+    + "      <span style=\"margin-left:70px\">&nbsp;</span>\n";
 },"2":function(container,depth0,helpers,partials,data) {
     var alias1=container.lambda, alias2=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
@@ -453,7 +454,7 @@ this["JST"]["ticker.hbs"] = Handlebars.template({"1":function(container,depth0,h
     };
 
   return "  <div class=\"ticker\" id=\"ticker\">\n"
-    + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"feeds") : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":2,"column":4},"end":{"line":12,"column":13}}})) != null ? stack1 : "")
+    + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"feeds") : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":2,"column":4},"end":{"line":13,"column":13}}})) != null ? stack1 : "")
     + "  </div>\n  <script type=\"text/javascript\">\n    $(document).ready(function () {\n      $('.ticker').marquee({\n        speed: 80\n      });\n\n    });\n\n  </script>\n";
 },"useData":true});
 

@@ -106,8 +106,14 @@ function getFeed(url) {
         }
       })
       .then((result) => {
-        logger.log("Parsing feed", url);
+        logger.log("Parsed feed", url);
         result.href = url;
+        result.entries = result.entries.sort((a, b) => {
+          if ((a.published) && (b.published)) {
+            return (moment(b.published).unix() - moment(a.published).unix());
+          }
+          return 0;
+        });
         resolve(result);
       })
       .catch((err) => {

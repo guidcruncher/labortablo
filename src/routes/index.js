@@ -3,8 +3,6 @@ const express = require("express");
 const router = express.Router();
 const requiresAuth = require("../oidchelper.js");
 const Client = require("node-rest-client").Client;
-const fs = require("fs");
-const path = require("path");
 
 router.get("/", requiresAuth(), function(req, res) {
   logger.debug("Rendering dashboard page");

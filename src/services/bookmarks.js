@@ -47,6 +47,7 @@ function loadBookmarks() {
 
             Promise.allSettled(iconpromises).then(() => {
             */
+      bookmarks = bookmarks.sort((a, b) => a.name.localeCompare(b.name));
       resolve(bookmarks);
       // });
     });
