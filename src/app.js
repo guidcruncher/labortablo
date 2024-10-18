@@ -107,16 +107,13 @@ app.use(
   express.static(path.join(process.env.NODE_CONFIG_DIR, "user-icons")),
 );
 
-app.use("/setup", require("./routes/setup.js"));
 app.use("/", require("./routes/index.js"));
-app.use("/settings", require("./routes/settings.js"));
 app.use("/api/containers", require("./routes/api-container.js"));
 app.use("/api/repeository", require("./routes/api-repository.js"));
 app.use("/api/icons", require("./routes/api-icon.js"));
 app.use("/api/bookmarks", require("./routes/api-bookmarks.js"));
 app.use("/api/rss", require("./routes/api-rssproxy.js"));
 app.use("/api/system", require("./routes/api-system.js"));
-app.use("/api/settings", require("./routes/api-settings.js"));
 
 crontasks.initialise(app);
 crontasks.register(app);

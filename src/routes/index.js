@@ -6,23 +6,7 @@ const Client = require("node-rest-client").Client;
 const fs = require("fs");
 const path = require("path");
 
-function isFirstRun() {
-  var filename = path.join(process.env.NODE_CONFIG_DIR, "firstrun.txt");
-  if (fs.existsSync(filename)) {
-    // fs.unlinkSync(filename);
-    return true;
-  }
-  return false;
-}
-
 router.get("/", requiresAuth(), function(req, res) {
-  console.log(req.app.engine);
-  if (req.query.setup || isFirstRun()) {
-    logger.debug("Redirecting to first run setup page as requested.");
-    res.redirect("/setup");
-    return;
-  }
-
   logger.debug("Rendering dashboard page");
 
   var promises = [];
