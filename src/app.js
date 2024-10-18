@@ -116,6 +116,7 @@ app.use("/api/icons", require("./routes/api-icon.js"));
 app.use("/api/bookmarks", require("./routes/api-bookmarks.js"));
 app.use("/api/rss", require("./routes/api-rssproxy.js"));
 app.use("/api/system", require("./routes/api-system.js"));
+app.use("/api/settings", require("./routes/api-settings.js"));
 
 crontasks.initialise(app);
 crontasks.register(app);

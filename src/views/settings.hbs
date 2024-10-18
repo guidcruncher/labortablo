@@ -25,11 +25,11 @@
       <div class="mb-3">
         <label for="drptheme" class="form-label">Theme:</label>
         <div class="form-floating">
-          <select class="form-select" id="drptheme">
-            <option selected value="auto">Automatic (Based on Operating System)</option>
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
-            <option value="scheduled">Scheduled</option>
+          <select class="form-select" data-bind="theme.name">
+              <option value="auto">Automatic (Based on Operating System)</option>
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+              <option value="scheduled">Scheduled</option>
           </select>
         </div>
       </div>
@@ -47,8 +47,18 @@
 
 <script type="text/javascript">
   $(function () {
-    window.API_BASE = '{{API_BASE}}';
-    $('.form-select').selectfield();
-  });
+        window.API_BASE = '{{API_BASE}}';
+        $('.form-select').selectfield();
 
+          var url = apiBase() + "settings";
+          $.getJSON(url, function (settings, status, jqXHR) {
+            $.each($('[data-bind]'), function (index, ctl) {
+              var tag = $(ctl)[0].tagName.toLowerCase();
+              var type = $(ctl).prop("type");
+              var field = $(ctl).prop("data-bind");
+              var value = settings[field];
+              $(ctl).val(value);
+            });
+          });
+});
 </script>
