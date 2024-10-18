@@ -137,7 +137,6 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['package', 'shell:tagbuild', 'shell:prebuild', 'npm-command:dev']);
   grunt.registerTask('package', ['env:dev', 'shell:cssprettify', 'shell:jsprettify', 'shell:prettify', 'handlebars', 'eslint', 'uglify']);
   grunt.registerTask('build', ['shell:tagbuild', 'shell:build']);
-  grunt.registerTask('build-deploy', ['build', 'shell:push', 'deploy']);
-  grunt.registerTask('deploy', ['env:deploy', 'shell:deploy']);
+  grunt.registerTask('deploy', ['env:deploy', 'shell:push', 'shell:deploy']);
   grunt.registerTask('publish', ['shell:publish']);
 };

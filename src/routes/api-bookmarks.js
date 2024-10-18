@@ -56,20 +56,25 @@ router.get("/tags/frequency", function(req, reply) {
 });
 
 router.get("/icon", function(req, reply) {
-  iconResolver
-    .getWebsiteIcon(req.query.host)
-    .then((content) =>
-      reply
-      .header("content-type", content.mimeType)
-      .header(
-        "content-disposition",
-        "inline; filename=" + req.query.host + content.extn,
+  try {
+    iconResolver
+      .getWebsiteIcon(req.query.host)
+      .then((content) =>
+        reply
+        .header("content-type", content.mimeType)
+        .header(
+          "content-disposition",
+          "inline; filename=" + req.query.host + content.extn,
+        )
+        .end(content.content, "binary"),
       )
-      .end(content.content, "binary"),
-    )
-    .catch(() => {
-      reply.status(200).sendFile(path.resolve(path.join(__dirname, "../public/images/unknown.png")));
-    });
+      .catch(() => {
+        reply.status(200).sendFile(path.resolve(path.join(__dirname, "../public/images/unknown.png")));
+      });
+  } catch (err) {
+    logger.error("Error in bookmark icon", err);
+    reply.status(200).sendFile(path.resolve(path.join(__dirname, "../public/images/unknown.png")));
+  }
 });
 
 module.exports = router;

@@ -88,7 +88,6 @@ function reloadBookmarks() {
   $.getJSON(url, function(data, status, jqXHR) {
     var html = JST["bookmarks.hbs"](data);
     $("#bookmarks0").html(html);
-    setTimeout(reloadBookmarks, 60000);
   });
 }
 
