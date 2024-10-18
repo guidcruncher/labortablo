@@ -67,7 +67,7 @@ function applyTheme(name, s, e) {
 function reloadSystem() {
   var url = apiBase() + "system";
   $.getJSON(url, function(data, status, jqXHR) {
-    var html = JSTE["system.hbs"](response.data);
+    var html = JST["system.hbs"](data);
     $("#system0").html(html);
     setTimeout(reloadSystem, 15000);
   });
@@ -76,7 +76,7 @@ function reloadSystem() {
 function reloadIconList() {
   var url = apiBase() + "containers";
   $.getJSON(url, function(data, status, jqXHR) {
-    var html = JST["iconlist.hbs"](response.data);
+    var html = JST["iconlist.hbs"](data);
     $("#services0").html(html);
     containerStats();
     setTimeout(reloadIconList, 15000);
@@ -86,7 +86,7 @@ function reloadIconList() {
 function reloadBookmarks() {
   var url = apiBase() + "bookmarks";
   $.getJSON(url, function(data, status, jqXHR) {
-    var html = JST["bookmarks.hbs"](response.data);
+    var html = JST["bookmarks.hbs"](data);
     $("#bookmarks0").html(html);
     setTimeout(reloadBookmarks, 60000);
   });
