@@ -4,6 +4,7 @@ RUN apk add --no-cache nano bash curl sqlite tzdata
 
 RUN npm i --global handlebars
 
+ENV OS_ENV=docker
 ENV API_INTERNAL_URL="http://127.0.0.1:9080/api"
 ENV NODE_CONFIG_DIR="/config"
 ENV PERSISTENCE_STORE="/cache"
