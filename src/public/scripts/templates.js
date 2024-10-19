@@ -338,6 +338,26 @@ this["JST"]["icontabs.hbs"] = Handlebars.template({"1":function(container,depth0
 },"usePartial":true,"useData":true,"useDepths":true});
 
 this["JST"]["system.hbs"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
+    return "docker";
+},"3":function(container,depth0,helpers,partials,data) {
+    var stack1, lookupProperty = container.lookupProperty || function(parent, propertyName) {
+        if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
+          return parent[propertyName];
+        }
+        return undefined
+    };
+
+  return container.escapeExpression(container.lambda(((stack1 = (depth0 != null ? lookupProperty(depth0,"system") : depth0)) != null ? lookupProperty(stack1,"manufacturer") : stack1), depth0));
+},"5":function(container,depth0,helpers,partials,data) {
+    var stack1, lookupProperty = container.lookupProperty || function(parent, propertyName) {
+        if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
+          return parent[propertyName];
+        }
+        return undefined
+    };
+
+  return container.escapeExpression(container.lambda(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"vendor") : stack1), depth0));
+},"7":function(container,depth0,helpers,partials,data) {
     var stack1, alias1=container.lambda, alias2=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
           return parent[propertyName];
@@ -356,14 +376,14 @@ this["JST"]["system.hbs"] = Handlebars.template({"1":function(container,depth0,h
     + "%)</td>\n                </tr>\n                <tr>\n                  <th scope=\"row\">Free</th>\n                  <td>"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"stravailable") : depth0), depth0))
     + "</t>\n                </tr>\n                "
-    + ((stack1 = lookupProperty(helpers,"if").call(depth0 != null ? depth0 : (container.nullContext || {}),(data && lookupProperty(data,"last")),{"name":"if","hash":{},"fn":container.program(2, data, 0),"inverse":container.program(4, data, 0),"data":data,"loc":{"start":{"line":118,"column":16},"end":{"line":123,"column":23}}})) != null ? stack1 : "")
+    + ((stack1 = lookupProperty(helpers,"if").call(depth0 != null ? depth0 : (container.nullContext || {}),(data && lookupProperty(data,"last")),{"name":"if","hash":{},"fn":container.program(8, data, 0),"inverse":container.program(10, data, 0),"data":data,"loc":{"start":{"line":118,"column":16},"end":{"line":123,"column":23}}})) != null ? stack1 : "")
     + " ";
-},"2":function(container,depth0,helpers,partials,data) {
+},"8":function(container,depth0,helpers,partials,data) {
     return "";
-},"4":function(container,depth0,helpers,partials,data) {
+},"10":function(container,depth0,helpers,partials,data) {
     return "\n                  <tr>\n                    <th scope=\"row\">&nbsp;</th>\n                    <td>&nbsp;</td>\n                  </tr>\n                ";
 },"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
-    var stack1, alias1=container.lambda, alias2=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
+    var stack1, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=container.lambda, alias3=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
           return parent[propertyName];
         }
@@ -371,47 +391,47 @@ this["JST"]["system.hbs"] = Handlebars.template({"1":function(container,depth0,h
     };
 
   return "<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col\">\n      <div class=\"card m-3 border border-primary\" style=\"max-width:400px\">\n        <img class=\"card-img-top\" style=\"margin:10px;max-height:100px;max-width:380px;\" src=\"/api/icons/simple?name="
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"system") : depth0)) != null ? lookupProperty(stack1,"manufacturer") : stack1), depth0))
+    + ((stack1 = lookupProperty(helpers,"if").call(alias1,(depth0 != null ? lookupProperty(depth0,"isDocker") : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(3, data, 0),"data":data,"loc":{"start":{"line":5,"column":116},"end":{"line":5,"column":176}}})) != null ? stack1 : "")
     + "\" alt=\"\">\n        <div class=\"card-body\">\n          <h4 class=\"card-title text-primary\">"
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"system") : depth0)) != null ? lookupProperty(stack1,"model") : stack1), depth0))
+    + alias3(alias2(((stack1 = (depth0 != null ? lookupProperty(depth0,"system") : depth0)) != null ? lookupProperty(stack1,"model") : stack1), depth0))
     + "</h4>\n          <p class=\"card-text\">\n          <table class=\"table table-hover\">\n            <tbody>\n              <tr>\n                <th scope=\"row\">Manufacturer</th>\n                <td>"
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"system") : depth0)) != null ? lookupProperty(stack1,"manufacturer") : stack1), depth0))
+    + alias3(alias2(((stack1 = (depth0 != null ? lookupProperty(depth0,"system") : depth0)) != null ? lookupProperty(stack1,"manufacturer") : stack1), depth0))
     + "</td>\n              </tr>\n              <tr>\n                <th scope=\"row\">CPU</th>\n                <td>"
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"manufacturer") : stack1), depth0))
+    + alias3(alias2(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"manufacturer") : stack1), depth0))
     + " "
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"brand") : stack1), depth0))
+    + alias3(alias2(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"brand") : stack1), depth0))
     + "</td>\n              </tr>\n              <tr>\n                <th scope=\"row\">Vendor</th>\n                <td>"
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"vendor") : stack1), depth0))
+    + alias3(alias2(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"vendor") : stack1), depth0))
     + "</td>\n              </tr>\n            </tbody>\n          </table>\n          </p>\n        </div>\n      </div>\n    </div>\n    <div class=\"col\">\n      <div class=\"card m-3 border border-primary\" style=\"max-width:400px\">\n        <img class=\"card-img-top\" style=\"margin:10px;max-height:100px;max-width:380px\" src=\"/api/icons/simple?name="
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"vendor") : stack1), depth0))
+    + ((stack1 = lookupProperty(helpers,"if").call(alias1,(depth0 != null ? lookupProperty(depth0,"isDocker") : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(5, data, 0),"data":data,"loc":{"start":{"line":31,"column":115},"end":{"line":31,"column":166}}})) != null ? stack1 : "")
     + "\" alt=\"\">\n        <div class=\"card-body\">\n          <h4 class=\"card-title text-primary\">Processor</h4>\n          <p class=\"card-text\">\n          <table class=\"table table-hover\">\n            <tbody>\n              <tr>\n                <th scope=\"row\">CPU</th>\n                <td>"
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"vendor") : stack1), depth0))
+    + alias3(alias2(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"vendor") : stack1), depth0))
     + " "
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"family") : stack1), depth0))
+    + alias3(alias2(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpu") : depth0)) != null ? lookupProperty(stack1,"family") : stack1), depth0))
     + "</td>\n              </tr>\n              <tr>\n                <th scope=\"row\">Avg Speed</th>\n                <td>"
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpuCurrentSpeed") : depth0)) != null ? lookupProperty(stack1,"avg") : stack1), depth0))
+    + alias3(alias2(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpuCurrentSpeed") : depth0)) != null ? lookupProperty(stack1,"avg") : stack1), depth0))
     + "ghz</td>\n              </tr>\n              <tr>\n                <th scope=\"row\">Temperature</th>\n                <td>"
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpuTemperature") : depth0)) != null ? lookupProperty(stack1,"main") : stack1), depth0))
+    + alias3(alias2(((stack1 = (depth0 != null ? lookupProperty(depth0,"cpuTemperature") : depth0)) != null ? lookupProperty(stack1,"main") : stack1), depth0))
     + "&#8451;</td>\n              </tr>\n            </tbody>\n          </table>\n          </p>\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class=\"row\">\n    <div class=\"col\">\n      <div class=\"card m-3 border border-primary\" style=\"max-width:400px\">\n        <div class=\"card-body\">\n          <h4 class=\"card-title text-primary\">Memory</h4>\n          <p class=\"card-text\">\n          <table class=\"table table-hover\">\n            <tbody>\n              <tr>\n                <th scope=\"row\">Capacity</th>\n                <td>"
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"mem") : depth0)) != null ? lookupProperty(stack1,"strtotal") : stack1), depth0))
+    + alias3(alias2(((stack1 = (depth0 != null ? lookupProperty(depth0,"mem") : depth0)) != null ? lookupProperty(stack1,"strtotal") : stack1), depth0))
     + "</td>\n              </tr>\n              <tr>\n                <th scope=\"row\">Used</th>\n                <td>"
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"mem") : depth0)) != null ? lookupProperty(stack1,"strused") : stack1), depth0))
+    + alias3(alias2(((stack1 = (depth0 != null ? lookupProperty(depth0,"mem") : depth0)) != null ? lookupProperty(stack1,"strused") : stack1), depth0))
     + " </td>\n              </tr>\n              <tr>\n                <th scope=\"row\">Free</th>\n                <td>"
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"mem") : depth0)) != null ? lookupProperty(stack1,"strfree") : stack1), depth0))
+    + alias3(alias2(((stack1 = (depth0 != null ? lookupProperty(depth0,"mem") : depth0)) != null ? lookupProperty(stack1,"strfree") : stack1), depth0))
     + "</td>\n              </tr>\n              <tr>\n                <th scope=\"row\">Swap Capacity</th>\n                <td>"
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"mem") : depth0)) != null ? lookupProperty(stack1,"strswaptotal") : stack1), depth0))
+    + alias3(alias2(((stack1 = (depth0 != null ? lookupProperty(depth0,"mem") : depth0)) != null ? lookupProperty(stack1,"strswaptotal") : stack1), depth0))
     + "</td>\n              </tr>\n              <tr>\n                <th scope=\"row\">Swap Used</th>\n                <td>"
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"mem") : depth0)) != null ? lookupProperty(stack1,"strswapused") : stack1), depth0))
+    + alias3(alias2(((stack1 = (depth0 != null ? lookupProperty(depth0,"mem") : depth0)) != null ? lookupProperty(stack1,"strswapused") : stack1), depth0))
     + " </td>\n              </tr>\n              <tr>\n                <th scope=\"row\">Swap Free</th>\n                <td>"
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"mem") : depth0)) != null ? lookupProperty(stack1,"strswapfree") : stack1), depth0))
+    + alias3(alias2(((stack1 = (depth0 != null ? lookupProperty(depth0,"mem") : depth0)) != null ? lookupProperty(stack1,"strswapfree") : stack1), depth0))
     + "</td>\n              </tr>\n            </tbody>\n          </table>\n          </p>\n        </div>\n      </div>\n    </div>\n    <div class=\"col\">\n      <div class=\"card m-3 border border-primary\" style=\"max-width:400px\">\n        <div class=\"card-body\">\n          <h4 class=\"card-title text-primary\">Storage</h4>\n          <p class=\"card-text\">\n          <table class=\"table table-hover\">\n            <tbody>\n"
-    + ((stack1 = lookupProperty(helpers,"each").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"fsSize") : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":101,"column":14},"end":{"line":123,"column":33}}})) != null ? stack1 : "")
+    + ((stack1 = lookupProperty(helpers,"each").call(alias1,(depth0 != null ? lookupProperty(depth0,"fsSize") : depth0),{"name":"each","hash":{},"fn":container.program(7, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":101,"column":14},"end":{"line":123,"column":33}}})) != null ? stack1 : "")
     + "\n            </tbody>\n          </table>\n          </p>\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class=\"row\">\n    <div class=\"col\">\n      <div class=\"card m-3 border border-primary\" style=\"max-width:400px\">\n        <div class=\"card-body\">\n          <h4 class=\"card-title text-primary\">"
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"software") : depth0)) != null ? lookupProperty(stack1,"apptitle") : stack1), depth0))
+    + alias3(alias2(((stack1 = (depth0 != null ? lookupProperty(depth0,"software") : depth0)) != null ? lookupProperty(stack1,"apptitle") : stack1), depth0))
     + "</h4>\n          <p class=\"card-text\">\n          <table class=\"table table-hover\">\n            <tbody>\n              <tr>\n                <th scope=\"row\">Version</th>\n                <td>"
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"software") : depth0)) != null ? lookupProperty(stack1,"version") : stack1), depth0))
+    + alias3(alias2(((stack1 = (depth0 != null ? lookupProperty(depth0,"software") : depth0)) != null ? lookupProperty(stack1,"version") : stack1), depth0))
     + "</td>\n              </tr>\n              <tr>\n                <th scope=\"row\">Build date</th>\n                <td>"
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"software") : depth0)) != null ? lookupProperty(stack1,"builddate") : stack1), depth0))
+    + alias3(alias2(((stack1 = (depth0 != null ? lookupProperty(depth0,"software") : depth0)) != null ? lookupProperty(stack1,"builddate") : stack1), depth0))
     + "</td>\n              </tr>\n            </tbody>\n          </table>\n          </p>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n";
 },"useData":true});
 

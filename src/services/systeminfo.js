@@ -3,6 +3,10 @@ const si = require("systeminformation");
 const config = require("config");
 const Client = require("node-rest-client").Client;
 
+function getOsEnv() {
+  return process.env.OS_ENV ? process.env.OS_ENV : "native";
+}
+
 function formatBytes(bytes, decimals = 2) {
   if (!+bytes) return "0 Bytes";
 
@@ -28,6 +32,7 @@ function formatBytes(bytes, decimals = 2) {
 function view(data) {
   var r = data;
 
+  r.osenv = getOsEnv();
   r.mem.strtotal = formatBytes(data.mem.total);
   r.mem.strfree = formatBytes(data.mem.free);
   r.mem.strused = formatBytes(data.mem.used);
@@ -59,7 +64,10 @@ function gatherInternal() {
       .then((data) => {
         resolve(data);
       })
-      .catch((error) => reject(error));
+      .catch((error) => {
+        logger.error("error in gatherinternal system info", error);
+        reject(error);
+      });
   });
 }
 
@@ -82,7 +90,7 @@ function gatherExternal() {
       resolve(result);
     });
     req.on("error", function(err) {
-      logger.log("Error", err);
+      logger.log("Error in gather external systeminfo", err.code);
       reject(err.code);
     });
   });

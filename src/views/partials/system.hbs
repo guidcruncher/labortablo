@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col">
       <div class="card m-3 border border-primary" style="max-width:400px">
-        <img class="card-img-top" style="margin:10px;max-height:100px;max-width:380px;" src="/api/icons/simple?name={{system.manufacturer}}" alt="">
+        <img class="card-img-top" style="margin:10px;max-height:100px;max-width:380px;" src="/api/icons/simple?name={{#if isDocker}}docker{{else}}{{system.manufacturer}}{{/if}}" alt="">
         <div class="card-body">
           <h4 class="card-title text-primary">{{system.model}}</h4>
           <p class="card-text">
@@ -28,7 +28,7 @@
     </div>
     <div class="col">
       <div class="card m-3 border border-primary" style="max-width:400px">
-        <img class="card-img-top" style="margin:10px;max-height:100px;max-width:380px" src="/api/icons/simple?name={{cpu.vendor}}" alt="">
+        <img class="card-img-top" style="margin:10px;max-height:100px;max-width:380px" src="/api/icons/simple?name={{#if isDocker}}docker{{else}}{{cpu.vendor}}{{/if}}" alt="">
         <div class="card-body">
           <h4 class="card-title text-primary">Processor</h4>
           <p class="card-text">
